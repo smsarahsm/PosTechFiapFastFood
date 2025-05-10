@@ -1,0 +1,14 @@
+services:
+  mariadb:
+    image: 'mariadb:latest'
+    environment:
+      - 'MARIADB_DATABASE=fiap-fastfood'
+      - 'MARIADB_PASSWORD=fiap'
+      - 'MARIADB_ROOT_PASSWORD=rootfiap'
+      - 'MARIADB_USER=fiap'
+    ports:
+      - '3306'
+
+# SE QUISERERM ATIVAR A PERSISTENCIA DO BANCO NO SISTEMA DE ARQUIVOS. DESCOMENTE AS DUAS LINHAS ABAIXO
+#    volumes:
+#      - ./mariadb/data:/var/lib/mysql

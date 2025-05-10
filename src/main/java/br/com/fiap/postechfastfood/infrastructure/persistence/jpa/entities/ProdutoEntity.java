@@ -1,0 +1,31 @@
+package br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities;
+
+import br.com.fiap.postechfastfood.domain.enums.TipoCategoriaProdutoEnum;
+import br.com.fiap.postechfastfood.domain.enums.TipoPessoaEnum;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "tb_produtos")
+public class ProdutoEntity {
+    @Id
+    @Column(name = "cd_produto", nullable = false, unique = true)
+    private String cdProduto;
+    @Column(name = "nm_produto", nullable = false)
+    private String nmProduto;
+    @Column(name = "ds_descricao", nullable = false)
+    private String dsDescricao;
+    @Column(name = "vl_preco", nullable = false)
+    private double vlPreco;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tp_categoria", nullable = false)
+    private TipoCategoriaProdutoEnum tpCategoria;
+
+}
