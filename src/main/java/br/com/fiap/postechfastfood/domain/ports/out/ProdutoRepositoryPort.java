@@ -10,7 +10,6 @@ public interface ProdutoRepositoryPort {
     ProdutoModel cadastrar(ProdutoModel produto);
     ProdutoModel atualizar(String cdProduto, ProdutoModel produto);
     void deletar(String cdProduto);
-    //TODO: implementar métodos de busca na classe de dominio de produtos
     Optional<List<ProdutoModel>> buscar();
     Optional<List<ProdutoModel>> buscar(TipoCategoriaProdutoEnum tpCategoria);
 }

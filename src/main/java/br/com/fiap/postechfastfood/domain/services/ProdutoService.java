@@ -7,9 +7,8 @@ import br.com.fiap.postechfastfood.domain.ports.out.ProdutoRepositoryPort;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoRequestDto;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoResponseDto;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ProdutoService implements ProdutoServicePort {
 
@@ -47,15 +46,33 @@ public class ProdutoService implements ProdutoServicePort {
 
     @Override
     public Optional<List<ProdutoResponseDto>> buscar() {
-        return Optional.empty();
+        var model = produtoRepository.buscar();
+        return model.map(it ->
+                it.stream()
+                        .map(this::toResponse)
+                        .collect(Collectors.toList()));
     }
 
     @Override
-    public Optional<List<ProdutoResponseDto>> buscar(TipoCategoriaProdutoEnum tpCategoria) {
-        return Optional.empty();
+    public Optional<List<ProdutoResponseDto>> buscar(String tpCategoria) {
+        var enumTpCategoria = converteTipoProdutoCategortiaEnum(tpCategoria);
+
+        var model = produtoRepository.buscar(enumTpCategoria);
+        return model.map(it ->
+                        it.stream()
+                        .map(this::toResponse)
+                        .collect(Collectors.toList()));
     }
 
     private ProdutoResponseDto toResponse(ProdutoModel produtoModel) {
         return new ProdutoResponseDto(produtoModel);
+    }
+
+    private TipoCategoriaProdutoEnum converteTipoProdutoCategortiaEnum(String tpCategoria) {
+        try{
+            return TipoCategoriaProdutoEnum.valueOf(tpCategoria.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Categoria não existente");
+        }
     }
 }

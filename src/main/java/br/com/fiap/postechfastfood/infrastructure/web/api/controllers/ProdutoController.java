@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -37,5 +39,17 @@ public class ProdutoController {
     public ResponseEntity<Void> deletarProduto(@PathVariable String cdProduto){
         produtoService.deletar(cdProduto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/v1/produto/{tpCategoria}")
+    public ResponseEntity<List<ProdutoResponseDto>> buscar(@PathVariable String tpCategoria) {
+        Optional<List<ProdutoResponseDto>> produtoResponseDto = produtoService.buscar(tpCategoria);
+        return produtoResponseDto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/v1/produto")
+    public ResponseEntity<List<ProdutoResponseDto>> buscar() {
+        Optional<List<ProdutoResponseDto>> produtoResponseDto = produtoService.buscar();
+        return produtoResponseDto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
