@@ -1,5 +1,6 @@
 package br.com.fiap.postechfastfood.infrastructure.web.api.controllers;
 
+import br.com.fiap.postechfastfood.domain.models.ProdutoModel;
 import br.com.fiap.postechfastfood.domain.ports.in.ProdutoServicePort;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoRequestDto;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoResponseDto;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -43,13 +44,30 @@ public class ProdutoController {
 
     @GetMapping("/v1/produto/{tpCategoria}")
     public ResponseEntity<List<ProdutoResponseDto>> buscar(@PathVariable String tpCategoria) {
-        Optional<List<ProdutoResponseDto>> produtoResponseDto = produtoService.buscar(tpCategoria);
-        return produtoResponseDto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        List<ProdutoModel> produtoResponse = produtoService.buscar(tpCategoria);
+
+        if (produtoResponse.isEmpty()) { return ResponseEntity.notFound().build(); }
+
+        var produtoResponseDto = mapeiaModelParaDTO(produtoResponse);
+        return ResponseEntity.ok(produtoResponseDto);
     }
 
     @GetMapping("/v1/produto")
     public ResponseEntity<List<ProdutoResponseDto>> buscar() {
-        Optional<List<ProdutoResponseDto>> produtoResponseDto = produtoService.buscar();
-        return produtoResponseDto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        List<ProdutoModel> produtoResponse = produtoService.buscar();
+
+        if (produtoResponse.isEmpty()) { return ResponseEntity.notFound().build(); }
+
+        var produtoResponseDto = mapeiaModelParaDTO(produtoResponse);
+        return ResponseEntity.ok(produtoResponseDto);
+    }
+
+    private ProdutoResponseDto toResponse(ProdutoModel produtoModel) {
+        return new ProdutoResponseDto(produtoModel);
+    }
+
+    private List<ProdutoResponseDto> mapeiaModelParaDTO(List<ProdutoModel> produtosModel) {
+        return produtosModel.stream().map(this::toResponse).collect(Collectors.toList());
     }
 }
+

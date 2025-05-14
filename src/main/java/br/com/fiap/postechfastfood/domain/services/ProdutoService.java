@@ -7,8 +7,8 @@ import br.com.fiap.postechfastfood.domain.ports.out.ProdutoRepositoryPort;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoRequestDto;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoResponseDto;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.UUID;
 
 public class ProdutoService implements ProdutoServicePort {
 
@@ -45,23 +45,15 @@ public class ProdutoService implements ProdutoServicePort {
     }
 
     @Override
-    public Optional<List<ProdutoResponseDto>> buscar() {
-        var model = produtoRepository.buscar();
-        return model.map(it ->
-                it.stream()
-                        .map(this::toResponse)
-                        .collect(Collectors.toList()));
-    }
+    public List<ProdutoModel> buscar() {
+        return produtoRepository.buscar();
+      }
 
     @Override
-    public Optional<List<ProdutoResponseDto>> buscar(String tpCategoria) {
+    public List<ProdutoModel> buscar(String tpCategoria) {
         var enumTpCategoria = converteTipoProdutoCategortiaEnum(tpCategoria);
 
-        var model = produtoRepository.buscar(enumTpCategoria);
-        return model.map(it ->
-                        it.stream()
-                        .map(this::toResponse)
-                        .collect(Collectors.toList()));
+        return produtoRepository.buscar(enumTpCategoria);
     }
 
     private ProdutoResponseDto toResponse(ProdutoModel produtoModel) {

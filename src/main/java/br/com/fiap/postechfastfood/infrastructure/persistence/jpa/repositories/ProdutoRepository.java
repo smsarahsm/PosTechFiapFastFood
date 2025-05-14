@@ -49,21 +49,21 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
     }
 
     @Override
-    public Optional<List<ProdutoModel>> buscar() {
+    public List<ProdutoModel> buscar() {
         var jpql = "FROM ProdutoEntity";
         List<ProdutoEntity> produtosEntity = em.createQuery(jpql, ProdutoEntity.class)
                 .getResultList();
 
-        return Optional.of(produtosEntity.stream().map(ProdutoMapper::toModel).toList());
+        return produtosEntity.stream().map(ProdutoMapper::toModel).toList();
     }
 
     @Override
-    public Optional<List<ProdutoModel>> buscar(TipoCategoriaProdutoEnum tpCategoria) {
+    public List<ProdutoModel> buscar(TipoCategoriaProdutoEnum tpCategoria) {
         var jpql = "FROM ProdutoEntity WHERE tpCategoria = :tpCategoria";
         List<ProdutoEntity> produtosEntity = em.createQuery(jpql, ProdutoEntity.class)
                 .setParameter("tpCategoria", tpCategoria)
                 .getResultList();
 
-        return Optional.of(produtosEntity.stream().map(ProdutoMapper::toModel).toList());
+        return produtosEntity.stream().map(ProdutoMapper::toModel).toList();
     }
 }
