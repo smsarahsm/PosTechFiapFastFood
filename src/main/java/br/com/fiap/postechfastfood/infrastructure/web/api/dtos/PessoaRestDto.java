@@ -10,8 +10,8 @@ import org.hibernate.validator.constraints.br.CPF;
 
 public record PessoaRestDto(
         @Valid
-        @NotNull
-        @CPF
+        @NotNull(message = "O atributo cdDocPessoa é obrigatório.")
+        @CPF(message = "O CPF informado no atributo cdDocPessoa é inválido.")
         String cdDocPessoa,
         @Valid
         @NotNull(message = "O atributo nmPessoa é obrigatório.")
