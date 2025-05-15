@@ -1,11 +1,9 @@
 package br.com.fiap.postechfastfood.domain.services;
 
 import br.com.fiap.postechfastfood.domain.enums.TipoCategoriaProdutoEnum;
-import br.com.fiap.postechfastfood.domain.models.PessoaModel;
 import br.com.fiap.postechfastfood.domain.models.ProdutoModel;
 import br.com.fiap.postechfastfood.domain.ports.in.ProdutoServicePort;
 import br.com.fiap.postechfastfood.domain.ports.out.ProdutoRepositoryPort;
-import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.PessoaResponseDto;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoRequestDto;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoResponseDto;
 

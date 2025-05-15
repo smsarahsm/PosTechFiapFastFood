@@ -1,8 +1,6 @@
 package br.com.fiap.postechfastfood.infrastructure.web.api.controllers;
 
 import br.com.fiap.postechfastfood.domain.ports.in.ProdutoServicePort;
-import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.PessoaRequestDto;
-import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.PessoaResponseDto;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoRequestDto;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoResponseDto;
 import org.springframework.http.HttpStatus;
