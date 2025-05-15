@@ -1,0 +1,28 @@
+package br.com.fiap.postechfastfood.domain.ports.in;
+
+import br.com.fiap.postechfastfood.domain.enums.TipoCategoriaProdutoEnum;
+import br.com.fiap.postechfastfood.domain.models.ProdutoModel;
+import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoRequestDto;
+import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoResponseDto;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface ProdutoServicePort {
+
+    ProdutoResponseDto cadastrar(ProdutoRequestDto produto);
+    ProdutoResponseDto atualizar(String cdProduto, ProdutoRequestDto produto);
+    void deletar(String cdProduto);
+    //TODO: implementar métodos de busca na classe de dominio de produtos
+    Optional<List<ProdutoResponseDto>> buscar();
+    Optional<List<ProdutoResponseDto>> buscar(TipoCategoriaProdutoEnum tpCategoria);
+
+
+    /*
+    TODO:Será que não deveriamos utilizar dos models para expor as funções do nosso dominio?
+         obrigando assim, os adaptadores a mapearem suas requests para nosso dominio? (eu acho que sim)
+    ProdutoModel cadastrar(ProdutoModel produto);
+    ProdutoModel atualizar(String cdProduto, ProdutoModel produto);
+    ProdutoModel deletar(String cdProduto);
+*/
+}

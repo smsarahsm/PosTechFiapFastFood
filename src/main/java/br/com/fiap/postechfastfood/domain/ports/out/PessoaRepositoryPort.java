@@ -1,10 +1,9 @@
-package br.com.fiap.postechfastfood.domain.ports;
+package br.com.fiap.postechfastfood.domain.ports.out;
 
 import br.com.fiap.postechfastfood.domain.models.PessoaModel;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface PessoaRepositoryPort {
 

@@ -1,12 +1,11 @@
 package br.com.fiap.postechfastfood.domain.services;
 
 import br.com.fiap.postechfastfood.domain.models.PessoaModel;
-import br.com.fiap.postechfastfood.domain.ports.PessoaRepositoryPort;
+import br.com.fiap.postechfastfood.domain.ports.out.PessoaRepositoryPort;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.PessoaRequestDto;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.PessoaResponseDto;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class PessoaService {
