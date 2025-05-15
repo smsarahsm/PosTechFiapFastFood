@@ -48,14 +48,22 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
         em.remove(em.getReference(ProdutoEntity.class, cdProduto));
     }
 
-    //TODO: implementar métodos de acordo com o contrato da interface
     @Override
-    public Optional<List<ProdutoModel>> buscar() {
-        return Optional.empty();
+    public List<ProdutoModel> buscar() {
+        var jpql = "FROM ProdutoEntity";
+        List<ProdutoEntity> produtosEntity = em.createQuery(jpql, ProdutoEntity.class)
+                .getResultList();
+
+        return produtosEntity.stream().map(ProdutoMapper::toModel).toList();
     }
 
     @Override
-    public Optional<List<ProdutoModel>> buscar(TipoCategoriaProdutoEnum tpCategoria) {
-        return Optional.empty();
+    public List<ProdutoModel> buscar(TipoCategoriaProdutoEnum tpCategoria) {
+        var jpql = "FROM ProdutoEntity WHERE tpCategoria = :tpCategoria";
+        List<ProdutoEntity> produtosEntity = em.createQuery(jpql, ProdutoEntity.class)
+                .setParameter("tpCategoria", tpCategoria)
+                .getResultList();
+
+        return produtosEntity.stream().map(ProdutoMapper::toModel).toList();
     }
 }

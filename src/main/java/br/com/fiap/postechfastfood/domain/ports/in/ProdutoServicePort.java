@@ -1,6 +1,6 @@
 package br.com.fiap.postechfastfood.domain.ports.in;
 
-import br.com.fiap.postechfastfood.domain.enums.TipoCategoriaProdutoEnum;
+
 import br.com.fiap.postechfastfood.domain.models.ProdutoModel;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoRequestDto;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoResponseDto;
@@ -13,9 +13,8 @@ public interface ProdutoServicePort {
     ProdutoResponseDto cadastrar(ProdutoRequestDto produto);
     ProdutoResponseDto atualizar(String cdProduto, ProdutoRequestDto produto);
     void deletar(String cdProduto);
-    //TODO: implementar métodos de busca na classe de dominio de produtos
-    Optional<List<ProdutoResponseDto>> buscar();
-    Optional<List<ProdutoResponseDto>> buscar(TipoCategoriaProdutoEnum tpCategoria);
+    List<ProdutoModel> buscar();
+    List<ProdutoModel> buscar(String tpCategoria);
 
 
     /*

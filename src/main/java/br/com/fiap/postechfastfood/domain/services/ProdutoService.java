@@ -8,7 +8,6 @@ import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoRequestDto
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoResponseDto;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public class ProdutoService implements ProdutoServicePort {
@@ -46,16 +45,26 @@ public class ProdutoService implements ProdutoServicePort {
     }
 
     @Override
-    public Optional<List<ProdutoResponseDto>> buscar() {
-        return Optional.empty();
-    }
+    public List<ProdutoModel> buscar() {
+        return produtoRepository.buscar();
+      }
 
     @Override
-    public Optional<List<ProdutoResponseDto>> buscar(TipoCategoriaProdutoEnum tpCategoria) {
-        return Optional.empty();
+    public List<ProdutoModel> buscar(String tpCategoria) {
+        var enumTpCategoria = converteTipoProdutoCategortiaEnum(tpCategoria);
+
+        return produtoRepository.buscar(enumTpCategoria);
     }
 
     private ProdutoResponseDto toResponse(ProdutoModel produtoModel) {
         return new ProdutoResponseDto(produtoModel);
+    }
+
+    private TipoCategoriaProdutoEnum converteTipoProdutoCategortiaEnum(String tpCategoria) {
+        try{
+            return TipoCategoriaProdutoEnum.valueOf(tpCategoria.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Categoria não existente");
+        }
     }
 }
