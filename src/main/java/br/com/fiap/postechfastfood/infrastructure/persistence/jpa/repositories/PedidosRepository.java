@@ -30,7 +30,7 @@ public class PedidosRepository implements PedidosRepositoryPort {
         return PedidosMapper.toModel(pedidosEntity);
     }
 
-    @Override
+    // @Override
     @Transactional
     public Optional<PedidosModel> buscarPedidoPorId(UUID cdPedido) {
         PedidosEntity pedidosEntity = em.find(PedidosEntity.class, cdPedido);

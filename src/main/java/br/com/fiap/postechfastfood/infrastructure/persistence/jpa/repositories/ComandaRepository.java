@@ -25,15 +25,14 @@ public class ComandaRepository implements ComandaRepositoryPort {
 
     
 
-    @Override
-    public Optional<ComandaModel> buscarPorCdPedido(String cdPedido) {
-        ComandaEntity comandaEntity = em.find(ComandaEntity.class, cdPedido);
-            return Optional.ofNullable(comandaEntity).map(ComandaMapper::toModel);
-        }
+    public Optional<ComandaModel> buscarPorNrPedido(int nrPedido) {
+        ComandaEntity comandaEntity = em.find(ComandaEntity.class, nrPedido);
+        return Optional.ofNullable(comandaEntity).map(ComandaMapper::toModel);
+    }
     
         @Override
         public Optional<ComandaModel> buscarPedido(ComandaModel comandaModel) {
-            ComandaEntity comandaEntity = em.find(ComandaEntity.class, comandaModel.getCdPedido());
+            ComandaEntity comandaEntity = em.find(ComandaEntity.class, comandaModel.getNrPedido());
             return Optional.ofNullable(comandaEntity).map(ComandaMapper::toModel);
         }
     
@@ -44,6 +43,12 @@ public class ComandaRepository implements ComandaRepositoryPort {
         var jpql = "FROM ComandaEntity";
         List<ComandaEntity> comanda = em.createQuery(jpql, ComandaEntity.class).getResultList();
         return comanda.stream().map(ComandaMapper::toModel).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<ComandaModel> buscarPorCdPedido(String cdPedido) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buscarPorCdPedido'");
     }
 
     

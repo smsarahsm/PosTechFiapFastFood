@@ -2,6 +2,8 @@ package br.com.fiap.postechfastfood.infrastructure.web.api.controllers;
 
 import br.com.fiap.postechfastfood.domain.services.ComandaService;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ComandaResponseDto;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -16,9 +18,13 @@ public class ComandaController {
     }
 
 
-    @GetMapping("/v1/comanda/{cdComanda")
-    
-    public ComandaResponseDto toResponse(ComandaResponseDto dto) {
-        return new ComandaResponseDto(dto.cdPedido(), dto.stPedido());
+    @GetMapping("/v1/comanda/{nrPedido}")
+    public ResponseEntity<ComandaResponseDto> buscarPorNrPedido(@PathVariable String nrPedido) {
+        ComandaResponseDto comandaResponseDto = comandaService.buscarPorNrPedido(nrPedido);
+        if (comandaResponseDto != null) {
+            return ResponseEntity.ok(comandaResponseDto);
+        }
+        return ResponseEntity.notFound().build();
     }
 }
+

@@ -1,5 +1,6 @@
 package br.com.fiap.postechfastfood.domain.services;
 
+import br.com.fiap.postechfastfood.domain.enums.TipoProdutoStatusEnum;
 import br.com.fiap.postechfastfood.domain.models.ComandaModel;
 import br.com.fiap.postechfastfood.domain.ports.out.ComandaRepositoryPort;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ComandaResponseDto;
@@ -16,8 +17,8 @@ public class ComandaService {
     }
 
 
-    public ComandaResponseDto buscarPorCdPedido(String cdPedido) {
-        ComandaModel comandaModel = comandaRepository.buscarPorCdPedido(cdPedido).orElseThrow(() -> new IllegalArgumentException("Comanda não encontrada"));
+    public ComandaResponseDto buscarPorNrPedido(String nrPedido) {
+        ComandaModel comandaModel = comandaRepository.buscarPorCdPedido(nrPedido).orElseThrow(() -> new IllegalArgumentException("Comanda não encontrada"));
         return toResponse(comandaModel);
     }
 
