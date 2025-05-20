@@ -1,8 +1,8 @@
 package br.com.fiap.postechfastfood.infrastructure.persistence.jpa.repositories;
 
-import br.com.fiap.postechfastfood.domain.enums.TipoProdutoStatusEnum;
-import br.com.fiap.postechfastfood.domain.models.PedidosModel;
-import br.com.fiap.postechfastfood.domain.ports.PedidosRepositoryPort;
+import br.com.fiap.postechfastfood.domain.enums.TipoStatusPedidoEnum;
+import br.com.fiap.postechfastfood.domain.models.PedidoModel;
+import br.com.fiap.postechfastfood.domain.ports.out.PedidoRepositoryPort;
 import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities.PedidosEntity;
 import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.mappers.PedidosMapper;
 import jakarta.persistence.EntityManager;
@@ -17,14 +17,14 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Repository
-public class PedidosRepository implements PedidosRepositoryPort {
+public class PedidoRepository implements PedidoRepositoryPort {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
     @Transactional
-    public PedidosModel cadastrarPedido(PedidosModel pedidoModel) {
+    public PedidoModel cadastrarPedido(PedidoModel pedidoModel) {
         PedidosEntity pedidosEntity = PedidosMapper.toEntity(pedidoModel);
         em.merge(pedidosEntity);
         return PedidosMapper.toModel(pedidosEntity);
@@ -32,13 +32,13 @@ public class PedidosRepository implements PedidosRepositoryPort {
 
     // @Override
     @Transactional
-    public Optional<PedidosModel> buscarPedidoPorId(UUID cdPedido) {
+    public Optional<PedidoModel> buscarPedidoPorId(UUID cdPedido) {
         PedidosEntity pedidosEntity = em.find(PedidosEntity.class, cdPedido);
         return Optional.ofNullable(pedidosEntity).map(PedidosMapper::toModel);
     }
 
     @Override
-    public List<PedidosModel> listarTodosPedidos() {
+    public List<PedidoModel> listarTodosPedidos() {
         var jpql = "FROM PedidosEntity";
         List<PedidosEntity> pedidos = em.createQuery(jpql, PedidosEntity.class).getResultList();
         return pedidos.stream().map(PedidosMapper::toModel).collect(Collectors.toList());
@@ -71,7 +71,7 @@ public class PedidosRepository implements PedidosRepositoryPort {
 //    }
 
     @jakarta.transaction.Transactional
-    public PedidosModel atualizarStatusPedido(UUID cdPedido, TipoProdutoStatusEnum status) {
+    public PedidoModel atualizarStatusPedido(UUID cdPedido, TipoStatusPedidoEnum status) {
         PedidosEntity pedidosEntity = em.find(PedidosEntity.class, cdPedido);
         if (pedidosEntity == null) {
             throw new IllegalArgumentException("Pedido não encontrado");
@@ -85,7 +85,7 @@ public class PedidosRepository implements PedidosRepositoryPort {
     }
 
     @Override
-    public List<PedidosModel> buscarPedidosPorStatus(TipoProdutoStatusEnum status) {
+    public List<PedidoModel> buscarPedidosPorStatus(TipoStatusPedidoEnum status) {
         var jpql = "FROM PedidosEntity p WHERE p.txStatus = :status";
         List<PedidosEntity> pedidos = em.createQuery(jpql, PedidosEntity.class)
                 .setParameter("status", status)

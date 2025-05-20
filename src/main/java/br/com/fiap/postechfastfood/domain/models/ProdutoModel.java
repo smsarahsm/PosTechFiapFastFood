@@ -2,9 +2,11 @@ package br.com.fiap.postechfastfood.domain.models;
 
 import br.com.fiap.postechfastfood.domain.enums.TipoCategoriaProdutoEnum;
 
+import java.util.UUID;
+
 public class ProdutoModel {
 
-    private String cdProduto = "";
+    private UUID cdProduto;
     private String nmProduto;
     private String dsDescricao;
     private double vlPreco;
@@ -13,7 +15,7 @@ public class ProdutoModel {
     public ProdutoModel() {
     }
 
-    public ProdutoModel(String cdProduto, String nmProduto, String dsDescricao, double vlPreco, TipoCategoriaProdutoEnum tpCategoria) {
+    public ProdutoModel(UUID cdProduto, String nmProduto, String dsDescricao, double vlPreco, TipoCategoriaProdutoEnum tpCategoria) {
         this.cdProduto = cdProduto;
         this.nmProduto = nmProduto;
         this.dsDescricao = dsDescricao;
@@ -21,11 +23,11 @@ public class ProdutoModel {
         this.tpCategoria = tpCategoria;
     }
 
-    public String getCdProduto() {
+    public UUID getCdProduto() {
         return cdProduto;
     }
 
-    public void setCdProduto(String cdProduto) {
+    public void setCdProduto(UUID cdProduto) {
         this.cdProduto = cdProduto;
     }
 
@@ -61,14 +63,14 @@ public class ProdutoModel {
         this.tpCategoria = tpCategoria;
     }
 
-    public static class Builder{
-        private String cdProduto;
+    public static class Builder {
+        private UUID cdProduto;
         private String nmProduto;
         private String dsDescricao;
         private double vlPreco;
         private TipoCategoriaProdutoEnum tpCategoria;
 
-        public Builder setCdProduto(String cdProduto) {
+        public Builder setCdProduto(UUID cdProduto) {
             this.cdProduto = cdProduto;
             return this;
         }
@@ -93,6 +95,8 @@ public class ProdutoModel {
             return this;
         }
 
-        public ProdutoModel build() {return new ProdutoModel(cdProduto, nmProduto, dsDescricao, vlPreco, tpCategoria);}
+        public ProdutoModel build() {
+            return new ProdutoModel(cdProduto, nmProduto, dsDescricao, vlPreco, tpCategoria);
+        }
     }
 }

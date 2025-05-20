@@ -11,7 +11,7 @@ public record ProdutoRequestDto(//String cdProduto,
                                 double vlPreco,
                                 TipoCategoriaProdutoEnum tpCategoria) {
     public ProdutoRequestDto(ProdutoModel model){
-       this(/*model.getCdProduto(),*/ model.getNmProduto(), model.getDsDescricao(), model.getVlPreco(), model.getTpCategoria());
+       this(/*model.getProdutoModel(),*/ model.getNmProduto(), model.getDsDescricao(), model.getVlPreco(), model.getTpCategoria());
     }
 }
 

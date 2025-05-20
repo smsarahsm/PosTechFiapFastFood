@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,5 +29,7 @@ public class ProdutoEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "tp_categoria", nullable = false)
     private TipoCategoriaProdutoEnum tpCategoria;
+    @OneToMany(mappedBy = "produto")
+    private List<ProdutoPedidoEntity> lsProdutoPedido;
 
 }

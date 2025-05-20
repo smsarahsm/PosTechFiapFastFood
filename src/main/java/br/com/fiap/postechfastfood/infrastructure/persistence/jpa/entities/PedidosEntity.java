@@ -1,7 +1,7 @@
 package br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities;
 
 
-import br.com.fiap.postechfastfood.domain.enums.TipoProdutoStatusEnum;
+import br.com.fiap.postechfastfood.domain.enums.TipoStatusPedidoEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -31,7 +32,7 @@ public class PedidosEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tx_status", nullable = false)
-    private TipoProdutoStatusEnum txStatus;
+    private TipoStatusPedidoEnum txStatus;
 
     @Column(name = "nr_pedido", nullable = false)
     private int nrPedido;
@@ -41,5 +42,8 @@ public class PedidosEntity {
 
     @Column(name = "dh_ult_atualizacao", nullable = false)
     private LocalDateTime dhUltAtualizacao;
+
+    @OneToMany(mappedBy = "pedido")
+    private List<ProdutoPedidoEntity> lsProdutoPedido;
 
 }

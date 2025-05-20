@@ -13,12 +13,15 @@ import java.util.UUID;
 public class ProdutoService implements ProdutoServicePort {
 
     private final ProdutoRepositoryPort produtoRepository;
-    public ProdutoService(ProdutoRepositoryPort produtoRepository){this.produtoRepository = produtoRepository;}
+
+    public ProdutoService(ProdutoRepositoryPort produtoRepository) {
+        this.produtoRepository = produtoRepository;
+    }
 
     @Override
     public ProdutoResponseDto cadastrar(ProdutoRequestDto produto) {
         ProdutoModel model = new ProdutoModel.Builder()
-                .setCdProduto(UUID.randomUUID().toString())
+                .setCdProduto(UUID.randomUUID())
                 .setNmProduto(produto.nmProduto())
                 .setDsDescricao(produto.dsDescricao())
                 .setVlPreco(produto.vlPreco())
@@ -47,7 +50,7 @@ public class ProdutoService implements ProdutoServicePort {
     @Override
     public List<ProdutoModel> buscar() {
         return produtoRepository.buscar();
-      }
+    }
 
     @Override
     public List<ProdutoModel> buscar(String tpCategoria) {
@@ -61,7 +64,7 @@ public class ProdutoService implements ProdutoServicePort {
     }
 
     private TipoCategoriaProdutoEnum converteTipoProdutoCategortiaEnum(String tpCategoria) {
-        try{
+        try {
             return TipoCategoriaProdutoEnum.valueOf(tpCategoria.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Categoria não existente");
