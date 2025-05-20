@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,7 +19,7 @@ import lombok.Setter;
 public class ProdutoEntity {
     @Id
     @Column(name = "cd_produto", nullable = false, unique = true)
-    private String cdProduto;
+    private UUID cdProduto;
     @Column(name = "nm_produto", nullable = false)
     private String nmProduto;
     @Column(name = "ds_descricao", nullable = false)

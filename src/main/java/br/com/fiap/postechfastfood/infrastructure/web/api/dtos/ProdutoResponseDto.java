@@ -3,7 +3,9 @@ package br.com.fiap.postechfastfood.infrastructure.web.api.dtos;
 import br.com.fiap.postechfastfood.domain.enums.TipoCategoriaProdutoEnum;
 import br.com.fiap.postechfastfood.domain.models.ProdutoModel;
 
-public record ProdutoResponseDto(String cdProduto,
+import java.util.UUID;
+
+public record ProdutoResponseDto(UUID cdProduto,
                                  String nmProduto,
                                  String dsDescricao,
                                  double vlPreco,

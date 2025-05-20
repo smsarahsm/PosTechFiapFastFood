@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -29,7 +30,7 @@ public class ProdutoController {
     }
 
     @PutMapping("/v1/produto/{cdProduto}")
-    public ResponseEntity<ProdutoResponseDto> atualizarProduto(@PathVariable String cdProduto,
+    public ResponseEntity<ProdutoResponseDto> atualizarProduto(@PathVariable UUID cdProduto,
                                                                @RequestBody ProdutoRequestDto produtoRequestDto)
     {
         ProdutoResponseDto produtoResponseDto = produtoService.atualizar(cdProduto, produtoRequestDto);
@@ -37,7 +38,7 @@ public class ProdutoController {
     }
 
     @DeleteMapping("/v1/produto/{cdProduto}")
-    public ResponseEntity<Void> deletarProduto(@PathVariable String cdProduto){
+    public ResponseEntity<Void> deletarProduto(@PathVariable UUID cdProduto){
         produtoService.deletar(cdProduto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

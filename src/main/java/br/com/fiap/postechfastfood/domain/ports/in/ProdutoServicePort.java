@@ -7,12 +7,13 @@ import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoResponseDt
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface ProdutoServicePort {
 
     ProdutoResponseDto cadastrar(ProdutoRequestDto produto);
-    ProdutoResponseDto atualizar(String cdProduto, ProdutoRequestDto produto);
-    void deletar(String cdProduto);
+    ProdutoResponseDto atualizar(UUID cdProduto, ProdutoRequestDto produto);
+    void deletar(UUID cdProduto);
     List<ProdutoModel> buscar();
     List<ProdutoModel> buscar(String tpCategoria);
 

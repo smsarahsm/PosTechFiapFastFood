@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public class ProdutoRepository implements ProdutoRepositoryPort {
@@ -30,7 +31,7 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
 
     @Override
     @Transactional
-    public ProdutoModel atualizar(String cdProduto, ProdutoModel produto) {
+    public ProdutoModel atualizar(UUID cdProduto, ProdutoModel produto) {
         ProdutoEntity produtoEntity = ProdutoMapper.toEntity(produto);
         em.merge(produtoEntity);
 //        em.createQuery("UPDATE ProdutoEntity SET nmProduto= :nome, dsDescricao= :descricao, vlPreco= :preco, tpCategoria= :categoria WHERE cdProduto= :codigo")
@@ -44,7 +45,7 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
 
     @Override
     @Transactional
-    public void deletar(String cdProduto) {
+    public void deletar(UUID cdProduto) {
         em.remove(em.getReference(ProdutoEntity.class, cdProduto));
     }
 
