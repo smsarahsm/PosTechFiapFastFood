@@ -1,7 +1,7 @@
 package br.com.fiap.postechfastfood.infrastructure.web.api.dtos;
 
 import br.com.fiap.postechfastfood.domain.enums.TipoProdutoStatusEnum;
-import br.com.fiap.postechfastfood.domain.models.PedidosModel;
+import br.com.fiap.postechfastfood.domain.models.PedidoModel;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -17,7 +17,7 @@ public record PedidoRequestDto(
 )
 
     {
-        public PedidoRequestDto(PedidosModel model) {
+        public PedidoRequestDto(PedidoModel model) {
             this(model.getCd_pedido(),
                     model.getCd_doc_cliente(),
                     model.getCd_doc_funcionario(),

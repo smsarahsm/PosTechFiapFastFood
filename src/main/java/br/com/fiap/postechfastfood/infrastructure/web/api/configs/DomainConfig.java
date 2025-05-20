@@ -1,9 +1,8 @@
 package br.com.fiap.postechfastfood.infrastructure.web.api.configs;
 
-import br.com.fiap.postechfastfood.domain.ports.in.ProdutoServicePort;
 import br.com.fiap.postechfastfood.domain.ports.out.PessoaRepositoryPort;
 import br.com.fiap.postechfastfood.domain.ports.out.ProdutoRepositoryPort;
-import br.com.fiap.postechfastfood.domain.ports.PedidosRepositoryPort;
+import br.com.fiap.postechfastfood.domain.ports.PedidoRepositoryPort;
 import br.com.fiap.postechfastfood.domain.services.PedidoService;
 import br.com.fiap.postechfastfood.domain.services.PessoaService;
 import br.com.fiap.postechfastfood.domain.services.ProdutoService;
@@ -18,8 +17,8 @@ public class DomainConfig {
         return new PessoaService(pessoaRepository);
     }
     @Bean
-    public PedidoService pedidosService(PedidosRepositoryPort pedidosRepositoryPort) {
-        return new PedidoService(pedidosRepositoryPort);
+    public PedidoService pedidosService(PedidoRepositoryPort pedidoRepositoryPort) {
+        return new PedidoService(pedidoRepositoryPort);
     }
 
 

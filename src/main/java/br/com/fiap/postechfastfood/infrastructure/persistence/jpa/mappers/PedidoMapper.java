@@ -1,14 +1,12 @@
 package br.com.fiap.postechfastfood.infrastructure.persistence.jpa.mappers;
 
-import br.com.fiap.postechfastfood.domain.models.PedidosModel;
-import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities.PedidosEntity;
+import br.com.fiap.postechfastfood.domain.models.PedidoModel;
+import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities.PedidoEntity;
 
-import java.util.UUID;
+public class PedidoMapper {
 
-public class PedidosMapper {
-
-    public static PedidosEntity toEntity(PedidosModel model) {
-        PedidosEntity entity = new PedidosEntity();
+    public static PedidoEntity toEntity(PedidoModel model) {
+        PedidoEntity entity = new PedidoEntity();
         entity.setCdPedido(model.getCd_pedido());
         entity.setCdDocCliente(model.getCd_doc_cliente());
         entity.setCdDocFuncionario(model.getCd_doc_funcionario());
@@ -19,8 +17,8 @@ public class PedidosMapper {
         return entity;
     }
 
-    public static PedidosModel toModel(PedidosEntity entity) {
-        PedidosModel model = new PedidosModel();
+    public static PedidoModel toModel(PedidoEntity entity) {
+        PedidoModel model = new PedidoModel();
         model.setCd_pedido(entity.getCdPedido());
         model.setCd_doc_cliente(entity.getCdDocCliente());
         model.setCd_doc_funcionario(entity.getCdDocFuncionario());

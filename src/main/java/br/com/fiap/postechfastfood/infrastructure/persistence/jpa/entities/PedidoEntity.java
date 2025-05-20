@@ -17,7 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "tb_pedidos")
-public class PedidosEntity {
+public class PedidoEntity {
 
     @Id
     @Column(name = "cd_pedido", nullable = false, unique = true)

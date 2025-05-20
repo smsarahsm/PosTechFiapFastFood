@@ -3,33 +3,32 @@ package br.com.fiap.postechfastfood.infrastructure.web.api.controllers;
 import br.com.fiap.postechfastfood.domain.enums.TipoProdutoStatusEnum;
 import br.com.fiap.postechfastfood.domain.services.PedidoService;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.PedidoRequestDto;
-import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.PedidosResponseDto;
+import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.PedidoResponseDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.sql.Time;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/pedidos")
-public class PedidosController {
+public class PedidoController {
 
     private final PedidoService pedidoService;
 
-    public PedidosController(PedidoService pedidoService) {
+    public PedidoController(PedidoService pedidoService) {
         this.pedidoService = pedidoService;
     }
 
     @PostMapping
-    public ResponseEntity<PedidosResponseDto> cadastrar(@RequestBody PedidoRequestDto pedidoRequestDto) {
-        PedidosResponseDto pedido = pedidoService.cadastrar(pedidoRequestDto);
+    public ResponseEntity<PedidoResponseDto> cadastrar(@RequestBody PedidoRequestDto pedidoRequestDto) {
+        PedidoResponseDto pedido = pedidoService.cadastrar(pedidoRequestDto);
         return ResponseEntity.created(URI.create("/api/pedidos/" + pedido.cdPedido())).body(pedido);
     }
 
     @PutMapping("/{cdPedido}/status")
-    public ResponseEntity<PedidosResponseDto> atualizar(@PathVariable UUID cdPedido, @RequestBody PedidoRequestDto pedidoRequestDto) {
+    public ResponseEntity<PedidoResponseDto> atualizar(@PathVariable UUID cdPedido, @RequestBody PedidoRequestDto pedidoRequestDto) {
         var pedidoAtualizado = pedidoService.atualizar(cdPedido, pedidoRequestDto);
         return ResponseEntity.ok(pedidoAtualizado);
     }
@@ -42,7 +41,7 @@ public class PedidosController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PedidosResponseDto>> buscar() {
+    public ResponseEntity<List<PedidoResponseDto>> buscar() {
         var pedidos = pedidoService.buscar();
         if (pedidos.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -51,7 +50,7 @@ public class PedidosController {
     }
 
     @GetMapping("/status")
-    public ResponseEntity<List<PedidosResponseDto>> buscarPorStatus(@RequestParam TipoProdutoStatusEnum status) {
+    public ResponseEntity<List<PedidoResponseDto>> buscarPorStatus(@RequestParam TipoProdutoStatusEnum status) {
         var pedidos = pedidoService.buscarPorStatus(status);
         if (pedidos.isEmpty()) {
             return ResponseEntity.noContent().build();

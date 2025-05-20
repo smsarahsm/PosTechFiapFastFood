@@ -1,10 +1,10 @@
 package br.com.fiap.postechfastfood.infrastructure.persistence.jpa.repositories;
 
 import br.com.fiap.postechfastfood.domain.enums.TipoProdutoStatusEnum;
-import br.com.fiap.postechfastfood.domain.models.PedidosModel;
-import br.com.fiap.postechfastfood.domain.ports.PedidosRepositoryPort;
-import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities.PedidosEntity;
-import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.mappers.PedidosMapper;
+import br.com.fiap.postechfastfood.domain.models.PedidoModel;
+import br.com.fiap.postechfastfood.domain.ports.PedidoRepositoryPort;
+import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities.PedidoEntity;
+import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.mappers.PedidoMapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
@@ -17,37 +17,37 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Repository
-public class PedidosRepository implements PedidosRepositoryPort {
+public class PedidoRepository implements PedidoRepositoryPort {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
     @Transactional
-    public PedidosModel cadastrarPedido(PedidosModel pedidoModel) {
-        PedidosEntity pedidosEntity = PedidosMapper.toEntity(pedidoModel);
-        em.merge(pedidosEntity);
-        return PedidosMapper.toModel(pedidosEntity);
+    public PedidoModel cadastrarPedido(PedidoModel pedidoModel) {
+        PedidoEntity pedidoEntity = PedidoMapper.toEntity(pedidoModel);
+        em.merge(pedidoEntity);
+        return PedidoMapper.toModel(pedidoEntity);
     }
 
     // @Override
     @Transactional
-    public Optional<PedidosModel> buscarPedidoPorId(UUID cdPedido) {
-        PedidosEntity pedidosEntity = em.find(PedidosEntity.class, cdPedido);
-        return Optional.ofNullable(pedidosEntity).map(PedidosMapper::toModel);
+    public Optional<PedidoModel> buscarPedidoPorId(UUID cdPedido) {
+        PedidoEntity pedidoEntity = em.find(PedidoEntity.class, cdPedido);
+        return Optional.ofNullable(pedidoEntity).map(PedidoMapper::toModel);
     }
 
     @Override
-    public List<PedidosModel> listarTodosPedidos() {
+    public List<PedidoModel> listarTodosPedidos() {
         var jpql = "FROM PedidosEntity";
-        List<PedidosEntity> pedidos = em.createQuery(jpql, PedidosEntity.class).getResultList();
-        return pedidos.stream().map(PedidosMapper::toModel).collect(Collectors.toList());
+        List<PedidoEntity> pedidos = em.createQuery(jpql, PedidoEntity.class).getResultList();
+        return pedidos.stream().map(PedidoMapper::toModel).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public void removerPedido(UUID cdPedido) {
-        em.remove(em.getReference(PedidosEntity.class, cdPedido));
+        em.remove(em.getReference(PedidoEntity.class, cdPedido));
     }
 
 //    @Override
@@ -71,25 +71,25 @@ public class PedidosRepository implements PedidosRepositoryPort {
 //    }
 
     @jakarta.transaction.Transactional
-    public PedidosModel atualizarStatusPedido(UUID cdPedido, TipoProdutoStatusEnum status) {
-        PedidosEntity pedidosEntity = em.find(PedidosEntity.class, cdPedido);
-        if (pedidosEntity == null) {
+    public PedidoModel atualizarStatusPedido(UUID cdPedido, TipoProdutoStatusEnum status) {
+        PedidoEntity pedidoEntity = em.find(PedidoEntity.class, cdPedido);
+        if (pedidoEntity == null) {
             throw new IllegalArgumentException("Pedido não encontrado");
         }
 
-        pedidosEntity.setTxStatus(status);
-        pedidosEntity.setDhUltAtualizacao(LocalDateTime.now());
-        em.merge(pedidosEntity);
+        pedidoEntity.setTxStatus(status);
+        pedidoEntity.setDhUltAtualizacao(LocalDateTime.now());
+        em.merge(pedidoEntity);
 
-        return PedidosMapper.toModel(pedidosEntity);
+        return PedidoMapper.toModel(pedidoEntity);
     }
 
     @Override
-    public List<PedidosModel> buscarPedidosPorStatus(TipoProdutoStatusEnum status) {
+    public List<PedidoModel> buscarPedidosPorStatus(TipoProdutoStatusEnum status) {
         var jpql = "FROM PedidosEntity p WHERE p.txStatus = :status";
-        List<PedidosEntity> pedidos = em.createQuery(jpql, PedidosEntity.class)
+        List<PedidoEntity> pedidos = em.createQuery(jpql, PedidoEntity.class)
                 .setParameter("status", status)
                 .getResultList();
-        return pedidos.stream().map(PedidosMapper::toModel).collect(Collectors.toList());
+        return pedidos.stream().map(PedidoMapper::toModel).collect(Collectors.toList());
     }
 }
