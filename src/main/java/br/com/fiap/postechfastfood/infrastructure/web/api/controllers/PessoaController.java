@@ -28,12 +28,6 @@ public class PessoaController {
     @PostMapping("/v1/pessoa")
     public ResponseEntity<?> cadastrarPessoa(@Valid @RequestBody PessoaRestDto pessoaRequestDto) {
 
-        Optional<PessoaModel> pessoaEncontrada = pessoaService.buscarPorCdDocPessoa(pessoaRequestDto.cdDocPessoa());
-        if (pessoaEncontrada.isPresent()) {
-            Map<String,String> error = new HashMap<>();
-            error.put("error", "Cliente já cadastrado com o CPF informado");
-            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-        }
         PessoaResponseDto pessoaResponseDto = toResponseDto(pessoaService.cadastrarPessoa(toModel(pessoaRequestDto)));
         return ResponseEntity.created(URI.create("/api/v1/pessoa/" + pessoaResponseDto.cdDocPessoa()))
                 .body(pessoaResponseDto);
