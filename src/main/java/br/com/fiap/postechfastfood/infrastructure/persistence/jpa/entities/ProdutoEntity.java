@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -30,4 +31,14 @@ public class ProdutoEntity {
     @Column(name = "tp_categoria", nullable = false)
     private TipoCategoriaProdutoEnum tpCategoria;
 
+    @Override
+    public String toString() {
+        return "ProdutoEntity{" +
+                "cdProduto=" + cdProduto +
+                ", nmProduto='" + nmProduto + '\'' +
+                ", dsDescricao='" + dsDescricao + '\'' +
+                ", vlPreco=" + vlPreco +
+                ", tpCategoria=" + tpCategoria +
+                '}';
+    }
 }

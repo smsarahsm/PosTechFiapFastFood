@@ -3,123 +3,166 @@ package br.com.fiap.postechfastfood.domain.models;
 import br.com.fiap.postechfastfood.domain.enums.TipoProdutoStatusEnum;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public class PedidoModel {
 
-    private  UUID cd_pedido;
-    private  String cd_doc_cliente;
-    private String cd_doc_funcionario;
-    private TipoProdutoStatusEnum tx_status;
-    private int nr_pedido;
-    private LocalDateTime dh_criacao_pedido;
-    private LocalDateTime dh_ult_atualizacao;
+    private UUID cdPedido;
+    private String cdDocCliente;
+    private String cdDocFuncionario;
+    private TipoProdutoStatusEnum txStatus;
+    private int nrPedido;
+    private LocalDateTime dhCriacaoPedido;
+    private LocalDateTime dhUltAtualizacao;
+    private List<ItensPedidoModel> itens;
 
-    public PedidoModel() {}
-
-    public PedidoModel(UUID cd_pedido, String cd_doc_cliente, String cd_doc_funcionario, TipoProdutoStatusEnum tx_status, int nr_pedido, LocalDateTime dh_criacao_pedido, LocalDateTime dh_ult_atualizacao) {
-        this.cd_pedido = cd_pedido;
-        this.cd_doc_cliente = cd_doc_cliente;
-        this.cd_doc_funcionario = cd_doc_funcionario;
-        this.tx_status = tx_status;
-        this.nr_pedido = nr_pedido;
-        this.dh_criacao_pedido = dh_criacao_pedido;
-        this.dh_ult_atualizacao = dh_ult_atualizacao;
+    public PedidoModel() {
     }
 
-    public UUID getCd_pedido() {
-        return cd_pedido;
-    }
-    public void setCd_pedido(UUID cd_pedido) {
-        this.cd_pedido = cd_pedido;
+    public PedidoModel(UUID cdPedido, String cdDocCliente, String cdDocFuncionario, TipoProdutoStatusEnum txStatus, int nrPedido, LocalDateTime dhCriacaoPedido, LocalDateTime dhUltAtualizacao, List<ItensPedidoModel> itens) {
+        this.cdPedido = cdPedido;
+        this.cdDocCliente = cdDocCliente;
+        this.cdDocFuncionario = cdDocFuncionario;
+        this.txStatus = txStatus;
+        this.nrPedido = nrPedido;
+        this.dhCriacaoPedido = dhCriacaoPedido;
+        this.dhUltAtualizacao = dhUltAtualizacao;
+        this.itens = itens;
     }
 
-    public String getCd_doc_cliente() {
-        return cd_doc_cliente;
+    public UUID getCdPedido() {
+        return cdPedido;
     }
-    public void setCd_doc_cliente(String cd_doc_cliente) {
-        this.cd_doc_cliente = cd_doc_cliente;
+
+    public void setCdPedido(UUID cdPedido) {
+        this.cdPedido = cdPedido;
     }
-    public String getCd_doc_funcionario() {
-        return cd_doc_funcionario;
+
+    public String getCdDocCliente() {
+        return cdDocCliente;
     }
-    public void setCd_doc_funcionario(String cd_doc_funcionario) {
-        this.cd_doc_funcionario = cd_doc_funcionario;
+
+    public void setCdDocCliente(String cdDocCliente) {
+        this.cdDocCliente = cdDocCliente;
     }
-    public TipoProdutoStatusEnum getTx_status() {
-        return tx_status;
+
+    public String getCdDocFuncionario() {
+        return cdDocFuncionario;
     }
-    public void setTx_status(TipoProdutoStatusEnum tx_status) {
-        this.tx_status = tx_status;
+
+    public void setCdDocFuncionario(String cdDocFuncionario) {
+        this.cdDocFuncionario = cdDocFuncionario;
     }
-    public int getNr_pedido() {
-        return nr_pedido;
+
+    public TipoProdutoStatusEnum getTxStatus() {
+        return txStatus;
     }
-    public void setNr_pedido(int nr_pedido) {
-        this.nr_pedido = nr_pedido;
+
+    public void setTxStatus(TipoProdutoStatusEnum txStatus) {
+        this.txStatus = txStatus;
     }
-    public LocalDateTime getDh_criacao_pedido() {
-        return dh_criacao_pedido;
+
+    public int getNrPedido() {
+        return nrPedido;
     }
-    public void setDh_criacao_pedido(LocalDateTime dh_criacao_pedido) {
-        this.dh_criacao_pedido = dh_criacao_pedido;
+
+    public void setNrPedido(int nrPedido) {
+        this.nrPedido = nrPedido;
     }
-    public LocalDateTime getDh_ult_atualizacao() {
-        return dh_ult_atualizacao;
+
+    public LocalDateTime getDhCriacaoPedido() {
+        return dhCriacaoPedido;
     }
-    public void setDh_ult_atualizacao(LocalDateTime dh_ult_atualizacao) {
-        this.dh_ult_atualizacao = dh_ult_atualizacao;
+
+    public void setDhCriacaoPedido(LocalDateTime dhCriacaoPedido) {
+        this.dhCriacaoPedido = dhCriacaoPedido;
+    }
+
+    public LocalDateTime getDhUltAtualizacao() {
+        return dhUltAtualizacao;
+    }
+
+    public void setDhUltAtualizacao(LocalDateTime dhUltAtualizacao) {
+        this.dhUltAtualizacao = dhUltAtualizacao;
+    }
+
+    public List<ItensPedidoModel> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<ItensPedidoModel> itens) {
+        this.itens = itens;
     }
 
     public static class Builder {
-        private UUID cd_pedido;
-        private String cd_doc_cliente;
-        private String cd_doc_funcionario;
-        private TipoProdutoStatusEnum tx_status;
-        private int nr_pedido;
-        private LocalDateTime dh_criacao_pedido;
-        private LocalDateTime dh_ult_atualizacao;
+        private UUID cdPedido;
+        private String cdDocCliente;
+        private String cdDocFuncionario;
+        private TipoProdutoStatusEnum txStatus;
+        private int nrPedido;
+        private LocalDateTime dhCriacaoPedido;
+        private LocalDateTime dhUltAtualizacao;
+        private List<ItensPedidoModel> itens;
 
-        public Builder setCd_pedido(UUID cd_pedido) {
-            this.cd_pedido = cd_pedido;
+        public Builder setCdPedido(UUID cdPedido) {
+            this.cdPedido = cdPedido;
             return this;
         }
 
-        public Builder setCd_doc_cliente(String cd_doc_cliente) {
-            this.cd_doc_cliente = cd_doc_cliente;
+        public Builder setCdDocCliente(String cdDocCliente) {
+            this.cdDocCliente = cdDocCliente;
             return this;
         }
 
-        public Builder setCd_doc_funcionario(String cd_doc_funcionario) {
-            this.cd_doc_funcionario = cd_doc_funcionario;
+        public Builder setCdDocFuncionario(String cdDocFuncionario) {
+            this.cdDocFuncionario = cdDocFuncionario;
             return this;
         }
 
-        public Builder setTx_status(TipoProdutoStatusEnum tx_status) {
-            this.tx_status = tx_status;
+        public Builder setTxStatus(TipoProdutoStatusEnum txStatus) {
+            this.txStatus = txStatus;
             return this;
         }
 
-        public Builder setNr_pedido(int nr_pedido) {
-            this.nr_pedido = nr_pedido;
+        public Builder setNrPedido(int nrPedido) {
+            this.nrPedido = nrPedido;
             return this;
         }
 
-        public Builder setDh_criacao_pedido(LocalDateTime dh_criacao_pedido) {
-            this.dh_criacao_pedido = dh_criacao_pedido;
+        public Builder setDhCriacaoPedido(LocalDateTime dhCriacaoPedido) {
+            this.dhCriacaoPedido = dhCriacaoPedido;
             return this;
         }
 
-        public Builder setDh_ult_atualizacao(LocalDateTime dh_ult_atualizacao) {
-            this.dh_ult_atualizacao = dh_ult_atualizacao;
+        public Builder setDhUltAtualizacao(LocalDateTime dhUltAtualizacao) {
+            this.dhUltAtualizacao = dhUltAtualizacao;
+            return this;
+        }
+
+        public Builder setItens(List<ItensPedidoModel> itens){
+            this.itens = itens;
             return this;
         }
 
         public PedidoModel build() {
-            return new PedidoModel(cd_pedido, cd_doc_cliente, cd_doc_funcionario, tx_status, nr_pedido, dh_criacao_pedido, dh_ult_atualizacao);
+            return new PedidoModel(cdPedido, cdDocCliente, cdDocFuncionario, txStatus, nrPedido, dhCriacaoPedido, dhUltAtualizacao, itens);
         }
     }
 
+    @Override
+    public String toString() {
+        return "PedidoModel{" +
+                "cdPedido=" + cdPedido +
+                ", cdDocCliente='" + cdDocCliente + '\'' +
+                ", cdDocFuncionario='" + cdDocFuncionario + '\'' +
+                ", txStatus=" + txStatus +
+                ", nrPedido=" + nrPedido +
+                ", dhCriacaoPedido=" + dhCriacaoPedido +
+                ", dhUltAtualizacao=" + dhUltAtualizacao +
+                ", itens=" + itens +
+                '}';
+    }
 }
 
 

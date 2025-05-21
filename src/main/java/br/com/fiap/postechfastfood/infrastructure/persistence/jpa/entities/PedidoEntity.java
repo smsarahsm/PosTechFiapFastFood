@@ -2,6 +2,7 @@ package br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities;
 
 
 import br.com.fiap.postechfastfood.domain.enums.TipoProdutoStatusEnum;
+import br.com.fiap.postechfastfood.domain.models.ProdutoModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -42,4 +44,16 @@ public class PedidoEntity {
     @Column(name = "dh_ult_atualizacao", nullable = false)
     private LocalDateTime dhUltAtualizacao;
 
+    @Override
+    public String toString() {
+        return "PedidoEntity{" +
+                "cdPedido=" + cdPedido +
+                ", cdDocCliente='" + cdDocCliente + '\'' +
+                ", cdDocFuncionario='" + cdDocFuncionario + '\'' +
+                ", txStatus=" + txStatus +
+                ", nrPedido=" + nrPedido +
+                ", dhCriacaoPedido=" + dhCriacaoPedido +
+                ", dhUltAtualizacao=" + dhUltAtualizacao +
+                '}';
+    }
 }

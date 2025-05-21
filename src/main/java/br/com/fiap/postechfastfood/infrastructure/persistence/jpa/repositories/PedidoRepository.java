@@ -2,9 +2,12 @@ package br.com.fiap.postechfastfood.infrastructure.persistence.jpa.repositories;
 
 import br.com.fiap.postechfastfood.domain.enums.TipoProdutoStatusEnum;
 import br.com.fiap.postechfastfood.domain.models.PedidoModel;
-import br.com.fiap.postechfastfood.domain.ports.PedidoRepositoryPort;
+import br.com.fiap.postechfastfood.domain.models.ProdutosPedidoModel;
+import br.com.fiap.postechfastfood.domain.ports.out.PedidoRepositoryPort;
+import br.com.fiap.postechfastfood.infrastructure.commons.mappers.ProdutosPedidoMapper;
 import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities.PedidoEntity;
-import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.mappers.PedidoMapper;
+import br.com.fiap.postechfastfood.infrastructure.commons.mappers.PedidoMapper;
+import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities.ProdutosPedidoEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
@@ -25,23 +28,23 @@ public class PedidoRepository implements PedidoRepositoryPort {
     @Override
     @Transactional
     public PedidoModel cadastrarPedido(PedidoModel pedidoModel) {
-        PedidoEntity pedidoEntity = PedidoMapper.toEntity(pedidoModel);
+        PedidoEntity pedidoEntity = PedidoMapper.modelToEntity(pedidoModel);
         em.merge(pedidoEntity);
-        return PedidoMapper.toModel(pedidoEntity);
+        return PedidoMapper.entityToModel(pedidoEntity);
     }
 
     // @Override
     @Transactional
     public Optional<PedidoModel> buscarPedidoPorId(UUID cdPedido) {
         PedidoEntity pedidoEntity = em.find(PedidoEntity.class, cdPedido);
-        return Optional.ofNullable(pedidoEntity).map(PedidoMapper::toModel);
+        return Optional.ofNullable(pedidoEntity).map(PedidoMapper::entityToModel);
     }
 
     @Override
     public List<PedidoModel> listarTodosPedidos() {
         var jpql = "FROM PedidosEntity";
         List<PedidoEntity> pedidos = em.createQuery(jpql, PedidoEntity.class).getResultList();
-        return pedidos.stream().map(PedidoMapper::toModel).collect(Collectors.toList());
+        return pedidos.stream().map(PedidoMapper::entityToModel).collect(Collectors.toList());
     }
 
     @Override
@@ -67,7 +70,7 @@ public class PedidoRepository implements PedidoRepositoryPort {
 //        em.merge(pedidosEntity);
 //
 //        // Retorna o modelo atualizado
-//        return PedidosMapper.toModel(pedidosEntity);
+//        return PedidosMapper.EntityToModel(pedidosEntity);
 //    }
 
     @jakarta.transaction.Transactional
@@ -81,7 +84,7 @@ public class PedidoRepository implements PedidoRepositoryPort {
         pedidoEntity.setDhUltAtualizacao(LocalDateTime.now());
         em.merge(pedidoEntity);
 
-        return PedidoMapper.toModel(pedidoEntity);
+        return PedidoMapper.entityToModel(pedidoEntity);
     }
 
     @Override
@@ -90,6 +93,15 @@ public class PedidoRepository implements PedidoRepositoryPort {
         List<PedidoEntity> pedidos = em.createQuery(jpql, PedidoEntity.class)
                 .setParameter("status", status)
                 .getResultList();
-        return pedidos.stream().map(PedidoMapper::toModel).collect(Collectors.toList());
+        return pedidos.stream().map(PedidoMapper::entityToModel).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public ProdutosPedidoModel cadastrarProdutosPedido(ProdutosPedidoModel produtosPedidoModel) {
+        ProdutosPedidoEntity entity = ProdutosPedidoMapper.modelToEntity(produtosPedidoModel);
+        System.out.println("entity: " + entity);
+        em.merge(entity);
+        return ProdutosPedidoMapper.entityToModel(entity);
     }
 }

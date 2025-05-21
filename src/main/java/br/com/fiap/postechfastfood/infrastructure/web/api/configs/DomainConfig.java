@@ -2,7 +2,7 @@ package br.com.fiap.postechfastfood.infrastructure.web.api.configs;
 
 import br.com.fiap.postechfastfood.domain.ports.out.PessoaRepositoryPort;
 import br.com.fiap.postechfastfood.domain.ports.out.ProdutoRepositoryPort;
-import br.com.fiap.postechfastfood.domain.ports.PedidoRepositoryPort;
+import br.com.fiap.postechfastfood.domain.ports.out.PedidoRepositoryPort;
 import br.com.fiap.postechfastfood.domain.services.PedidoService;
 import br.com.fiap.postechfastfood.domain.services.PessoaService;
 import br.com.fiap.postechfastfood.domain.services.ProdutoService;

@@ -1,31 +1,17 @@
 package br.com.fiap.postechfastfood.domain.models;
 
-import br.com.fiap.postechfastfood.domain.enums.TipoCategoriaProdutoEnum;
-
-import java.util.List;
 import java.util.UUID;
 
-//TODO Não Utilizar
-public class ProdutosPedidoModel {
-    private PedidoModel pedido;
+public class ItensPedidoModel {
     private ProdutoModel produto;
     private int vlQuantidade;
 
-    public ProdutosPedidoModel() {
+    public ItensPedidoModel() {
     }
 
-    public ProdutosPedidoModel(PedidoModel pedido, ProdutoModel produto, int vlQuantidade) {
-        this.pedido = pedido;
+    public ItensPedidoModel(ProdutoModel produto, int vlQuantidade) {
         this.produto = produto;
         this.vlQuantidade = vlQuantidade;
-    }
-
-    public PedidoModel getPedido() {
-        return pedido;
-    }
-
-    public void setPedido(PedidoModel pedido) {
-        this.pedido = pedido;
     }
 
     public ProdutoModel getProduto() {
@@ -44,17 +30,12 @@ public class ProdutosPedidoModel {
         this.vlQuantidade = vlQuantidade;
     }
 
+
     public static class Builder {
-        private PedidoModel pedido;
         private ProdutoModel produto;
         private int vlQuantidade;
 
-        public Builder setPedido(PedidoModel pedido) {
-            this.pedido = pedido;
-            return this;
-        }
-
-        public Builder setProduto(ProdutoModel produto) {
+        public Builder setCdProduto(ProdutoModel produto) {
             this.produto = produto;
             return this;
         }
@@ -64,8 +45,16 @@ public class ProdutosPedidoModel {
             return this;
         }
 
-        public ProdutosPedidoModel build() {
-            return new ProdutosPedidoModel(pedido, produto, vlQuantidade);
+        public ItensPedidoModel build() {
+            return new ItensPedidoModel(produto, vlQuantidade);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "ItensPedidoModel{" +
+                "produto=" + produto +
+                ", vlQuantidade=" + vlQuantidade +
+                '}';
     }
 }

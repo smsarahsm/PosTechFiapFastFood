@@ -3,16 +3,14 @@ package br.com.fiap.postechfastfood.infrastructure.persistence.jpa.repositories;
 import br.com.fiap.postechfastfood.domain.enums.TipoCategoriaProdutoEnum;
 import br.com.fiap.postechfastfood.domain.models.ProdutoModel;
 import br.com.fiap.postechfastfood.domain.ports.out.ProdutoRepositoryPort;
-import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities.PessoaEntity;
 import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities.ProdutoEntity;
-import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.mappers.ProdutoMapper;
+import br.com.fiap.postechfastfood.infrastructure.commons.mappers.ProdutoMapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository
