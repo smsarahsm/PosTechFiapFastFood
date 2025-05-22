@@ -2,12 +2,15 @@ package br.com.fiap.postechfastfood.infrastructure.commons.mappers;
 
 import br.com.fiap.postechfastfood.domain.models.ItensPedidoModel;
 import br.com.fiap.postechfastfood.domain.models.PedidoModel;
+import br.com.fiap.postechfastfood.domain.models.ProdutoModel;
 import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities.PedidoEntity;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.PedidoRequestDto;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.PedidoResponseDto;
+import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoResponseDto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PedidoMapper {
 
@@ -32,6 +35,13 @@ public class PedidoMapper {
         model.setNrPedido(entity.getNrPedido());
         model.setDhCriacaoPedido(entity.getDhCriacaoPedido());
         model.setDhUltAtualizacao(entity.getDhUltAtualizacao());
+        if (entity.getProdutosPedidoEntities() != null && !entity.getProdutosPedidoEntities().isEmpty()){
+            model.setItens(
+                    entity.getProdutosPedidoEntities().stream()
+                    .map(m -> new ItensPedidoModel(ProdutoMapper.toModel(m.getProduto()), m.getVlQuantidadeProduto()))
+                    .toList()
+            );
+        }
         return model;
     }
 
@@ -45,14 +55,19 @@ public class PedidoMapper {
         model.setDhCriacaoPedido(req.dhCriacaoPedido());
         model.setDhUltAtualizacao(req.dhUltAtualizacao());
         List<ItensPedidoModel> itensPedidoModels = new ArrayList<>();
-        req.itens().forEach(itensPedidoModels::add);
-        model.setItens(itensPedidoModels);
-        System.out.println(model.toString());
+        if (req.itens() != null && !req.itens().isEmpty()){
+            req.itens().forEach(itensPedidoModels::add);
+            model.setItens(itensPedidoModels);
+        }
         return model;
     }
 
     public static PedidoResponseDto modelToResponse (PedidoModel model) {
         PedidoResponseDto responseDto = new PedidoResponseDto(model);
         return responseDto;
+    }
+
+    public static List<PedidoResponseDto> modelToListResponse(List<PedidoModel> pedidoModels) {
+        return pedidoModels.stream().map(PedidoMapper::modelToResponse).collect(Collectors.toList());
     }
 }

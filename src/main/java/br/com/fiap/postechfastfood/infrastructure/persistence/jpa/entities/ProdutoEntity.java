@@ -30,6 +30,8 @@ public class ProdutoEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "tp_categoria", nullable = false)
     private TipoCategoriaProdutoEnum tpCategoria;
+    @OneToMany(mappedBy = "produto", fetch = FetchType.EAGER)
+    private List<ProdutosPedidoEntity> produtosPedidoEntities;
 
     @Override
     public String toString() {

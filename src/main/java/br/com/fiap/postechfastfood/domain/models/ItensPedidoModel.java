@@ -1,7 +1,5 @@
 package br.com.fiap.postechfastfood.domain.models;
 
-import java.util.UUID;
-
 public class ItensPedidoModel {
     private ProdutoModel produto;
     private int vlQuantidade;

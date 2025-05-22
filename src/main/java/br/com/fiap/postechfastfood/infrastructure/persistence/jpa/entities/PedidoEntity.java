@@ -44,6 +44,9 @@ public class PedidoEntity {
     @Column(name = "dh_ult_atualizacao", nullable = false)
     private LocalDateTime dhUltAtualizacao;
 
+    @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER)
+    private List<ProdutosPedidoEntity> produtosPedidoEntities;
+
     @Override
     public String toString() {
         return "PedidoEntity{" +
