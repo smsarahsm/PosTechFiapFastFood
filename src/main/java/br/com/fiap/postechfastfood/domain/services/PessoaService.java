@@ -3,6 +3,7 @@ package br.com.fiap.postechfastfood.domain.services;
 import br.com.fiap.postechfastfood.domain.models.PessoaModel;
 import br.com.fiap.postechfastfood.domain.ports.in.PessoaServicePort;
 import br.com.fiap.postechfastfood.domain.ports.out.PessoaRepositoryPort;
+import br.com.fiap.postechfastfood.infrastructure.web.api.exceptions.CpfCadastradoException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,10 @@ public class PessoaService implements PessoaServicePort {
     }
 
     public PessoaModel cadastrarPessoa(PessoaModel model) {
+        PessoaModel pessoaEncontrada = buscarPorCdDocPessoa(model.getCdDocPessoa()).orElse(null);
+        if (pessoaEncontrada != null) {
+            throw new CpfCadastradoException("Cliente já cadastrado com o CPF informado");
+        }
         return pessoaRepository.cadastrarPessoa(model);
     }
 
