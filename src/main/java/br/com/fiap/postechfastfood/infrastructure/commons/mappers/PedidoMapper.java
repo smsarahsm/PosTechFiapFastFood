@@ -2,11 +2,9 @@ package br.com.fiap.postechfastfood.infrastructure.commons.mappers;
 
 import br.com.fiap.postechfastfood.domain.models.ItensPedidoModel;
 import br.com.fiap.postechfastfood.domain.models.PedidoModel;
-import br.com.fiap.postechfastfood.domain.models.ProdutoModel;
 import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities.PedidoEntity;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.PedidoRequestDto;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.PedidoResponseDto;
-import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoResponseDto;
 
 import java.util.ArrayList;
 import java.util.List;

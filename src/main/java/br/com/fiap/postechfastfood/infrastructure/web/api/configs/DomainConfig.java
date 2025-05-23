@@ -21,7 +21,6 @@ public class DomainConfig {
         return new PedidoService(pedidoRepositoryPort);
     }
 
-
     @Bean
     public ProdutoService produtoService(ProdutoRepositoryPort produtoRepository) {
         return new ProdutoService(produtoRepository);

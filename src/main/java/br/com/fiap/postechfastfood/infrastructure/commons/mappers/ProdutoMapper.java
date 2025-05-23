@@ -33,7 +33,7 @@ public class ProdutoMapper {
         return new ProdutoResponseDto(produtoModel);
     }
 
-    public static List<ProdutoResponseDto> mapeiaModelParaDTO(List<ProdutoModel> produtosModel) {
+    public static List<ProdutoResponseDto> modelToListResponse(List<ProdutoModel> produtosModel) {
         return produtosModel.stream().map(ProdutoMapper::toResponse).collect(Collectors.toList());
     }
 }
