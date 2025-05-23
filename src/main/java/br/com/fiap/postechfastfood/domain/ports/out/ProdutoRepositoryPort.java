@@ -4,11 +4,12 @@ import br.com.fiap.postechfastfood.domain.enums.TipoCategoriaProdutoEnum;
 import br.com.fiap.postechfastfood.domain.models.ProdutoModel;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ProdutoRepositoryPort {
     ProdutoModel cadastrar(ProdutoModel produto);
-    ProdutoModel atualizar(String cdProduto, ProdutoModel produto);
-    void deletar(String cdProduto);
+    ProdutoModel atualizar(UUID cdProduto, ProdutoModel produto);
+    void deletar(UUID cdProduto);
     List<ProdutoModel> buscar();
     List<ProdutoModel> buscar(TipoCategoriaProdutoEnum tpCategoria);
 }

@@ -18,7 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "tb_pedidos")
-public class PedidosEntity {
+public class PedidoEntity {
 
     @Id
     @Column(name = "cd_pedido", nullable = false, unique = true)
@@ -43,7 +43,19 @@ public class PedidosEntity {
     @Column(name = "dh_ult_atualizacao", nullable = false)
     private LocalDateTime dhUltAtualizacao;
 
-    @OneToMany(mappedBy = "pedido")
-    private List<ProdutoPedidoEntity> lsProdutoPedido;
+    @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER)
+    private List<ProdutosPedidoEntity> produtosPedidoEntities;
 
+    @Override
+    public String toString() {
+        return "PedidoEntity{" +
+                "cdPedido=" + cdPedido +
+                ", cdDocCliente='" + cdDocCliente + '\'' +
+                ", cdDocFuncionario='" + cdDocFuncionario + '\'' +
+                ", txStatus=" + txStatus +
+                ", nrPedido=" + nrPedido +
+                ", dhCriacaoPedido=" + dhCriacaoPedido +
+                ", dhUltAtualizacao=" + dhUltAtualizacao +
+                '}';
+    }
 }

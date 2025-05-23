@@ -1,7 +1,11 @@
-package br.com.fiap.postechfastfood.infrastructure.persistence.jpa.mappers;
+package br.com.fiap.postechfastfood.infrastructure.commons.mappers;
 
 import br.com.fiap.postechfastfood.domain.models.ProdutoModel;
 import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities.ProdutoEntity;
+import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoResponseDto;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProdutoMapper {
 
@@ -23,5 +27,13 @@ public class ProdutoMapper {
         m.setVlPreco(entity.getVlPreco());
         m.setTpCategoria(entity.getTpCategoria());
         return m;
+    }
+
+    public static ProdutoResponseDto toResponse(ProdutoModel produtoModel) {
+        return new ProdutoResponseDto(produtoModel);
+    }
+
+    public static List<ProdutoResponseDto> mapeiaModelParaDTO(List<ProdutoModel> produtosModel) {
+        return produtosModel.stream().map(ProdutoMapper::toResponse).collect(Collectors.toList());
     }
 }

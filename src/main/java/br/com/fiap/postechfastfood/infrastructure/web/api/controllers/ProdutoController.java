@@ -2,6 +2,7 @@ package br.com.fiap.postechfastfood.infrastructure.web.api.controllers;
 
 import br.com.fiap.postechfastfood.domain.models.ProdutoModel;
 import br.com.fiap.postechfastfood.domain.ports.in.ProdutoServicePort;
+import br.com.fiap.postechfastfood.infrastructure.commons.mappers.ProdutoMapper;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoRequestDto;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoResponseDto;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -29,7 +30,7 @@ public class ProdutoController {
     }
 
     @PutMapping("/v1/produto/{cdProduto}")
-    public ResponseEntity<ProdutoResponseDto> atualizarProduto(@PathVariable String cdProduto,
+    public ResponseEntity<ProdutoResponseDto> atualizarProduto(@PathVariable UUID cdProduto,
                                                                @RequestBody ProdutoRequestDto produtoRequestDto)
     {
         ProdutoResponseDto produtoResponseDto = produtoService.atualizar(cdProduto, produtoRequestDto);
@@ -37,7 +38,7 @@ public class ProdutoController {
     }
 
     @DeleteMapping("/v1/produto/{cdProduto}")
-    public ResponseEntity<Void> deletarProduto(@PathVariable String cdProduto){
+    public ResponseEntity<Void> deletarProduto(@PathVariable UUID cdProduto){
         produtoService.deletar(cdProduto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -48,8 +49,7 @@ public class ProdutoController {
 
         if (produtoResponse.isEmpty()) { return ResponseEntity.notFound().build(); }
 
-        var produtoResponseDto = mapeiaModelParaDTO(produtoResponse);
-        return ResponseEntity.ok(produtoResponseDto);
+        return ResponseEntity.ok(ProdutoMapper.mapeiaModelParaDTO(produtoResponse));
     }
 
     @GetMapping("/v1/produto")
@@ -58,16 +58,7 @@ public class ProdutoController {
 
         if (produtoResponse.isEmpty()) { return ResponseEntity.notFound().build(); }
 
-        var produtoResponseDto = mapeiaModelParaDTO(produtoResponse);
-        return ResponseEntity.ok(produtoResponseDto);
-    }
-
-    private ProdutoResponseDto toResponse(ProdutoModel produtoModel) {
-        return new ProdutoResponseDto(produtoModel);
-    }
-
-    private List<ProdutoResponseDto> mapeiaModelParaDTO(List<ProdutoModel> produtosModel) {
-        return produtosModel.stream().map(this::toResponse).collect(Collectors.toList());
+        return ResponseEntity.ok(ProdutoMapper.mapeiaModelParaDTO(produtoResponse));
     }
 }
 

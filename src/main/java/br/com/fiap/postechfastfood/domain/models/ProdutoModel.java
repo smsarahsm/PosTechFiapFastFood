@@ -95,8 +95,17 @@ public class ProdutoModel {
             return this;
         }
 
-        public ProdutoModel build() {
-            return new ProdutoModel(cdProduto, nmProduto, dsDescricao, vlPreco, tpCategoria);
-        }
+        public ProdutoModel build() {return new ProdutoModel(cdProduto, nmProduto, dsDescricao, vlPreco, tpCategoria);}
+    }
+
+    @Override
+    public String toString() {
+        return "ProdutoModel{" +
+                "cdProduto=" + cdProduto +
+                ", nmProduto='" + nmProduto + '\'' +
+                ", dsDescricao='" + dsDescricao + '\'' +
+                ", vlPreco=" + vlPreco +
+                ", tpCategoria=" + tpCategoria +
+                '}';
     }
 }

@@ -3,7 +3,7 @@ package br.com.fiap.postechfastfood.infrastructure.persistence.jpa.repositories;
 import br.com.fiap.postechfastfood.domain.models.PessoaModel;
 import br.com.fiap.postechfastfood.domain.ports.out.PessoaRepositoryPort;
 import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities.PessoaEntity;
-import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.mappers.PessoaMapper;
+import br.com.fiap.postechfastfood.infrastructure.commons.mappers.PessoaMapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;

@@ -15,12 +15,12 @@ public class PedidoModel {
     private int nrPedido;
     private LocalDateTime dhCriacaoPedido;
     private LocalDateTime dhUltAtualizacao;
-    private List<ProdutoPedidoModel> lsProdutoPedido;
+    private List<ItensPedidoModel> itens;
 
     public PedidoModel() {
     }
 
-    public PedidoModel(UUID cdPedido, String cdDocCliente, String cdDocFuncionario, TipoStatusPedidoEnum txStatus, int nrPedido, LocalDateTime dhCriacaoPedido, LocalDateTime dhUltAtualizacao, List<ProdutoPedidoModel> lsProdutoPedido) {
+    public PedidoModel(UUID cdPedido, String cdDocCliente, String cdDocFuncionario, TipoStatusPedidoEnum txStatus, int nrPedido, LocalDateTime dhCriacaoPedido, LocalDateTime dhUltAtualizacao, List<ItensPedidoModel> itens) {
         this.cdPedido = cdPedido;
         this.cdDocCliente = cdDocCliente;
         this.cdDocFuncionario = cdDocFuncionario;
@@ -28,7 +28,7 @@ public class PedidoModel {
         this.nrPedido = nrPedido;
         this.dhCriacaoPedido = dhCriacaoPedido;
         this.dhUltAtualizacao = dhUltAtualizacao;
-        this.lsProdutoPedido = lsProdutoPedido;
+        this.itens = itens;
     }
 
     public UUID getCdPedido() {
@@ -39,11 +39,11 @@ public class PedidoModel {
         this.cdPedido = cdPedido;
     }
 
-    public String getcdDocCliente() {
+    public String getCdDocCliente() {
         return cdDocCliente;
     }
 
-    public void setcdDocCliente(String cdDocCliente) {
+    public void setCdDocCliente(String cdDocCliente) {
         this.cdDocCliente = cdDocCliente;
     }
 
@@ -87,12 +87,12 @@ public class PedidoModel {
         this.dhUltAtualizacao = dhUltAtualizacao;
     }
 
-    public List<ProdutoPedidoModel> getLsProdutoPedido() {
-        return lsProdutoPedido;
+    public List<ItensPedidoModel> getItens() {
+        return itens;
     }
 
-    public void setLsProdutoPedido(List<ProdutoPedidoModel> lsProdutoPedido) {
-        this.lsProdutoPedido = lsProdutoPedido;
+    public void setItens(List<ItensPedidoModel> itens) {
+        this.itens = itens;
     }
 
     public static class Builder {
@@ -103,14 +103,14 @@ public class PedidoModel {
         private int nrPedido;
         private LocalDateTime dhCriacaoPedido;
         private LocalDateTime dhUltAtualizacao;
-        private List<ProdutoPedidoModel> lsProdutoPedido;
+        private List<ItensPedidoModel> itens;
 
         public Builder setCdPedido(UUID cdPedido) {
             this.cdPedido = cdPedido;
             return this;
         }
 
-        public Builder setcdDocCliente(String cdDocCliente) {
+        public Builder setCdDocCliente(String cdDocCliente) {
             this.cdDocCliente = cdDocCliente;
             return this;
         }
@@ -140,16 +140,29 @@ public class PedidoModel {
             return this;
         }
 
-        public Builder setLsProdutoPedido(List<ProdutoPedidoModel> lsProdutoPedido) {
-            this.lsProdutoPedido = lsProdutoPedido;
+        public Builder setItens(List<ItensPedidoModel> itens){
+            this.itens = itens;
             return this;
         }
 
         public PedidoModel build() {
-            return new PedidoModel(cdPedido, cdDocCliente, cdDocFuncionario, txStatus, nrPedido, dhCriacaoPedido, dhUltAtualizacao, lsProdutoPedido);
+            return new PedidoModel(cdPedido, cdDocCliente, cdDocFuncionario, txStatus, nrPedido, dhCriacaoPedido, dhUltAtualizacao, itens);
         }
     }
 
+    @Override
+    public String toString() {
+        return "PedidoModel{" +
+                "cdPedido=" + cdPedido +
+                ", cdDocCliente='" + cdDocCliente + '\'' +
+                ", cdDocFuncionario='" + cdDocFuncionario + '\'' +
+                ", txStatus=" + txStatus +
+                ", nrPedido=" + nrPedido +
+                ", dhCriacaoPedido=" + dhCriacaoPedido +
+                ", dhUltAtualizacao=" + dhUltAtualizacao +
+                ", itens=" + itens +
+                '}';
+    }
 }
 
 

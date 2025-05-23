@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -19,7 +20,7 @@ import java.util.List;
 public class ProdutoEntity {
     @Id
     @Column(name = "cd_produto", nullable = false, unique = true)
-    private String cdProduto;
+    private UUID cdProduto;
     @Column(name = "nm_produto", nullable = false)
     private String nmProduto;
     @Column(name = "ds_descricao", nullable = false)
@@ -29,7 +30,17 @@ public class ProdutoEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "tp_categoria", nullable = false)
     private TipoCategoriaProdutoEnum tpCategoria;
-    @OneToMany(mappedBy = "produto")
-    private List<ProdutoPedidoEntity> lsProdutoPedido;
+    @OneToMany(mappedBy = "produto", fetch = FetchType.EAGER)
+    private List<ProdutosPedidoEntity> produtosPedidoEntities;
 
+    @Override
+    public String toString() {
+        return "ProdutoEntity{" +
+                "cdProduto=" + cdProduto +
+                ", nmProduto='" + nmProduto + '\'' +
+                ", dsDescricao='" + dsDescricao + '\'' +
+                ", vlPreco=" + vlPreco +
+                ", tpCategoria=" + tpCategoria +
+                '}';
+    }
 }

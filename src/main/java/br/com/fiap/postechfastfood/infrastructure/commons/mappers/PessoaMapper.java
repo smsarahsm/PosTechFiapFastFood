@@ -1,4 +1,4 @@
-package br.com.fiap.postechfastfood.infrastructure.persistence.jpa.mappers;
+package br.com.fiap.postechfastfood.infrastructure.commons.mappers;
 
 import br.com.fiap.postechfastfood.domain.models.PessoaModel;
 import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities.PessoaEntity;

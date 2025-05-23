@@ -31,7 +31,7 @@ public class ProdutoService implements ProdutoServicePort {
     }
 
     @Override
-    public ProdutoResponseDto atualizar(String cdProduto, ProdutoRequestDto produto) {
+    public ProdutoResponseDto atualizar(UUID cdProduto, ProdutoRequestDto produto) {
         ProdutoModel model = new ProdutoModel.Builder()
                 .setCdProduto(cdProduto)
                 .setNmProduto(produto.nmProduto())
@@ -43,7 +43,7 @@ public class ProdutoService implements ProdutoServicePort {
     }
 
     @Override
-    public void deletar(String cdProduto) {
+    public void deletar(UUID cdProduto) {
         produtoRepository.deletar(cdProduto);
     }
 

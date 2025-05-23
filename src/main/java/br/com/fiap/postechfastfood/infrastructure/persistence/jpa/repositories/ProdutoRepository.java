@@ -3,16 +3,15 @@ package br.com.fiap.postechfastfood.infrastructure.persistence.jpa.repositories;
 import br.com.fiap.postechfastfood.domain.enums.TipoCategoriaProdutoEnum;
 import br.com.fiap.postechfastfood.domain.models.ProdutoModel;
 import br.com.fiap.postechfastfood.domain.ports.out.ProdutoRepositoryPort;
-import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities.PessoaEntity;
 import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities.ProdutoEntity;
-import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.mappers.ProdutoMapper;
+import br.com.fiap.postechfastfood.infrastructure.commons.mappers.ProdutoMapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public class ProdutoRepository implements ProdutoRepositoryPort {
@@ -30,7 +29,7 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
 
     @Override
     @Transactional
-    public ProdutoModel atualizar(String cdProduto, ProdutoModel produto) {
+    public ProdutoModel atualizar(UUID cdProduto, ProdutoModel produto) {
         ProdutoEntity produtoEntity = ProdutoMapper.toEntity(produto);
         em.merge(produtoEntity);
 //        em.createQuery("UPDATE ProdutoEntity SET nmProduto= :nome, dsDescricao= :descricao, vlPreco= :preco, tpCategoria= :categoria WHERE cdProduto= :codigo")
@@ -44,7 +43,7 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
 
     @Override
     @Transactional
-    public void deletar(String cdProduto) {
+    public void deletar(UUID cdProduto) {
         em.remove(em.getReference(ProdutoEntity.class, cdProduto));
     }
 

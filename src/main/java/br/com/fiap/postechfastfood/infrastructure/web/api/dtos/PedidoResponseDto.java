@@ -1,14 +1,14 @@
 package br.com.fiap.postechfastfood.infrastructure.web.api.dtos;
 
 import br.com.fiap.postechfastfood.domain.enums.TipoStatusPedidoEnum;
+import br.com.fiap.postechfastfood.domain.models.ItensPedidoModel;
 import br.com.fiap.postechfastfood.domain.models.PedidoModel;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
-public record PedidosResponseDto(
+public record PedidoResponseDto(
         UUID cdPedido,
         String cdDocCliente,
         String cdDocFuncionario,
@@ -16,16 +16,16 @@ public record PedidosResponseDto(
         int nrPedido,
         LocalDateTime dhCriacaoPedido,
         LocalDateTime dhUltAtualizacao,
-        List<ProdutoPedidoRequestDto> lsProdutoPedido
+        List<ItensPedidoModel> itens
 ) {
-    public PedidosResponseDto(PedidoModel model) {
+    public PedidoResponseDto(PedidoModel model) {
         this(model.getCdPedido(),
-                model.getcdDocCliente(),
+                model.getCdDocCliente(),
                 model.getCdDocFuncionario(),
                 model.getTxStatus(),
                 model.getNrPedido(),
                 model.getDhCriacaoPedido(),
                 model.getDhUltAtualizacao(),
-                model.getLsProdutoPedido().stream().map(ProdutoPedidoRequestDto::new).collect(Collectors.toList()));
+                model.getItens());
     }
 }
