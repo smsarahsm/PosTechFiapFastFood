@@ -2,6 +2,7 @@ package br.com.fiap.postechfastfood.infrastructure.commons.mappers;
 
 import br.com.fiap.postechfastfood.domain.models.ProdutoModel;
 import br.com.fiap.postechfastfood.infrastructure.persistence.jpa.entities.ProdutoEntity;
+import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoRequestDto;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoResponseDto;
 
 import java.util.List;
@@ -27,6 +28,14 @@ public class ProdutoMapper {
         m.setVlPreco(entity.getVlPreco());
         m.setTpCategoria(entity.getTpCategoria());
         return m;
+    }
+
+    public static ProdutoModel requestToModel(ProdutoRequestDto produtoRequestDto) {
+        return new ProdutoModel(produtoRequestDto.cdProduto(),
+                produtoRequestDto.nmProduto(),
+                produtoRequestDto.dsDescricao(),
+                produtoRequestDto.vlPreco(),
+                produtoRequestDto.tpCategoria());
     }
 
     public static ProdutoResponseDto toResponse(ProdutoModel produtoModel) {

@@ -28,7 +28,7 @@ public class ProdutoController {
     @PostMapping("/v1/produto")
     @Operation(summary = "Cadastra produtos", description = "Cadastra os produtos")
     public ResponseEntity<ProdutoResponseDto> cadastrarProduto(@RequestBody ProdutoRequestDto produtoRequestDto) {
-        ProdutoResponseDto produtoResponseDto = produtoService.cadastrar(produtoRequestDto);
+        ProdutoResponseDto produtoResponseDto = ProdutoMapper.toResponse(produtoService.cadastrar(ProdutoMapper.requestToModel(produtoRequestDto)));
         return ResponseEntity.created(URI.create("/api/v1/produto/" + produtoResponseDto.cdProduto()))
                 .body(produtoResponseDto);
     }
@@ -38,7 +38,7 @@ public class ProdutoController {
     public ResponseEntity<ProdutoResponseDto> atualizarProduto(@PathVariable UUID cdProduto,
                                                                @RequestBody ProdutoRequestDto produtoRequestDto)
     {
-        ProdutoResponseDto produtoResponseDto = produtoService.atualizar(cdProduto, produtoRequestDto);
+        ProdutoResponseDto produtoResponseDto = ProdutoMapper.toResponse(produtoService.atualizar(cdProduto, ProdutoMapper.requestToModel(produtoRequestDto)));
         return ResponseEntity.ok(produtoResponseDto);
     }
 

@@ -4,7 +4,6 @@ import br.com.fiap.postechfastfood.domain.enums.TipoCategoriaProdutoEnum;
 import br.com.fiap.postechfastfood.domain.models.ProdutoModel;
 import br.com.fiap.postechfastfood.domain.ports.in.ProdutoServicePort;
 import br.com.fiap.postechfastfood.domain.ports.out.ProdutoRepositoryPort;
-import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoRequestDto;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoResponseDto;
 
 import java.util.List;
@@ -19,27 +18,15 @@ public class ProdutoService implements ProdutoServicePort {
     }
 
     @Override
-    public ProdutoResponseDto cadastrar(ProdutoRequestDto produto) {
-        ProdutoModel model = new ProdutoModel.Builder()
-                .setCdProduto(UUID.randomUUID())
-                .setNmProduto(produto.nmProduto())
-                .setDsDescricao(produto.dsDescricao())
-                .setVlPreco(produto.vlPreco())
-                .setTpCategoria(produto.tpCategoria()).build();
-        ProdutoResponseDto response = toResponse(produtoRepository.cadastrar(model));
-        return response;
+    public ProdutoModel cadastrar(ProdutoModel produto) {
+        produto.setCdProduto(UUID.randomUUID());
+        return produtoRepository.cadastrar(produto);
     }
 
     @Override
-    public ProdutoResponseDto atualizar(UUID cdProduto, ProdutoRequestDto produto) {
-        ProdutoModel model = new ProdutoModel.Builder()
-                .setCdProduto(cdProduto)
-                .setNmProduto(produto.nmProduto())
-                .setDsDescricao(produto.dsDescricao())
-                .setVlPreco(produto.vlPreco())
-                .setTpCategoria(produto.tpCategoria()).build();
-        ProdutoResponseDto response = toResponse(produtoRepository.atualizar(cdProduto, model));
-        return response;
+    public ProdutoModel atualizar(UUID cdProduto, ProdutoModel produto) {
+        produto.setCdProduto(cdProduto);
+        return produtoRepository.atualizar(cdProduto, produto);
     }
 
     @Override

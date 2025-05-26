@@ -24,7 +24,7 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
     public ProdutoModel cadastrar(ProdutoModel produto) {
         ProdutoEntity produtoEntity = ProdutoMapper.toEntity(produto);
         em.merge(produtoEntity);
-        return ProdutoMapper.toModel(produtoEntity); //TODO: não podemos só retornar o obejeto que recebemos no método?
+        return ProdutoMapper.toModel(produtoEntity);
     }
 
     @Override
@@ -32,12 +32,6 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
     public ProdutoModel atualizar(UUID cdProduto, ProdutoModel produto) {
         ProdutoEntity produtoEntity = ProdutoMapper.toEntity(produto);
         em.merge(produtoEntity);
-//        em.createQuery("UPDATE ProdutoEntity SET nmProduto= :nome, dsDescricao= :descricao, vlPreco= :preco, tpCategoria= :categoria WHERE cdProduto= :codigo")
-//                .setParameter("nome", produtoEntity.getNmProduto())
-//                .setParameter("descricao", produtoEntity.getDsDescricao())
-//                .setParameter("preco", produtoEntity.getVlPreco())
-//                .setParameter("categoria", produtoEntity.getTpCategoria())
-//                .setParameter("codigo", cdProduto);
         return ProdutoMapper.toModel(produtoEntity);
     }
 

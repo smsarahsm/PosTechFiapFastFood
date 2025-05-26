@@ -5,7 +5,6 @@ import br.com.fiap.postechfastfood.domain.enums.TipoCategoriaProdutoEnum;
 import java.util.List;
 import java.util.UUID;
 
-//TODO Não Utilizar
 public class ProdutosPedidoModel {
     private PedidoModel pedido;
     private ProdutoModel produto;
