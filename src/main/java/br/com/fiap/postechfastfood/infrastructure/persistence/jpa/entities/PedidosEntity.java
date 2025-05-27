@@ -23,7 +23,7 @@ public class PedidosEntity {
     @Column(name = "cd_pedido", nullable = false, unique = true)
     private UUID cdPedido;
 
-    @Column(name = "cd_doc_cliente", nullable = false)
+    @Column(name = "cd_doc_cliente", nullable = true)
     private String cdDocCliente;
 
     @Column(name = "cd_doc_funcionario", nullable = false)

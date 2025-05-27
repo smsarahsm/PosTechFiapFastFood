@@ -27,5 +27,7 @@ public class ProdutoEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "tp_categoria", nullable = false)
     private TipoCategoriaProdutoEnum tpCategoria;
+    @Column(name = "fl_ativo", nullable = false)
+    private boolean flAtivo; // novo campo
 
 }

@@ -19,12 +19,15 @@ public class PedidoService {
     }
 
     public PedidosResponseDto cadastrar(PedidoRequestDto pedido) {
+        int ultimoNumero = pedidosRepositoryPort.buscarUltimoNumeroPedido();
+        int proximoNumero = (ultimoNumero >= 999) ? 1 : ultimoNumero + 1;
+
         PedidosModel model = new PedidosModel.Builder()
                 .setCd_pedido(UUID.randomUUID())
                 .setCd_doc_cliente(pedido.cdDocCliente())
                 .setCd_doc_funcionario(pedido.cdDocFuncionario())
                 .setTx_status(pedido.txStatus())
-                .setNr_pedido(pedido.nrPedido())
+                .setNr_pedido(proximoNumero)
                 .setDh_criacao_pedido(pedido.dhCriacaoPedido())
                 .setDh_ult_atualizacao(pedido.dhUltAtualizacao())
                 .build();
@@ -32,17 +35,8 @@ public class PedidoService {
         return toResponse(savedModel);
     }
 
-    public PedidosResponseDto atualizar(UUID cdPedido, PedidoRequestDto pedido) {
-        PedidosModel model = new PedidosModel.Builder()
-                .setCd_pedido(cdPedido)
-                .setCd_doc_cliente(pedido.cdDocCliente())
-                .setCd_doc_funcionario(pedido.cdDocFuncionario())
-                .setTx_status(pedido.txStatus())
-                .setNr_pedido(pedido.nrPedido())
-                .setDh_criacao_pedido(pedido.dhCriacaoPedido())
-                .setDh_ult_atualizacao(pedido.dhUltAtualizacao())
-                .build();
-        PedidosModel updatedModel = pedidosRepositoryPort.cadastrarPedido(model);
+    public PedidosResponseDto atualizarStatus(UUID cdPedido, TipoProdutoStatusEnum status) {
+        PedidosModel updatedModel = pedidosRepositoryPort.atualizarStatusPedido(cdPedido, status);
         return toResponse(updatedModel);
     }
 

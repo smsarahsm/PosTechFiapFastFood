@@ -19,4 +19,6 @@ public interface PedidosRepositoryPort {
     PedidosModel atualizarStatusPedido(UUID cdPedido, TipoProdutoStatusEnum status);
 
     List<PedidosModel> buscarPedidosPorStatus(TipoProdutoStatusEnum status);
+
+    int buscarUltimoNumeroPedido();
 }

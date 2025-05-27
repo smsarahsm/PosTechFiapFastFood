@@ -4,10 +4,12 @@ import br.com.fiap.postechfastfood.domain.enums.TipoProdutoStatusEnum;
 import br.com.fiap.postechfastfood.domain.models.ComandaModel;
 import br.com.fiap.postechfastfood.domain.ports.out.ComandaRepositoryPort;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ComandaResponseDto;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class ComandaService {
 
     private final ComandaRepositoryPort comandaRepository;

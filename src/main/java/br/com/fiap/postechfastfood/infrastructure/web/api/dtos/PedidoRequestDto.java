@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record PedidoRequestDto(
-    UUID cdPedido,
     String cdDocCliente,
     String cdDocFuncionario,
     TipoProdutoStatusEnum txStatus,
@@ -18,7 +17,7 @@ public record PedidoRequestDto(
 
     {
         public PedidoRequestDto(PedidosModel model) {
-            this(model.getCd_pedido(),
+            this(
                     model.getCd_doc_cliente(),
                     model.getCd_doc_funcionario(),
                     model.getTx_status(),

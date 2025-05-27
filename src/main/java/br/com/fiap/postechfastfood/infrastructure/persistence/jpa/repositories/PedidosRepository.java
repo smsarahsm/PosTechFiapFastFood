@@ -45,6 +45,13 @@ public class PedidosRepository implements PedidosRepositoryPort {
     }
 
     @Override
+    public int buscarUltimoNumeroPedido() {
+        var jpql = "SELECT MAX(p.nrPedido) FROM PedidosEntity p";
+        Integer max = em.createQuery(jpql, Integer.class).getSingleResult();
+        return (max == null) ? 0 : max;
+    }
+
+    @Override
     @Transactional
     public void removerPedido(UUID cdPedido) {
         em.remove(em.getReference(PedidosEntity.class, cdPedido));
@@ -86,7 +93,7 @@ public class PedidosRepository implements PedidosRepositoryPort {
 
     @Override
     public List<PedidosModel> buscarPedidosPorStatus(TipoProdutoStatusEnum status) {
-        var jpql = "FROM PedidosEntity p WHERE p.txStatus = :status";
+        var jpql = "FROM PedidosEntity p WHERE p.txStatus = :status ORDER BY p.dhCriacaoPedido ASC";
         List<PedidosEntity> pedidos = em.createQuery(jpql, PedidosEntity.class)
                 .setParameter("status", status)
                 .getResultList();

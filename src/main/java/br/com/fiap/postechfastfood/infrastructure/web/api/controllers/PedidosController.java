@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/pedidos")
+@RequestMapping("/api/pedido")
 public class PedidosController {
 
     private final PedidoService pedidoService;
@@ -25,12 +25,14 @@ public class PedidosController {
     @PostMapping
     public ResponseEntity<PedidosResponseDto> cadastrar(@RequestBody PedidoRequestDto pedidoRequestDto) {
         PedidosResponseDto pedido = pedidoService.cadastrar(pedidoRequestDto);
-        return ResponseEntity.created(URI.create("/api/pedidos/" + pedido.cdPedido())).body(pedido);
+        return ResponseEntity.created(URI.create("/api/pedido/" + pedido.cdPedido())).body(pedido);
     }
 
-    @PutMapping("/{cdPedido}/status")
-    public ResponseEntity<PedidosResponseDto> atualizar(@PathVariable UUID cdPedido, @RequestBody PedidoRequestDto pedidoRequestDto) {
-        var pedidoAtualizado = pedidoService.atualizar(cdPedido, pedidoRequestDto);
+    @PatchMapping("/{cdPedido}/status")
+    public ResponseEntity<PedidosResponseDto> atualizarStatus(
+            @PathVariable UUID cdPedido,
+            @RequestBody PedidoRequestDto status) {
+        var pedidoAtualizado = pedidoService.atualizarStatus(cdPedido, status.txStatus());
         return ResponseEntity.ok(pedidoAtualizado);
     }
 

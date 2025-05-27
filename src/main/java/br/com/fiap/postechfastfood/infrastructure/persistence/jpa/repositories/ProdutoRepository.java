@@ -50,7 +50,7 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
 
     @Override
     public List<ProdutoModel> buscar() {
-        var jpql = "FROM ProdutoEntity";
+        var jpql = "FROM ProdutoEntity p WHERE p.flAtivo = true";
         List<ProdutoEntity> produtosEntity = em.createQuery(jpql, ProdutoEntity.class)
                 .getResultList();
 

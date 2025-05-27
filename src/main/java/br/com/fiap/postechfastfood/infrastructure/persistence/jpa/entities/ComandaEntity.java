@@ -19,9 +19,9 @@ import lombok.Setter;
 public class ComandaEntity {
 
     @Id
-    @Column(name = "cdPedido", nullable = false, unique = true)
+    @Column(name = "cd_Pedido", nullable = false, unique = true)
     private UUID cdPedido;
-    @Column(name = "cd_doc_cliente", nullable = false)
+    @Column(name = "cd_doc_cliente", nullable = true)
     private String cdDocCliente;
     @Column(name = "cd_doc_funcionario", nullable = false)
     private String cdDocFuncionario;
