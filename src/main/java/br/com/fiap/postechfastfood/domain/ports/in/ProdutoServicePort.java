@@ -1,6 +1,7 @@
 package br.com.fiap.postechfastfood.domain.ports.in;
 
 
+import br.com.fiap.postechfastfood.domain.enums.TipoCategoriaProdutoEnum;
 import br.com.fiap.postechfastfood.domain.models.ProdutoModel;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public interface ProdutoServicePort {
     ProdutoModel atualizar(UUID cdProduto, ProdutoModel produto);
     void deletar(UUID cdProduto);
     List<ProdutoModel> buscar();
-    List<ProdutoModel> buscar(String tpCategoria);
+    List<ProdutoModel> buscar(TipoCategoriaProdutoEnum tpCategoria);
 }

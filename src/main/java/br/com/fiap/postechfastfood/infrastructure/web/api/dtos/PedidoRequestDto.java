@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.UUID;
 
 public record PedidoRequestDto(
-    UUID cdPedido,
     String cdDocCliente,
     String cdDocFuncionario,
     TipoStatusPedidoEnum txStatus,
@@ -21,8 +20,7 @@ public record PedidoRequestDto(
 
     {
         public PedidoRequestDto(PedidoModel model) {
-            this(model.getCdPedido(),
-                    model.getCdDocCliente(),
+            this(model.getCdDocCliente(),
                     model.getCdDocFuncionario(),
                     model.getTxStatus(),
                     model.getNrPedido(),
@@ -34,8 +32,7 @@ public record PedidoRequestDto(
         @Override
         public String toString() {
             return "PedidoRequestDto{" +
-                    "cdPedido=" + cdPedido +
-                    ", cdDocCliente='" + cdDocCliente + '\'' +
+                    "cdDocCliente='" + cdDocCliente + '\'' +
                     ", cdDocFuncionario='" + cdDocFuncionario + '\'' +
                     ", txStatus=" + txStatus +
                     ", nrPedido=" + nrPedido +

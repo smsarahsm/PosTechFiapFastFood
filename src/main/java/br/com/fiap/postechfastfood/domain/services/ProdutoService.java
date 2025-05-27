@@ -40,21 +40,7 @@ public class ProdutoService implements ProdutoServicePort {
     }
 
     @Override
-    public List<ProdutoModel> buscar(String tpCategoria) {
-        var enumTpCategoria = converteTipoProdutoCategortiaEnum(tpCategoria);
-
-        return produtoRepository.buscar(enumTpCategoria);
-    }
-
-    private ProdutoResponseDto toResponse(ProdutoModel produtoModel) {
-        return new ProdutoResponseDto(produtoModel);
-    }
-
-    private TipoCategoriaProdutoEnum converteTipoProdutoCategortiaEnum(String tpCategoria) {
-        try {
-            return TipoCategoriaProdutoEnum.valueOf(tpCategoria.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Categoria não existente");
-        }
+    public List<ProdutoModel> buscar(TipoCategoriaProdutoEnum tpCategoria) {
+return produtoRepository.buscar(tpCategoria);
     }
 }

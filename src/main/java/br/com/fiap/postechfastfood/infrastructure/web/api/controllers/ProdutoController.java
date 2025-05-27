@@ -1,5 +1,6 @@
 package br.com.fiap.postechfastfood.infrastructure.web.api.controllers;
 
+import br.com.fiap.postechfastfood.domain.enums.TipoCategoriaProdutoEnum;
 import br.com.fiap.postechfastfood.domain.models.ProdutoModel;
 import br.com.fiap.postechfastfood.domain.ports.in.ProdutoServicePort;
 import br.com.fiap.postechfastfood.infrastructure.commons.mappers.ProdutoMapper;
@@ -49,17 +50,17 @@ public class ProdutoController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/v1/produto/{tpCategoria}")
+    @GetMapping("/v1/produtos/categoria")
     @Operation(summary = "Lista produtos", description = "Lista todos produtos existentes por categoria")
-    public ResponseEntity<List<ProdutoResponseDto>> buscar(@PathVariable String tpCategoria) {
-        List<ProdutoModel> produtoResponse = produtoService.buscar(tpCategoria);
+    public ResponseEntity<List<ProdutoResponseDto>> buscar(@RequestParam TipoCategoriaProdutoEnum tipo) {
+        List<ProdutoModel> produtoResponse = produtoService.buscar(tipo);
 
         if (produtoResponse.isEmpty()) { return ResponseEntity.notFound().build(); }
 
         return ResponseEntity.ok(ProdutoMapper.modelToListResponse(produtoResponse));
     }
 
-    @GetMapping("/v1/produto")
+    @GetMapping("/v1/produtos")
     @Operation(summary = "Lista produtos", description = "Lista todos produtos existentes")
     public ResponseEntity<List<ProdutoResponseDto>> buscar() {
         List<ProdutoModel> produtoResponse = produtoService.buscar();

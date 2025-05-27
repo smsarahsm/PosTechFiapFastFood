@@ -45,7 +45,6 @@ public class PedidoMapper {
 
     public static PedidoModel requestToModel(PedidoRequestDto req) {
         PedidoModel model = new PedidoModel();
-        model.setCdPedido(req.cdPedido());
         model.setCdDocCliente(req.cdDocCliente());
         model.setCdDocFuncionario(req.cdDocFuncionario());
         model.setTxStatus(req.txStatus());
