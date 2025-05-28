@@ -1,19 +1,24 @@
 package br.com.fiap.postechfastfood.infrastructure.web.api.controllers;
 
+import br.com.fiap.postechfastfood.domain.enums.TipoCategoriaProdutoEnum;
 import br.com.fiap.postechfastfood.domain.models.ProdutoModel;
 import br.com.fiap.postechfastfood.domain.ports.in.ProdutoServicePort;
+import br.com.fiap.postechfastfood.infrastructure.commons.mappers.ProdutoMapper;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoRequestDto;
 import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoResponseDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
+@Tag(name="Produtos", description = "end-point para gerenciar os produtos")
 public class ProdutoController {
     private final ProdutoServicePort produtoService;
 
@@ -22,52 +27,47 @@ public class ProdutoController {
     }
 
     @PostMapping("/v1/produto")
+    @Operation(summary = "Cadastra produtos", description = "Cadastra os produtos")
     public ResponseEntity<ProdutoResponseDto> cadastrarProduto(@RequestBody ProdutoRequestDto produtoRequestDto) {
-        ProdutoResponseDto produtoResponseDto = produtoService.cadastrar(produtoRequestDto);
+        ProdutoResponseDto produtoResponseDto = ProdutoMapper.toResponse(produtoService.cadastrar(ProdutoMapper.requestToModel(produtoRequestDto)));
         return ResponseEntity.created(URI.create("/api/v1/produto/" + produtoResponseDto.cdProduto()))
                 .body(produtoResponseDto);
     }
 
     @PutMapping("/v1/produto/{cdProduto}")
-    public ResponseEntity<ProdutoResponseDto> atualizarProduto(@PathVariable String cdProduto,
+    @Operation(summary = "Atualiza produtos", description = "Atualiza produtos existentes")
+    public ResponseEntity<ProdutoResponseDto> atualizarProduto(@PathVariable UUID cdProduto,
                                                                @RequestBody ProdutoRequestDto produtoRequestDto)
     {
-        ProdutoResponseDto produtoResponseDto = produtoService.atualizar(cdProduto, produtoRequestDto);
+        ProdutoResponseDto produtoResponseDto = ProdutoMapper.toResponse(produtoService.atualizar(cdProduto, ProdutoMapper.requestToModel(produtoRequestDto)));
         return ResponseEntity.ok(produtoResponseDto);
     }
 
     @DeleteMapping("/v1/produto/{cdProduto}")
-    public ResponseEntity<Void> deletarProduto(@PathVariable String cdProduto){
+    @Operation(summary = "Remove produtos", description = "Remove produtos existentes")
+    public ResponseEntity<Void> deletarProduto(@PathVariable UUID cdProduto){
         produtoService.deletar(cdProduto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/v1/produto/{tpCategoria}")
-    public ResponseEntity<List<ProdutoResponseDto>> buscar(@PathVariable String tpCategoria) {
-        List<ProdutoModel> produtoResponse = produtoService.buscar(tpCategoria);
+    @GetMapping("/v1/produtos/categoria")
+    @Operation(summary = "Lista produtos", description = "Lista todos produtos existentes por categoria")
+    public ResponseEntity<List<ProdutoResponseDto>> buscar(@RequestParam TipoCategoriaProdutoEnum tipo) {
+        List<ProdutoModel> produtoResponse = produtoService.buscar(tipo);
 
         if (produtoResponse.isEmpty()) { return ResponseEntity.notFound().build(); }
 
-        var produtoResponseDto = mapeiaModelParaDTO(produtoResponse);
-        return ResponseEntity.ok(produtoResponseDto);
+        return ResponseEntity.ok(ProdutoMapper.modelToListResponse(produtoResponse));
     }
 
-    @GetMapping("/v1/produto")
+    @GetMapping("/v1/produtos")
+    @Operation(summary = "Lista produtos", description = "Lista todos produtos existentes")
     public ResponseEntity<List<ProdutoResponseDto>> buscar() {
         List<ProdutoModel> produtoResponse = produtoService.buscar();
 
         if (produtoResponse.isEmpty()) { return ResponseEntity.notFound().build(); }
 
-        var produtoResponseDto = mapeiaModelParaDTO(produtoResponse);
-        return ResponseEntity.ok(produtoResponseDto);
-    }
-
-    private ProdutoResponseDto toResponse(ProdutoModel produtoModel) {
-        return new ProdutoResponseDto(produtoModel);
-    }
-
-    private List<ProdutoResponseDto> mapeiaModelParaDTO(List<ProdutoModel> produtosModel) {
-        return produtosModel.stream().map(this::toResponse).collect(Collectors.toList());
+        return ResponseEntity.ok(ProdutoMapper.modelToListResponse(produtoResponse));
     }
 }
 

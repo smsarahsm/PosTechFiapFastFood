@@ -1,30 +1,45 @@
 package br.com.fiap.postechfastfood.infrastructure.web.api.dtos;
 
-import br.com.fiap.postechfastfood.domain.enums.TipoProdutoStatusEnum;
-import br.com.fiap.postechfastfood.domain.models.PedidosModel;
+import br.com.fiap.postechfastfood.domain.enums.TipoStatusPedidoEnum;
+import br.com.fiap.postechfastfood.domain.models.ItensPedidoModel;
+import br.com.fiap.postechfastfood.domain.models.PedidoModel;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public record PedidoRequestDto(
-    UUID cdPedido,
     String cdDocCliente,
     String cdDocFuncionario,
-    TipoProdutoStatusEnum txStatus,
+    TipoStatusPedidoEnum txStatus,
     int nrPedido,
     LocalDateTime dhCriacaoPedido,
-    LocalDateTime dhUltAtualizacao
+    LocalDateTime dhUltAtualizacao,
+    List<ItensPedidoModel> itens
 )
 
     {
-        public PedidoRequestDto(PedidosModel model) {
-            this(model.getCd_pedido(),
-                    model.getCd_doc_cliente(),
-                    model.getCd_doc_funcionario(),
-                    model.getTx_status(),
-                    model.getNr_pedido(),
-                    model.getDh_criacao_pedido(),
-                    model.getDh_ult_atualizacao());
+        public PedidoRequestDto(PedidoModel model) {
+            this(model.getCdDocCliente(),
+                    model.getCdDocFuncionario(),
+                    model.getTxStatus(),
+                    model.getNrPedido(),
+                    model.getDhCriacaoPedido(),
+                    model.getDhUltAtualizacao(),
+                    model.getItens());
+        }
+
+        @Override
+        public String toString() {
+            return "PedidoRequestDto{" +
+                    "cdDocCliente='" + cdDocCliente + '\'' +
+                    ", cdDocFuncionario='" + cdDocFuncionario + '\'' +
+                    ", txStatus=" + txStatus +
+                    ", nrPedido=" + nrPedido +
+                    ", dhCriacaoPedido=" + dhCriacaoPedido +
+                    ", dhUltAtualizacao=" + dhUltAtualizacao +
+                    ", itens=" + itens +
+                    '}';
         }
     }
 

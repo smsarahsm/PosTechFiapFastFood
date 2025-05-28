@@ -9,7 +9,8 @@ public class PessoaModel {
     private TipoPessoaEnum tpPessoa;
     private String dsEmail;
 
-    public PessoaModel() {}
+    public PessoaModel() {
+    }
 
     public PessoaModel(String cdDocPessoa, String nmPessoa, TipoPessoaEnum tpPessoa, String dsEmail) {
         this.cdDocPessoa = cdDocPessoa;
