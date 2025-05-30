@@ -5,6 +5,7 @@ import br.com.fiap.postechfastfood.domain.models.PedidoModel;
 import br.com.fiap.postechfastfood.domain.models.ProdutosPedidoModel;
 import br.com.fiap.postechfastfood.domain.ports.in.PedidoServicePort;
 import br.com.fiap.postechfastfood.domain.ports.out.PedidoRepositoryPort;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,8 +36,8 @@ public class PedidoService implements PedidoServicePort {
     }
 
     @Override
-    public PedidoModel atualizar(UUID cdPedido, PedidoModel model) {
-        return pedidoRepositoryPort.atualizarStatusPedido(cdPedido, model.getTxStatus());
+    public PedidoModel atualizar(UUID cdPedido, TipoStatusPedidoEnum status) {
+        return pedidoRepositoryPort.atualizarStatusPedido(cdPedido, status);
     }
 
     @Override

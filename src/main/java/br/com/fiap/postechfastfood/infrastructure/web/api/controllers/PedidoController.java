@@ -32,10 +32,10 @@ public class PedidoController {
         return ResponseEntity.created(URI.create("/api/pedidos/" + pedido.cdPedido())).body(pedido);
     }
 
-    @PutMapping("/{cdPedido}/status")
+    @PatchMapping("/{cdPedido}/status/")
     @Operation(summary = "Atualiza pedidos", description = "Atualiza o status dos pedidos")
-    public ResponseEntity<PedidoResponseDto> atualizar(@PathVariable UUID cdPedido, @RequestBody PedidoRequestDto pedidoRequestDto) {
-        var pedidoAtualizado = PedidoMapper.modelToResponse(pedidoServicePort.atualizar(cdPedido, PedidoMapper.requestToModel(pedidoRequestDto)));
+    public ResponseEntity<PedidoResponseDto> atualizar(@PathVariable UUID cdPedido, @RequestParam TipoStatusPedidoEnum status) {
+        var pedidoAtualizado = PedidoMapper.modelToResponse(pedidoServicePort.atualizar(cdPedido, status));
         return ResponseEntity.ok(pedidoAtualizado);
     }
 
