@@ -1,0 +1,29 @@
+services:
+  fiap-fastfood:
+    image: alexguimaraes21/fiap-fastfood:latest
+    container_name: fiap-fastfood
+    restart: no
+    environment:
+      TZ: America/Sao_Paulo
+      DATASOURCE_URL: jdbc:mariadb://fastood-db:3306/fiap-fastfood
+      DATASOURCE_USERNAME: fiap_postech
+      DATASOURCE_PASSWORD: fiap
+      DATASOURCE_POOL-NAME: fiap-fasfood
+      DATASOURCE_MAXIMUM-POOL-SIZE: 10
+    ports:
+      - 8080:8080
+  fastood-db:
+    image: mariadb:latest
+    container_name: fastfood-db
+    restart: no
+    environment:
+      TZ: America/Sao_Paulo
+      MARIADB_DATABASE: fiap-fastfood
+      MARIADB_ROOT_PASSWORD: rootfiap
+      MARIADB_USER: fiap_postech
+      MARIADB_PASSWORD: fiap
+      # Por segurança, a porta do MariaDB fica fechada para rede externa. Apenas acesso na rede do container é permitido
+      # ports:
+      # - 3306:3306
+    volumes:
+      - ./data:/var/lib/mysql
