@@ -8,6 +8,7 @@ import br.com.fiap.postechfastfood.infrastructure.web.api.exceptions.CpfCadastra
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class PessoaService implements PessoaServicePort {
 
@@ -22,6 +23,7 @@ public class PessoaService implements PessoaServicePort {
         if (pessoaEncontrada != null) {
             throw new CpfCadastradoException("Cliente já cadastrado com o CPF informado");
         }
+        model.setCdPessoa(UUID.randomUUID());
         return pessoaRepository.cadastrarPessoa(model);
     }
 

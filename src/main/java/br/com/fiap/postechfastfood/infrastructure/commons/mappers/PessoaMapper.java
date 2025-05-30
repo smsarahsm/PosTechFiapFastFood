@@ -7,6 +7,7 @@ public class PessoaMapper {
 
     public static PessoaEntity toEntity(PessoaModel model) {
         PessoaEntity e = new PessoaEntity();
+        e.setCdPessoa(model.getCdPessoa());
         e.setCdDocPessoa( model.getCdDocPessoa() );
         e.setNmPessoa( model.getNmPessoa() );
         e.setTpPessoa( model.getTpPessoa() );
@@ -16,6 +17,7 @@ public class PessoaMapper {
 
     public static PessoaModel toModel(PessoaEntity entity) {
         PessoaModel m = new PessoaModel();
+        m.setCdPessoa(entity.getCdPessoa());
         m.setCdDocPessoa( entity.getCdDocPessoa() );
         m.setNmPessoa( entity.getNmPessoa() );
         m.setTpPessoa( entity.getTpPessoa() );

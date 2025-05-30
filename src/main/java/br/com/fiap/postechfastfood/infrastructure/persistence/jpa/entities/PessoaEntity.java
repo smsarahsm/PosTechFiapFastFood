@@ -20,7 +20,7 @@ public class PessoaEntity {
     @Id
     @Column(name = "cd_pessoa", nullable = false, unique = true)
     private UUID cdPessoa;
-    @Column(name = "cd_doc_pessoa", nullable = false, unique = true)
+    @Column(name = "cd_doc_pessoa", unique = true)
     private String cdDocPessoa;
     @Column(name = "nm_pessoa", nullable = false)
     private String nmPessoa;

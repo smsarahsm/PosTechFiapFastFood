@@ -2,8 +2,11 @@ package br.com.fiap.postechfastfood.domain.models;
 
 import br.com.fiap.postechfastfood.domain.enums.TipoPessoaEnum;
 
+import java.util.UUID;
+
 public class PessoaModel {
 
+    private UUID cdPessoa;
     private String cdDocPessoa;
     private String nmPessoa;
     private TipoPessoaEnum tpPessoa;
@@ -17,6 +20,14 @@ public class PessoaModel {
         this.nmPessoa = nmPessoa;
         this.tpPessoa = tpPessoa;
         this.dsEmail = dsEmail;
+    }
+
+    public UUID getCdPessoa() {
+        return cdPessoa;
+    }
+
+    public void setCdPessoa(UUID cdPessoa) {
+        this.cdPessoa = cdPessoa;
     }
 
     public String getCdDocPessoa() {

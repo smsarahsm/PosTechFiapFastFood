@@ -30,7 +30,10 @@ public class PessoaRepository implements PessoaRepositoryPort {
 
     @Override
     public Optional<PessoaModel> buscarPorCdDocPessoa(String cdDocPessoa) {
-        PessoaEntity pessoaEntity = em.find(PessoaEntity.class, cdDocPessoa);
+        var jpql = "FROM PessoaEntity WHERE cdDocPessoa = :cdDocPessoa";
+        List<PessoaEntity> pessoasEntity = em.createQuery(jpql, PessoaEntity.class)
+                .setParameter("cdDocPessoa", cdDocPessoa).getResultList();
+        PessoaEntity pessoaEntity = pessoasEntity.isEmpty() ? null : pessoasEntity.getFirst();
         return Optional.ofNullable(pessoaEntity).map(PessoaMapper::toModel);
     }
 
