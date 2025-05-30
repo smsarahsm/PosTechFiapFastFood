@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,6 +18,8 @@ import lombok.Setter;
 public class PessoaEntity {
 
     @Id
+    @Column(name = "cd_pessoa", nullable = false, unique = true)
+    private UUID cdPessoa;
     @Column(name = "cd_doc_pessoa", nullable = false, unique = true)
     private String cdDocPessoa;
     @Column(name = "nm_pessoa", nullable = false)
