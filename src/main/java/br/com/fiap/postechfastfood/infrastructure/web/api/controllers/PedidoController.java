@@ -32,10 +32,10 @@ public class PedidoController {
         return ResponseEntity.created(URI.create("/api/pedidos/" + pedido.cdPedido())).body(pedido);
     }
 
-    @PutMapping("/{cdPedido}/status")
+    @PatchMapping("/{cdPedido}/status")
     @Operation(summary = "Atualiza pedidos", description = "Atualiza o status dos pedidos")
-    public ResponseEntity<PedidoResponseDto> atualizar(@PathVariable UUID cdPedido, @RequestBody PedidoRequestDto pedidoRequestDto) {
-        var pedidoAtualizado = PedidoMapper.modelToResponse(pedidoServicePort.atualizar(cdPedido, PedidoMapper.requestToModel(pedidoRequestDto)));
+    public ResponseEntity<PedidoResponseDto> atualizarStatus(@PathVariable UUID cdPedido, @RequestParam(value = "tpStattus") TipoStatusPedidoEnum tpStatus) {
+        var pedidoAtualizado = PedidoMapper.modelToResponse(pedidoServicePort.atualizaStatus(cdPedido, tpStatus));
         return ResponseEntity.ok(pedidoAtualizado);
     }
 
@@ -47,22 +47,22 @@ public class PedidoController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
-    @Operation(summary = "Lista pedidos", description = "Lista todos pedidos existentes")
-    public ResponseEntity<List<PedidoResponseDto>> buscar() {
-        var pedidos = PedidoMapper.modelToListResponse(pedidoServicePort.buscar());
-        if (pedidos.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(pedidos);
-    }
+//    @GetMapping
+//    @Operation(summary = "Lista pedidos", description = "Lista todos pedidos existentes")
+//    public ResponseEntity<List<PedidoResponseDto>> buscar() {
+//        var pedidos = PedidoMapper.modelToListResponse(pedidoServicePort.buscar());
+//        if (pedidos.isEmpty()) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.ok(pedidos);
+//    }
 
     @GetMapping("/status")
     @Operation(summary = "Lista pedidos", description = "Lista todos pedidos existentes por status")
     public ResponseEntity<List<PedidoResponseDto>> buscarPorStatus(@RequestParam TipoStatusPedidoEnum status) {
         var pedidos = PedidoMapper.modelToListResponse(pedidoServicePort.buscarPorStatus(status));
         if (pedidos.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(pedidos);
     }

@@ -9,7 +9,8 @@ import java.util.UUID;
 public interface ProdutoRepositoryPort {
     ProdutoModel cadastrar(ProdutoModel produto);
     ProdutoModel atualizar(UUID cdProduto, ProdutoModel produto);
-    void deletar(UUID cdProduto);
+    void desativar(UUID cdProduto);
+    void ativar(UUID cdProduto);
     List<ProdutoModel> buscar();
     List<ProdutoModel> buscar(TipoCategoriaProdutoEnum tpCategoria);
 }

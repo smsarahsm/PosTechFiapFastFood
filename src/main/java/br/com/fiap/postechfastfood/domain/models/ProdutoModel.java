@@ -10,16 +10,19 @@ public class ProdutoModel {
     private String nmProduto;
     private String dsDescricao;
     private double vlPreco;
+    private boolean snAtivo;
     private TipoCategoriaProdutoEnum tpCategoria;
 
     public ProdutoModel() {
     }
 
-    public ProdutoModel(UUID cdProduto, String nmProduto, String dsDescricao, double vlPreco, TipoCategoriaProdutoEnum tpCategoria) {
+    public ProdutoModel(UUID cdProduto, String nmProduto, String dsDescricao, double vlPreco, boolean snAtivo,
+                        TipoCategoriaProdutoEnum tpCategoria) {
         this.cdProduto = cdProduto;
         this.nmProduto = nmProduto;
         this.dsDescricao = dsDescricao;
         this.vlPreco = vlPreco;
+        this.snAtivo = snAtivo;
         this.tpCategoria = tpCategoria;
     }
 
@@ -55,6 +58,14 @@ public class ProdutoModel {
         this.vlPreco = vlPreco;
     }
 
+    public void setSnAtivo(boolean snAtivo) {
+        this.snAtivo = snAtivo;
+    }
+
+    public boolean getSnAtivo() {
+        return snAtivo;
+    }
+
     public TipoCategoriaProdutoEnum getTpCategoria() {
         return tpCategoria;
     }
@@ -68,6 +79,7 @@ public class ProdutoModel {
         private String nmProduto;
         private String dsDescricao;
         private double vlPreco;
+        private boolean snAtivo;
         private TipoCategoriaProdutoEnum tpCategoria;
 
         public Builder setCdProduto(UUID cdProduto) {
@@ -90,12 +102,17 @@ public class ProdutoModel {
             return this;
         }
 
+        public Builder setSnAtivo(boolean snAtivo) {
+            this.snAtivo = snAtivo;
+            return this;
+        }
+
         public Builder setTpCategoria(TipoCategoriaProdutoEnum tpCategoria) {
             this.tpCategoria = tpCategoria;
             return this;
         }
 
-        public ProdutoModel build() {return new ProdutoModel(cdProduto, nmProduto, dsDescricao, vlPreco, tpCategoria);}
+        public ProdutoModel build() {return new ProdutoModel(cdProduto, nmProduto, dsDescricao, vlPreco, snAtivo, tpCategoria);}
     }
 
     @Override
@@ -105,6 +122,7 @@ public class ProdutoModel {
                 ", nmProduto='" + nmProduto + '\'' +
                 ", dsDescricao='" + dsDescricao + '\'' +
                 ", vlPreco=" + vlPreco +
+                ", snAtivo=" + snAtivo +
                 ", tpCategoria=" + tpCategoria +
                 '}';
     }

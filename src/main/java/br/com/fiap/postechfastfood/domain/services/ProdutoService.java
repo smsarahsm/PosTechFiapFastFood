@@ -4,43 +4,47 @@ import br.com.fiap.postechfastfood.domain.enums.TipoCategoriaProdutoEnum;
 import br.com.fiap.postechfastfood.domain.models.ProdutoModel;
 import br.com.fiap.postechfastfood.domain.ports.in.ProdutoServicePort;
 import br.com.fiap.postechfastfood.domain.ports.out.ProdutoRepositoryPort;
-import br.com.fiap.postechfastfood.infrastructure.web.api.dtos.ProdutoResponseDto;
 
 import java.util.List;
 import java.util.UUID;
 
 public class ProdutoService implements ProdutoServicePort {
 
-    private final ProdutoRepositoryPort produtoRepository;
+    private final ProdutoRepositoryPort produtoRepositoryPort;
 
-    public ProdutoService(ProdutoRepositoryPort produtoRepository) {
-        this.produtoRepository = produtoRepository;
+    public ProdutoService(ProdutoRepositoryPort produtoRepositoryPort) {
+        this.produtoRepositoryPort = produtoRepositoryPort;
     }
 
     @Override
     public ProdutoModel cadastrar(ProdutoModel produto) {
         produto.setCdProduto(UUID.randomUUID());
-        return produtoRepository.cadastrar(produto);
+        return produtoRepositoryPort.cadastrar(produto);
     }
 
     @Override
     public ProdutoModel atualizar(UUID cdProduto, ProdutoModel produto) {
         produto.setCdProduto(cdProduto);
-        return produtoRepository.atualizar(cdProduto, produto);
+        return produtoRepositoryPort.atualizar(cdProduto, produto);
     }
 
     @Override
-    public void deletar(UUID cdProduto) {
-        produtoRepository.deletar(cdProduto);
+    public void desativar(UUID cdProduto) {
+        produtoRepositoryPort.desativar(cdProduto);
+    }
+
+    @Override
+    public void ativar(UUID cdProduto) {
+        produtoRepositoryPort.ativar(cdProduto);
     }
 
     @Override
     public List<ProdutoModel> buscar() {
-        return produtoRepository.buscar();
+        return produtoRepositoryPort.buscar();
     }
 
     @Override
     public List<ProdutoModel> buscar(TipoCategoriaProdutoEnum tpCategoria) {
-return produtoRepository.buscar(tpCategoria);
+return produtoRepositoryPort.buscar(tpCategoria);
     }
 }

@@ -5,5 +5,6 @@ CREATE TABLE tb_produtos
     ds_descricao LONGTEXT NOT NULL,
     vl_preco DECIMAL NOT NULL,
     tp_categoria VARCHAR(100) NOT NULL,
+    sn_ativo BIT DEFAULT 1,
     PRIMARY KEY (cd_produto)
 ) ENGINE=InnoDB;

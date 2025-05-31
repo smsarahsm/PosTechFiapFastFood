@@ -20,4 +20,5 @@ public interface PedidoRepositoryPort {
     List<PedidoModel> buscarPedidosPorStatus(TipoStatusPedidoEnum status);
 
     ProdutosPedidoModel cadastrarProdutosPedido(ProdutosPedidoModel produtosPedidoModel);
+    int buscarUltimoNumeroPedido();
 }

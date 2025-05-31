@@ -75,4 +75,10 @@ public class PedidoRepository implements PedidoRepositoryPort {
         em.merge(entity);
         return ProdutosPedidoMapper.entityToModel(entity);
     }
+
+    public int buscarUltimoNumeroPedido() {
+        var jpql = "SELECT MAX(p.nrPedido) FROM PedidoEntity p";
+        Integer max = em.createQuery(jpql, Integer.class).getSingleResult();
+        return max == null ? 0 : max;
+    }
 }

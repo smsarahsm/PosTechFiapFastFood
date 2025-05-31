@@ -16,6 +16,7 @@ public class ProdutoMapper {
         e.setNmProduto(model.getNmProduto());
         e.setDsDescricao(model.getDsDescricao());
         e.setVlPreco(model.getVlPreco());
+        e.setSnAtivo(model.getSnAtivo());
         e.setTpCategoria(model.getTpCategoria());
         return e;
     }
@@ -26,6 +27,7 @@ public class ProdutoMapper {
         m.setNmProduto(entity.getNmProduto());
         m.setDsDescricao(entity.getDsDescricao());
         m.setVlPreco(entity.getVlPreco());
+        m.setSnAtivo(entity.isSnAtivo());
         m.setTpCategoria(entity.getTpCategoria());
         return m;
     }
@@ -35,6 +37,7 @@ public class ProdutoMapper {
                 produtoRequestDto.nmProduto(),
                 produtoRequestDto.dsDescricao(),
                 produtoRequestDto.vlPreco(),
+                produtoRequestDto.snAtivo(),
                 produtoRequestDto.tpCategoria());
     }
 

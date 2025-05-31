@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -37,13 +38,29 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
 
     @Override
     @Transactional
-    public void deletar(UUID cdProduto) {
-        em.remove(em.getReference(ProdutoEntity.class, cdProduto));
+    public void desativar(UUID cdProduto) {
+        Optional<ProdutoEntity> produtoEntity = buscarPorCdProduto(cdProduto);
+        if (produtoEntity.isPresent()) {
+            ProdutoEntity entity = produtoEntity.get();
+            entity.setSnAtivo(false);
+            em.merge(entity);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void ativar(UUID cdProduto) {
+        Optional<ProdutoEntity> produtoEntity = buscarPorCdProduto(cdProduto);
+        if (produtoEntity.isPresent()) {
+            ProdutoEntity entity = produtoEntity.get();
+            entity.setSnAtivo(true);
+            em.merge(entity);
+        }
     }
 
     @Override
     public List<ProdutoModel> buscar() {
-        var jpql = "FROM ProdutoEntity";
+        var jpql = "FROM ProdutoEntity WHERE snAtivo = true";
         List<ProdutoEntity> produtosEntity = em.createQuery(jpql, ProdutoEntity.class)
                 .getResultList();
 
@@ -52,11 +69,15 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
 
     @Override
     public List<ProdutoModel> buscar(TipoCategoriaProdutoEnum tpCategoria) {
-        var jpql = "FROM ProdutoEntity WHERE tpCategoria = :tpCategoria";
+        var jpql = "FROM ProdutoEntity WHERE tpCategoria = :tpCategoria AND snAtivo = true";
         List<ProdutoEntity> produtosEntity = em.createQuery(jpql, ProdutoEntity.class)
                 .setParameter("tpCategoria", tpCategoria)
                 .getResultList();
 
         return produtosEntity.stream().map(ProdutoMapper::toModel).toList();
+    }
+
+    private Optional<ProdutoEntity> buscarPorCdProduto(UUID cdProduto) {
+        return Optional.ofNullable(em.find(ProdutoEntity.class, cdProduto));
     }
 }

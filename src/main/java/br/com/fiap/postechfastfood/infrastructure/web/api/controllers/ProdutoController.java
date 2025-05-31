@@ -20,16 +20,16 @@ import java.util.UUID;
 @RequestMapping("/api")
 @Tag(name="Produtos", description = "end-point para gerenciar os produtos")
 public class ProdutoController {
-    private final ProdutoServicePort produtoService;
+    private final ProdutoServicePort produtoServicePort;
 
-    public ProdutoController(ProdutoServicePort produtoService) {
-        this.produtoService = produtoService;
+    public ProdutoController(ProdutoServicePort produtoServicePort) {
+        this.produtoServicePort = produtoServicePort;
     }
 
     @PostMapping("/v1/produto")
     @Operation(summary = "Cadastra produtos", description = "Cadastra os produtos")
     public ResponseEntity<ProdutoResponseDto> cadastrarProduto(@RequestBody ProdutoRequestDto produtoRequestDto) {
-        ProdutoResponseDto produtoResponseDto = ProdutoMapper.toResponse(produtoService.cadastrar(ProdutoMapper.requestToModel(produtoRequestDto)));
+        ProdutoResponseDto produtoResponseDto = ProdutoMapper.toResponse(produtoServicePort.cadastrar(ProdutoMapper.requestToModel(produtoRequestDto)));
         return ResponseEntity.created(URI.create("/api/v1/produto/" + produtoResponseDto.cdProduto()))
                 .body(produtoResponseDto);
     }
@@ -39,21 +39,28 @@ public class ProdutoController {
     public ResponseEntity<ProdutoResponseDto> atualizarProduto(@PathVariable UUID cdProduto,
                                                                @RequestBody ProdutoRequestDto produtoRequestDto)
     {
-        ProdutoResponseDto produtoResponseDto = ProdutoMapper.toResponse(produtoService.atualizar(cdProduto, ProdutoMapper.requestToModel(produtoRequestDto)));
+        ProdutoResponseDto produtoResponseDto = ProdutoMapper.toResponse(produtoServicePort.atualizar(cdProduto, ProdutoMapper.requestToModel(produtoRequestDto)));
         return ResponseEntity.ok(produtoResponseDto);
     }
 
-    @DeleteMapping("/v1/produto/{cdProduto}")
-    @Operation(summary = "Remove produtos", description = "Remove produtos existentes")
-    public ResponseEntity<Void> deletarProduto(@PathVariable UUID cdProduto){
-        produtoService.deletar(cdProduto);
+    @PatchMapping("/v1/produto/{cdProduto}/desativar")
+    @Operation(summary = "Desativa produtos", description = "Desativa produtos existentes")
+    public ResponseEntity<Void> desativarProduto(@PathVariable UUID cdProduto){
+        produtoServicePort.desativar(cdProduto);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PatchMapping("/v1/produto/{cdProduto}/ativar")
+    @Operation(summary = "Ativa produtos", description = "Ativa produtos existentes")
+    public ResponseEntity<Void> ativarProduto(@PathVariable UUID cdProduto){
+        produtoServicePort.ativar(cdProduto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/v1/produtos/categoria")
     @Operation(summary = "Lista produtos", description = "Lista todos produtos existentes por categoria")
     public ResponseEntity<List<ProdutoResponseDto>> buscar(@RequestParam TipoCategoriaProdutoEnum tipo) {
-        List<ProdutoModel> produtoResponse = produtoService.buscar(tipo);
+        List<ProdutoModel> produtoResponse = produtoServicePort.buscar(tipo);
 
         if (produtoResponse.isEmpty()) { return ResponseEntity.notFound().build(); }
 
@@ -63,7 +70,7 @@ public class ProdutoController {
     @GetMapping("/v1/produtos")
     @Operation(summary = "Lista produtos", description = "Lista todos produtos existentes")
     public ResponseEntity<List<ProdutoResponseDto>> buscar() {
-        List<ProdutoModel> produtoResponse = produtoService.buscar();
+        List<ProdutoModel> produtoResponse = produtoServicePort.buscar();
 
         if (produtoResponse.isEmpty()) { return ResponseEntity.notFound().build(); }
 

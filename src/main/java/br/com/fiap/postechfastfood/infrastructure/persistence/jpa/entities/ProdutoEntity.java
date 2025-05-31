@@ -27,6 +27,8 @@ public class ProdutoEntity {
     private String dsDescricao;
     @Column(name = "vl_preco", nullable = false)
     private double vlPreco;
+    @Column(name = "sn_ativo")
+    private boolean snAtivo;
     @Enumerated(EnumType.STRING)
     @Column(name = "tp_categoria", nullable = false)
     private TipoCategoriaProdutoEnum tpCategoria;
@@ -40,6 +42,7 @@ public class ProdutoEntity {
                 ", nmProduto='" + nmProduto + '\'' +
                 ", dsDescricao='" + dsDescricao + '\'' +
                 ", vlPreco=" + vlPreco +
+                ", snAtivo=" + snAtivo +
                 ", tpCategoria=" + tpCategoria +
                 '}';
     }

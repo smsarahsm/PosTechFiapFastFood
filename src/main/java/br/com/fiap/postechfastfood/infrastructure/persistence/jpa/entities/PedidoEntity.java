@@ -24,10 +24,10 @@ public class PedidoEntity {
     @Column(name = "cd_pedido", nullable = false, unique = true)
     private UUID cdPedido;
 
-    @Column(name = "cd_doc_cliente", nullable = false)
+    @Column(name = "cd_doc_cliente")
     private String cdDocCliente;
 
-    @Column(name = "cd_doc_funcionario", nullable = false)
+    @Column(name = "cd_doc_funcionario")
     private String cdDocFuncionario;
 
     @Enumerated(EnumType.STRING)
@@ -37,10 +37,10 @@ public class PedidoEntity {
     @Column(name = "nr_pedido", nullable = false)
     private int nrPedido;
 
-    @Column(name = "dh_criacao_pedido", nullable = false)
+    @Column(name = "dh_criacao_pedido")
     private LocalDateTime dhCriacaoPedido;
 
-    @Column(name = "dh_ult_atualizacao", nullable = false)
+    @Column(name = "dh_ult_atualizacao")
     private LocalDateTime dhUltAtualizacao;
 
     @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER)

@@ -1,7 +1,7 @@
 CREATE TABLE tb_pedidos
 (
     cd_pedido UUID NOT NULL DEFAULT UUID(),
-    cd_doc_cliente CHAR(11) NOT NULL,
+    cd_doc_cliente CHAR(11),
     cd_doc_funcionario CHAR(11),
     tx_status VARCHAR(200) NOT NULL,
     nr_pedido TINYINT NOT NULL DEFAULT 0,

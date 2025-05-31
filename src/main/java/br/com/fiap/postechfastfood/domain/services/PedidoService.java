@@ -20,23 +20,29 @@ public class PedidoService implements PedidoServicePort {
 
     @Override
     public PedidoModel criar(PedidoModel pedido) {
+        int ultimoNumero = pedidoRepositoryPort.buscarUltimoNumeroPedido();
+        int proximoNumero = (ultimoNumero >= 999) ? 1 : ultimoNumero + 1;
         pedido.setCdPedido(UUID.randomUUID());
-        pedido.setDhCriacaoPedido(LocalDateTime.now());
-        pedido.setDhUltAtualizacao(LocalDateTime.now());
+        pedido.setNrPedido(proximoNumero);
         PedidoModel pedidoSalvo = pedidoRepositoryPort.cadastrarPedido(pedido);
         pedido.getItens().forEach(item -> {
             ProdutosPedidoModel produtosPedidoModel = new ProdutosPedidoModel();
             produtosPedidoModel.setPedido(pedido);
             produtosPedidoModel.setProduto(item.getProduto());
             produtosPedidoModel.setVlQuantidade(item.getVlQuantidade());
-            ProdutosPedidoModel response = pedidoRepositoryPort.cadastrarProdutosPedido(produtosPedidoModel);
+            pedidoRepositoryPort.cadastrarProdutosPedido(produtosPedidoModel);
         });
-        return pedido;
+        return pedidoSalvo;
     }
 
     @Override
     public PedidoModel atualizar(UUID cdPedido, PedidoModel model) {
         return pedidoRepositoryPort.atualizarStatusPedido(cdPedido, model.getTxStatus());
+    }
+
+    @Override
+    public PedidoModel atualizaStatus(UUID cdPedido, TipoStatusPedidoEnum status) {
+        return pedidoRepositoryPort.atualizarStatusPedido(cdPedido, status);
     }
 
     @Override

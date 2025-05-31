@@ -11,9 +11,11 @@ public record ProdutoRequestDto(UUID cdProduto,
                                 String nmProduto,
                                 String dsDescricao,
                                 double vlPreco,
+                                boolean snAtivo,
                                 TipoCategoriaProdutoEnum tpCategoria) {
     public ProdutoRequestDto(ProdutoModel model){
-       this(model.getCdProduto(), model.getNmProduto(), model.getDsDescricao(), model.getVlPreco(), model.getTpCategoria());
+       this(model.getCdProduto(), model.getNmProduto(), model.getDsDescricao(), model.getVlPreco(), model.getSnAtivo(),
+               model.getTpCategoria());
     }
 }
 
