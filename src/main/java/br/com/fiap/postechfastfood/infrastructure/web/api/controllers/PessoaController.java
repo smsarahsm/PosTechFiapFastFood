@@ -24,7 +24,7 @@ public class PessoaController {
 
     private final PessoaServicePort pessoaService;
 
-    public PessoaController(PessoaService pessoaService) {
+    public PessoaController(PessoaServicePort pessoaService) {
         this.pessoaService = pessoaService;
     }
 
