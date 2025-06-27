@@ -31,7 +31,7 @@ public class PessoaWebHandler {
     @PostMapping("/v1/pessoa")
     @Operation(summary = "Cadastra pessoas", description = "Cadastra os clientes e funcionarios")
     public ResponseEntity<?> cadastrarPessoa(@Valid @RequestBody PessoaWebHandlerRequest pessoaWebHandlerRequest) {
-
+        //TODO:instanciar o dbConnection e chamar o metodo da controller
         return ResponseEntity.created(URI.create("/api/v1/pessoa/")).build();
     }
 }

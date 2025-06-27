@@ -24,4 +24,5 @@ public record PessoaWebHandlerRequest(
         @NotNull(message = "O atributo dsEmail é obrigatório.")
         @Email(message = "O valor informado para dsEmail não é um e-mail válido")
         String dsEmail) {
+        //TODO:implementar construtor igual do projeto anterior
 }
