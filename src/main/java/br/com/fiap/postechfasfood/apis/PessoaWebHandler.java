@@ -1,11 +1,9 @@
 package br.com.fiap.postechfasfood.apis;
 
 import br.com.fiap.postechfasfood.apis.requests.PessoaWebHandlerRequest;
+import br.com.fiap.postechfasfood.controllers.PessoaController;
+import br.com.fiap.postechfasfood.gateways.entities.PessoaEntity;
 import br.com.fiap.postechfasfood.interfaces.DbConnection;
-import br.com.fiap.postechfastfood_old.domain.ports.in.PessoaServicePort;
-import br.com.fiap.postechfastfood_old.infrastructure.web.api.controllers.PessoaController;
-import br.com.fiap.postechfastfood_old.infrastructure.web.api.dtos.PessoaResponseDto;
-import br.com.fiap.postechfastfood_old.infrastructure.web.api.dtos.PessoaRestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -31,7 +29,9 @@ public class PessoaWebHandler {
     @PostMapping("/v1/pessoa")
     @Operation(summary = "Cadastra pessoas", description = "Cadastra os clientes e funcionarios")
     public ResponseEntity<?> cadastrarPessoa(@Valid @RequestBody PessoaWebHandlerRequest pessoaWebHandlerRequest) {
-        //TODO:instanciar o dbConnection e chamar o metodo da controller
+        //TODO:alterar o retorno de todos os metodos para retornar um objeto ao inves de void
+        final PessoaController pessoaController = new PessoaController();
+        pessoaController.criarEstudante(dbConnection, pessoaWebHandlerRequest);
         return ResponseEntity.created(URI.create("/api/v1/pessoa/")).build();
     }
 }

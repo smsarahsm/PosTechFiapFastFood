@@ -1,11 +1,12 @@
 package br.com.fiap.postechfasfood.apis.requests;
 
-import br.com.fiap.postechfastfood_old.domain.enums.TipoPessoaEnum;
-import br.com.fiap.postechfastfood_old.domain.models.PessoaModel;
+import br.com.fiap.postechfasfood.types.TipoPessoaEnum;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.Getter;
 import org.hibernate.validator.constraints.br.CPF;
 
 public record PessoaWebHandlerRequest(
