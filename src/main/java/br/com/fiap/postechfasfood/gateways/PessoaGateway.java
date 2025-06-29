@@ -42,4 +42,11 @@ public class PessoaGateway implements PessoaGatewayInterface {
         p.setDsEmail(pessoaEntity.getDsEmail());
         return p;
     }
+
+    @Override
+    public PessoaVO buscarPessoaPorCpf(String cpf) {
+    PessoaEntity entity = dbConnection.BuscarPessoaPorCpf(cpf);
+    if (entity == null) return null;
+    return toVo(entity);
+}
 }
