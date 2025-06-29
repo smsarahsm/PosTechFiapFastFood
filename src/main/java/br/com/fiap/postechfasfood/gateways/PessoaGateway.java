@@ -1,15 +1,15 @@
 package br.com.fiap.postechfasfood.gateways;
 
 import br.com.fiap.postechfasfood.entities.PessoaVO;
+import br.com.fiap.postechfasfood.externals.DbConnectionMariaDBImp;
 import br.com.fiap.postechfasfood.gateways.entities.PessoaEntity;
-import br.com.fiap.postechfasfood.interfaces.DbConnection;
 import br.com.fiap.postechfasfood.interfaces.PessoaGatewayInterface;
 
 public class PessoaGateway implements PessoaGatewayInterface {
 
-    private final DbConnection dbConnection;
+    private final DbConnectionMariaDBImp dbConnection;
 
-    public PessoaGateway(DbConnection dbConnection) {
+    public PessoaGateway(DbConnectionMariaDBImp dbConnection) {
         this.dbConnection = dbConnection;
     }
 

@@ -7,7 +7,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-@Service
+//@Service
 public class DbConnectionMariaDBImp implements DbConnection {
     @PersistenceContext
     private EntityManager em;

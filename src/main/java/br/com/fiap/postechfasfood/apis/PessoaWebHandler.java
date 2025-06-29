@@ -3,6 +3,7 @@ package br.com.fiap.postechfasfood.apis;
 import br.com.fiap.postechfasfood.apis.requests.PessoaWebHandlerRequest;
 import br.com.fiap.postechfasfood.apis.responses.PessoaWebHandlerResponse;
 import br.com.fiap.postechfasfood.controllers.PessoaController;
+import br.com.fiap.postechfasfood.externals.DbConnectionMariaDBImp;
 import br.com.fiap.postechfasfood.interfaces.DbConnection;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,9 +21,13 @@ import java.net.URI;
 @Tag(name = "Pessoas", description = "end-point para gerenciar os clientes e funcionarios")
 public class PessoaWebHandler {
 
-    private final DbConnection dbConnection;
+    //    private final DbConnection dbConnection;
+//    public PessoaWebHandler(DbConnection dbConnection) {
+//        this.dbConnection = dbConnection;
+//    }
+    private final DbConnectionMariaDBImp dbConnection;
 
-    public PessoaWebHandler(DbConnection dbConnection) {
+    public PessoaWebHandler(DbConnectionMariaDBImp dbConnection) {
         this.dbConnection = dbConnection;
     }
 
