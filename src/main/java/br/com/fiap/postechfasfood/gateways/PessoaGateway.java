@@ -23,6 +23,7 @@ public class PessoaGateway implements PessoaGatewayInterface {
         return toVo(pessoaEntity);
     }
 
+    //TODO: discutir a necessidade de um arquivo diferente para mappers... ou a inclusão dos metodos no adapters/presenters
     private PessoaEntity toEntity(PessoaVO pessoaVO) {
         PessoaEntity e = new PessoaEntity();
         e.setNmPessoa(pessoaVO.getNmPessoa());
@@ -32,6 +33,7 @@ public class PessoaGateway implements PessoaGatewayInterface {
         return e;
     }
 
+    //TODO: discutir a necessidade de um arquivo diferente para mappers... ou a inclusão dos metodos no adapters/presenters
     private PessoaVO toVo(PessoaEntity pessoaEntity) {
         PessoaVO p = new PessoaVO();
         p.setNmPessoa(pessoaEntity.getNmPessoa());

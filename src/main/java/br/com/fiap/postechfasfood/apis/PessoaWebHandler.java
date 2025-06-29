@@ -1,8 +1,8 @@
 package br.com.fiap.postechfasfood.apis;
 
 import br.com.fiap.postechfasfood.apis.requests.PessoaWebHandlerRequest;
+import br.com.fiap.postechfasfood.apis.responses.PessoaWebHandlerResponse;
 import br.com.fiap.postechfasfood.controllers.PessoaController;
-import br.com.fiap.postechfasfood.gateways.entities.PessoaEntity;
 import br.com.fiap.postechfasfood.interfaces.DbConnection;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,10 +28,10 @@ public class PessoaWebHandler {
 
     @PostMapping("/v1/pessoa")
     @Operation(summary = "Cadastra pessoas", description = "Cadastra os clientes e funcionarios")
-    public ResponseEntity<?> cadastrarPessoa(@Valid @RequestBody PessoaWebHandlerRequest pessoaWebHandlerRequest) {
-        //TODO:alterar o retorno de todos os metodos para retornar um objeto ao inves de void
+    public ResponseEntity<PessoaWebHandlerResponse> cadastrarPessoa(@Valid @RequestBody PessoaWebHandlerRequest pessoaWebHandlerRequest) {
         final PessoaController pessoaController = new PessoaController();
-        pessoaController.criarEstudante(dbConnection, pessoaWebHandlerRequest);
-        return ResponseEntity.created(URI.create("/api/v1/pessoa/")).build();
+        var response = pessoaController.criarEstudante(dbConnection, pessoaWebHandlerRequest);
+        return ResponseEntity.created(URI.create("/api/v1/pessoa/" + response.cdDocPessoa()))
+                .body(response);
     }
 }
