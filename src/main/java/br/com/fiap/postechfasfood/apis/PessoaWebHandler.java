@@ -1,5 +1,16 @@
 package br.com.fiap.postechfasfood.apis;
 
+import java.net.URI;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import br.com.fiap.postechfasfood.apis.requests.PessoaWebHandlerRequest;
 import br.com.fiap.postechfasfood.apis.responses.PessoaWebHandlerResponse;
 import br.com.fiap.postechfasfood.controllers.PessoaController;
@@ -7,14 +18,6 @@ import br.com.fiap.postechfasfood.interfaces.DbConnection;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.net.URI;
 
 @Service
 @RestController
@@ -27,13 +30,22 @@ public class PessoaWebHandler {
     public PessoaWebHandler(DbConnection dbConnection) {
         this.dbConnection = dbConnection;
     }
+    
 
     @PostMapping("/v1/pessoa")
     @Operation(summary = "Cadastra pessoas", description = "Cadastra os clientes e funcionarios")
     public ResponseEntity<PessoaWebHandlerResponse> cadastrarPessoa(@Valid @RequestBody PessoaWebHandlerRequest pessoaWebHandlerRequest) {
         final PessoaController pessoaController = new PessoaController();
-        var response = pessoaController.criarEstudante(dbConnection, pessoaWebHandlerRequest);
+        var response = pessoaController.criarPessoa(dbConnection, pessoaWebHandlerRequest);
         return ResponseEntity.created(URI.create("/api/v1/pessoa/" + response.cdDocPessoa()))
                 .body(response);
+    }
+
+    @GetMapping("/v1/pessoa/{cdDocPessoa}")
+    @Operation(summary = "Busca pessoa", description = "Busca o cliente ou funcionario por documento")
+    public ResponseEntity<PessoaWebHandlerResponse> buscarPessoaPorCpf(@PathVariable String cdDocPessoa) {
+        final PessoaController pessoaController = new PessoaController();
+        var response = pessoaController.buscarPessoaPorCpf(dbConnection, cdDocPessoa);
+        return ResponseEntity.ok(response);
     }
 }

@@ -1,10 +1,15 @@
 package br.com.fiap.postechfasfood.gateways;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import br.com.fiap.postechfasfood.entities.PessoaVO;
 import br.com.fiap.postechfasfood.gateways.entities.PessoaEntity;
 import br.com.fiap.postechfasfood.interfaces.DbConnection;
 import br.com.fiap.postechfasfood.interfaces.PessoaGatewayInterface;
 
+@Service
 public class PessoaGateway implements PessoaGatewayInterface {
 
     private final DbConnection dbConnection;
@@ -49,4 +54,14 @@ public class PessoaGateway implements PessoaGatewayInterface {
     if (entity == null) return null;
     return toVo(entity);
 }
+
+    @Override
+    public List<PessoaVO> listarTodasPessoas() {
+        throw new UnsupportedOperationException("Unimplemented method 'listarTodasPessoas'");
+    }
+
+    @Override
+    public void removerPessoa(String cdDocPessoa) {
+        throw new UnsupportedOperationException("Unimplemented method 'removerPessoa'");
+    }
 }

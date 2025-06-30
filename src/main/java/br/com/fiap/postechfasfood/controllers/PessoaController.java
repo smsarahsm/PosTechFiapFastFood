@@ -9,12 +9,21 @@ import br.com.fiap.postechfasfood.usecases.PessoaUseCase;
 
 public class PessoaController {
 
-    public PessoaWebHandlerResponse criarEstudante(DbConnection dbConnection, PessoaWebHandlerRequest request){
+    public PessoaWebHandlerResponse criarPessoa(DbConnection dbConnection, PessoaWebHandlerRequest request){
         final PessoaGateway pessoaGateway = new PessoaGateway(dbConnection);
-        PessoaUseCase pessoaUseCase = new PessoaUseCase();
+        PessoaUseCase pessoaUseCase = new PessoaUseCase(pessoaGateway);
         var pessoaCriada = pessoaUseCase.criarPessoa(pessoaGateway, request);
         final PessoaWebHandlerAdapter pessoaWebHandlerAdapter = new PessoaWebHandlerAdapter();
         var response = pessoaWebHandlerAdapter.toResponseDto(pessoaCriada);
+        return response;
+    }
+
+    public PessoaWebHandlerResponse buscarPessoaPorCpf(DbConnection dbConnection, String cdDocPessoa) { 
+        final PessoaGateway pessoaGateway = new PessoaGateway(dbConnection);
+        PessoaUseCase pessoaUseCase = new PessoaUseCase(pessoaGateway);
+        var pessoa = pessoaUseCase.buscarPessoaPorCpf(cdDocPessoa);
+        final PessoaWebHandlerAdapter pessoaWebHandlerAdapter = new PessoaWebHandlerAdapter();
+        var response = pessoaWebHandlerAdapter.toResponseDto(pessoa);
         return response;
     }
 
