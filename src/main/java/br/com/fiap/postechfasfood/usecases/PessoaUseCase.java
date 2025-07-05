@@ -31,7 +31,7 @@ public class PessoaUseCase {
                 request.nmPessoa(),
                 request.tpPessoa(),
                 request.dsEmail());
-        var pessoaCriada = pessoaGateway.InserirPessoaNaBase(pessoa);
+        var pessoaCriada = pessoaGateway.inserirPessoaNaBase(pessoa);
         return pessoaCriada;
     }
 
