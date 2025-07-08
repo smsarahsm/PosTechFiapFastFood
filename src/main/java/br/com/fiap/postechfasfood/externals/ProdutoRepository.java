@@ -1,6 +1,7 @@
 package br.com.fiap.postechfasfood.externals;
 
 import br.com.fiap.postechfasfood.entities.ProdutoVO;
+import br.com.fiap.postechfasfood.externals.mappers.ProdutoRowMapper;
 import br.com.fiap.postechfasfood.interfaces.ProdutoRepositoryInterface;
 import br.com.fiap.postechfasfood.types.TipoCategoriaProdutoEnum;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -91,14 +92,7 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
                 "tp_categoria " +
                 "FROM tb_produtos " +
                 "WHERE sn_ativo = :snAtivo";
-        return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> new ProdutoVO.Builder()
-                .setCdProduto(rs.getObject("cd_produto", UUID.class))
-                .setNmProduto(rs.getString("nm_produto"))
-                .setDsDescricao(rs.getString("ds_descricao"))
-                .setVlPreco(rs.getDouble("vl_preco"))
-                .setSnAtivo(rs.getBoolean("sn_ativo"))
-                .setTpCategoria(TipoCategoriaProdutoEnum.valueOf(rs.getString("tp_categoria")))
-                .build());
+        return namedParameterJdbcTemplate.query(sql, params, new ProdutoRowMapper());
     }
 
     @Override
@@ -116,14 +110,7 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
                 "FROM tb_produtos " +
                 "WHERE sn_ativo = :snAtivo " +
                 "AND tp_categoria = :tpCategoria";
-        return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> new ProdutoVO.Builder()
-                .setCdProduto(rs.getObject("cd_produto", UUID.class))
-                .setNmProduto(rs.getString("nm_produto"))
-                .setDsDescricao(rs.getString("ds_descricao"))
-                .setVlPreco(rs.getDouble("vl_preco"))
-                .setSnAtivo(rs.getBoolean("sn_ativo"))
-                .setTpCategoria(TipoCategoriaProdutoEnum.valueOf(rs.getString("tp_categoria")))
-                .build());
+        return namedParameterJdbcTemplate.query(sql, params, new ProdutoRowMapper());
     }
 
     @Override
@@ -139,13 +126,6 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
                 "tp_categoria " +
                 "FROM tb_produtos " +
                 "WHERE cd_produto = :cdProduto";
-        return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> new ProdutoVO.Builder()
-                .setCdProduto(rs.getObject("cd_produto", UUID.class))
-                .setNmProduto(rs.getString("nm_produto"))
-                .setDsDescricao(rs.getString("ds_descricao"))
-                .setVlPreco(rs.getDouble("vl_preco"))
-                .setSnAtivo(rs.getBoolean("sn_ativo"))
-                .setTpCategoria(TipoCategoriaProdutoEnum.valueOf(rs.getString("tp_categoria")))
-                .build());
+        return namedParameterJdbcTemplate.queryForObject(sql, params, new ProdutoRowMapper());
     }
 }

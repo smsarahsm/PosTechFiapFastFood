@@ -1,6 +1,7 @@
 package br.com.fiap.postechfasfood.externals;
 
 import br.com.fiap.postechfasfood.entities.PessoaVO;
+import br.com.fiap.postechfasfood.externals.mappers.PessoaRowMapper;
 import br.com.fiap.postechfasfood.types.TipoPessoaEnum;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -27,7 +28,7 @@ public class PessoaRepository implements br.com.fiap.postechfasfood.interfaces.P
         params.addValue("dsEmail", pessoa.getDsEmail());
 
         String sql = "INSERT INTO tb_pessoas (cd_doc_pessoa, nm_pessoa, tp_pessoa, ds_email) " +
-                "VALUES (:cdDocPessoa, :nmPessoa, :tpPessoa, :dsEmail))";
+                "VALUES (:cdDocPessoa, :nmPessoa, :tpPessoa, :dsEmail)";
         namedJdbcTemplate.update(sql, params);
     }
 
@@ -43,12 +44,7 @@ public class PessoaRepository implements br.com.fiap.postechfasfood.interfaces.P
                 "FROM tb_pessoas " +
                 "WHERE cd_doc_pessoa = :cdDocPessoa";
         try {
-            return namedJdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> new PessoaVO.Builder()
-                    .setCdDocPessoa(rs.getString("cd_doc_pessoa"))
-                    .setNmPessoa(rs.getString("nm_pessoa"))
-                    .setTpPessoa(TipoPessoaEnum.valueOf(rs.getString("tp_pessoa")))
-                    .setDsEmail(rs.getString("ds_email"))
-                    .build());
+            return namedJdbcTemplate.queryForObject(sql, params, new PessoaRowMapper());
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -61,12 +57,7 @@ public class PessoaRepository implements br.com.fiap.postechfasfood.interfaces.P
                 "tp_pessoa, " +
                 "ds_email " +
                 "FROM tb_pessoas ";
-        return namedJdbcTemplate.query(sql, (rs, rowNum) -> new PessoaVO.Builder()
-                .setCdDocPessoa(rs.getString("cd_doc_pessoa"))
-                .setNmPessoa(rs.getString("nm_pessoa"))
-                .setTpPessoa(TipoPessoaEnum.valueOf(rs.getString("tp_pessoa")))
-                .setDsEmail(rs.getString("ds_email"))
-                .build());
+        return namedJdbcTemplate.query(sql, new PessoaRowMapper());
     }
 
     @Override
