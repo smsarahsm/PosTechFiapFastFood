@@ -18,4 +18,19 @@ public class DbConnectionMariaDBImp implements DbConnection {
         em.merge(pessoaEntity);
     }
 
+    @Override
+    @Transactional
+    public PessoaEntity BuscarPessoaPorCpf(String cdDocPessoa) {
+    return em.createQuery(
+            "SELECT p FROM PessoaEntity p WHERE p.cdDocPessoa = :cpf", PessoaEntity.class)
+            .setParameter("cpf", cdDocPessoa)
+            .getResultStream()
+            .findFirst()
+            .orElse(null);
+}
+
+    @Override
+    public void criarPedido(PedidoEntity pedidoEntity) {
+
+    }
 }

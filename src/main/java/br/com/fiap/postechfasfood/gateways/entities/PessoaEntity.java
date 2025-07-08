@@ -1,5 +1,6 @@
 package br.com.fiap.postechfasfood.gateways.entities;
 
+import br.com.fiap.postechfasfood.entities.PessoaVO;
 import br.com.fiap.postechfasfood.types.TipoPessoaEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,4 +26,8 @@ public class PessoaEntity {
     private TipoPessoaEnum tpPessoa;
     @Column(name = "ds_email", nullable = false)
     private String dsEmail;
+    public PessoaVO get() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'get'");
+    }
 }
