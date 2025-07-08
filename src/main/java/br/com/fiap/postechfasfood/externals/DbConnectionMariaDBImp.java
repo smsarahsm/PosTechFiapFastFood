@@ -28,9 +28,4 @@ public class DbConnectionMariaDBImp implements DbConnection {
             .findFirst()
             .orElse(null);
 }
-
-    @Override
-    public void criarPedido(PedidoEntity pedidoEntity) {
-
-    }
 }

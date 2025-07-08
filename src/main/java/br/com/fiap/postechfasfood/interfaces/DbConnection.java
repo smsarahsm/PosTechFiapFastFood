@@ -6,5 +6,4 @@ public interface DbConnection {
     void CriarPessoa(PessoaEntity pessoaEntity);
 
     PessoaEntity BuscarPessoaPorCpf(String cdDocPessoa);
-    void criarPedido(PedidoEntity pedidoEntity);
 }

@@ -2,6 +2,8 @@ package br.com.fiap.postechfasfood.interfaces;
 
 import br.com.fiap.postechfasfood.entities.PedidoVO;
 
-public interface PedidoGatewayInterface {
-    public PedidoVO inserirPedidoNaBase(PedidoVO pedidoVO);
+public interface PedidoRepositoryInterface {
+
+    void criarPedido(PedidoVO pedidoVO);
+
 }
