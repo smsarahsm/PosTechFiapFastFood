@@ -2,7 +2,6 @@ package br.com.fiap.postechfasfood.externals;
 
 import br.com.fiap.postechfasfood.entities.PessoaVO;
 import br.com.fiap.postechfasfood.externals.mappers.PessoaRowMapper;
-import br.com.fiap.postechfasfood.types.TipoPessoaEnum;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -14,6 +13,8 @@ import java.util.List;
 public class PessoaRepository implements br.com.fiap.postechfasfood.interfaces.PessoaRepositoryInterface {
 
     private final NamedParameterJdbcTemplate namedJdbcTemplate;
+
+    private static final String SELECT_TB_PESSOAS = "SELECT cd_doc_pessoa, nm_pessoa, tp_pessoa, ds_email FROM tb_pessoas";
 
     public PessoaRepository(NamedParameterJdbcTemplate namedJdbcTemplate) {
         this.namedJdbcTemplate = namedJdbcTemplate;
@@ -37,12 +38,7 @@ public class PessoaRepository implements br.com.fiap.postechfasfood.interfaces.P
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("cdDocPessoa", cdDocPessoa);
 
-        String sql = "SELECT cd_doc_pessoa, " +
-                "nm_pessoa, " +
-                "tp_pessoa, " +
-                "ds_email " +
-                "FROM tb_pessoas " +
-                "WHERE cd_doc_pessoa = :cdDocPessoa";
+        String sql = SELECT_TB_PESSOAS + " WHERE cd_doc_pessoa = :cdDocPessoa";
         try {
             return namedJdbcTemplate.queryForObject(sql, params, new PessoaRowMapper());
         } catch (EmptyResultDataAccessException e) {
@@ -52,12 +48,7 @@ public class PessoaRepository implements br.com.fiap.postechfasfood.interfaces.P
 
     @Override
     public List<PessoaVO> listarTodasPessoas() {
-        String sql = "SELECT cd_doc_pessoa, " +
-                "nm_pessoa, " +
-                "tp_pessoa, " +
-                "ds_email " +
-                "FROM tb_pessoas ";
-        return namedJdbcTemplate.query(sql, new PessoaRowMapper());
+        return namedJdbcTemplate.query(SELECT_TB_PESSOAS, new PessoaRowMapper());
     }
 
     @Override

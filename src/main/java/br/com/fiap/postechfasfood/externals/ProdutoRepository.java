@@ -16,6 +16,8 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
+    private static final String SELECT_TB_PRODUTOS = "SELECT cd_produto, nm_produto, ds_descricao, vl_preco, sn_ativo, tp_categoria FROM tb_produtos";
+
     public ProdutoRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
@@ -84,14 +86,7 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("snAtivo", true);
 
-        String sql = "SELECT cd_produto, " +
-                "nm_produto, " +
-                "ds_descricao, " +
-                "vl_preco, " +
-                "sn_ativo, " +
-                "tp_categoria " +
-                "FROM tb_produtos " +
-                "WHERE sn_ativo = :snAtivo";
+        String sql = SELECT_TB_PRODUTOS + " WHERE sn_ativo = :snAtivo";
         return namedParameterJdbcTemplate.query(sql, params, new ProdutoRowMapper());
     }
 
@@ -101,15 +96,7 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
         params.addValue("snAtivo", true);
         params.addValue("tpCategoria", tpCategoria);
 
-        String sql = "SELECT cd_produto, " +
-                "nm_produto, " +
-                "ds_descricao, " +
-                "vl_preco, " +
-                "sn_ativo, " +
-                "tp_categoria " +
-                "FROM tb_produtos " +
-                "WHERE sn_ativo = :snAtivo " +
-                "AND tp_categoria = :tpCategoria";
+        String sql = SELECT_TB_PRODUTOS + " WHERE sn_ativo = :snAtivo AND tp_categoria = :tpCategoria";
         return namedParameterJdbcTemplate.query(sql, params, new ProdutoRowMapper());
     }
 
@@ -118,14 +105,7 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("cdProduto", cdProduto);
 
-        String sql = "SELECT cd_produto, " +
-                "nm_produto, " +
-                "ds_descricao, " +
-                "vl_preco, " +
-                "sn_ativo, " +
-                "tp_categoria " +
-                "FROM tb_produtos " +
-                "WHERE cd_produto = :cdProduto";
+        String sql = SELECT_TB_PRODUTOS + " WHERE cd_produto = :cdProduto";
         return namedParameterJdbcTemplate.queryForObject(sql, params, new ProdutoRowMapper());
     }
 }
