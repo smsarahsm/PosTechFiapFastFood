@@ -30,7 +30,7 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
         params.addValue("dsDescricao", produto.getDsDescricao());
         params.addValue("vlPreco", produto.getVlPreco());
         params.addValue("snAtivo", produto.getSnAtivo());
-        params.addValue("tpCategoria", produto.getTpCategoria());
+        params.addValue("tpCategoria", produto.getTpCategoria().name());
 
         String sql = "INSERT INTO tb_produtos (cd_produto, nm_produto, ds_descricao, vl_preco, sn_ativo, tp_categoria) " +
                 "VALUES (:cdProduto, :nmProduto, :dsDescricao, :vlPreco, :snAtivo, :tpCategoria)";
@@ -45,7 +45,7 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
         params.addValue("dsDescricao", produto.getDsDescricao());
         params.addValue("vlPreco", produto.getVlPreco());
         params.addValue("snAtivo", produto.getSnAtivo());
-        params.addValue("tpCategoria", produto.getTpCategoria());
+        params.addValue("tpCategoria", produto.getTpCategoria().name());
 
         String sql = "UPDATE tb_produtos SET " +
                 "nm_produto = :cdProduto, " +
@@ -94,7 +94,7 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
     public List<ProdutoVO> listar(TipoCategoriaProdutoEnum tpCategoria) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("snAtivo", true);
-        params.addValue("tpCategoria", tpCategoria);
+        params.addValue("tpCategoria", tpCategoria.name());
 
         String sql = SELECT_TB_PRODUTOS + " WHERE sn_ativo = :snAtivo AND tp_categoria = :tpCategoria";
         return namedParameterJdbcTemplate.query(sql, params, new ProdutoRowMapper());

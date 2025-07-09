@@ -32,7 +32,7 @@ public class PedidoRepository implements PedidoRepositoryInterface {
         params.addValue("cdPedido", pedidoModel.getCdPedido());
         params.addValue("cdDocCliente", pedidoModel.getCdDocCliente());
         params.addValue("cdDocFuncionario", pedidoModel.getCdDocFuncionario());
-        params.addValue("txStatus", pedidoModel.getTxStatus());
+        params.addValue("txStatus", pedidoModel.getTxStatus().name());
         params.addValue("nrPedido", pedidoModel.getNrPedido());
         params.addValue("dhCriacaoPedido", pedidoModel.getDhCriacaoPedido());
         params.addValue("dhUltimaAtualizacao", pedidoModel.getDhUltAtualizacao());
@@ -60,9 +60,9 @@ public class PedidoRepository implements PedidoRepositoryInterface {
     public List<PedidoVO> listarTodosPedidos() {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("listaStatus", List.of(
-                TipoStatusPedidoEnum.PRONTO,
-                TipoStatusPedidoEnum.PREPARACAO,
-                TipoStatusPedidoEnum.RECEBIDO
+                TipoStatusPedidoEnum.PRONTO.name(),
+                TipoStatusPedidoEnum.PREPARACAO.name(),
+                TipoStatusPedidoEnum.RECEBIDO.name()
         ));
         String sql = SELECT_TB_PEDIDOS + " WHERE tx_status IN (:listaStatus) " +
                 "ORDER BY " +
@@ -88,7 +88,7 @@ public class PedidoRepository implements PedidoRepositoryInterface {
     public PedidoVO atualizarStatusPedido(UUID cdPedido, TipoStatusPedidoEnum txStatus) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("cdPedido", cdPedido);
-        params.addValue("txStatus", txStatus);
+        params.addValue("txStatus", txStatus.name());
         String sql = "UPDATE tb_pedidos SET tx_status = :txStatus WHERE cd_pedido = :cdPedido";
         this.namedJdbcTemplate.update(sql, params);
         return this.buscarPorCdPedido(cdPedido);
@@ -97,7 +97,7 @@ public class PedidoRepository implements PedidoRepositoryInterface {
     @Override
     public List<PedidoVO> buscarPedidosPorStatus(TipoStatusPedidoEnum txStatus) {
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("txStatus", txStatus);
+        params.addValue("txStatus", txStatus.name());
         String sql = SELECT_TB_PEDIDOS + " WHERE tx_status = :txStatus ORDER BY dh_criacao_pedido ASC";
         return namedJdbcTemplate.query(sql, params, new PedidoRowMapper());
     }

@@ -25,7 +25,7 @@ public class PessoaRepository implements br.com.fiap.postechfasfood.interfaces.P
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("cdDocPessoa", pessoa.getCdDocPessoa());
         params.addValue("nmPessoa", pessoa.getNmPessoa());
-        params.addValue("tpPessoa", pessoa.getTpPessoa());
+        params.addValue("tpPessoa", pessoa.getTpPessoa().name());
         params.addValue("dsEmail", pessoa.getDsEmail());
 
         String sql = "INSERT INTO tb_pessoas (cd_doc_pessoa, nm_pessoa, tp_pessoa, ds_email) " +
