@@ -1,6 +1,7 @@
 package br.com.fiap.postechfasfood.externals;
 
 import br.com.fiap.postechfasfood.entities.ProdutoVO;
+import br.com.fiap.postechfasfood.externals.mappers.ProdutoRowMapper;
 import br.com.fiap.postechfasfood.interfaces.ProdutoRepositoryInterface;
 import br.com.fiap.postechfasfood.types.TipoCategoriaProdutoEnum;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -15,6 +16,8 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
+    private static final String SELECT_TB_PRODUTOS = "SELECT cd_produto, nm_produto, ds_descricao, vl_preco, sn_ativo, tp_categoria FROM tb_produtos";
+
     public ProdutoRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
@@ -27,7 +30,7 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
         params.addValue("dsDescricao", produto.getDsDescricao());
         params.addValue("vlPreco", produto.getVlPreco());
         params.addValue("snAtivo", produto.getSnAtivo());
-        params.addValue("tpCategoria", produto.getTpCategoria());
+        params.addValue("tpCategoria", produto.getTpCategoria().name());
 
         String sql = "INSERT INTO tb_produtos (cd_produto, nm_produto, ds_descricao, vl_preco, sn_ativo, tp_categoria) " +
                 "VALUES (:cdProduto, :nmProduto, :dsDescricao, :vlPreco, :snAtivo, :tpCategoria)";
@@ -42,7 +45,7 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
         params.addValue("dsDescricao", produto.getDsDescricao());
         params.addValue("vlPreco", produto.getVlPreco());
         params.addValue("snAtivo", produto.getSnAtivo());
-        params.addValue("tpCategoria", produto.getTpCategoria());
+        params.addValue("tpCategoria", produto.getTpCategoria().name());
 
         String sql = "UPDATE tb_produtos SET " +
                 "nm_produto = :cdProduto, " +
@@ -83,47 +86,18 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("snAtivo", true);
 
-        String sql = "SELECT cd_produto, " +
-                "nm_produto, " +
-                "ds_descricao, " +
-                "vl_preco, " +
-                "sn_ativo, " +
-                "tp_categoria " +
-                "FROM tb_produtos " +
-                "WHERE sn_ativo = :snAtivo";
-        return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> new ProdutoVO.Builder()
-                .setCdProduto(rs.getObject("cd_produto", UUID.class))
-                .setNmProduto(rs.getString("nm_produto"))
-                .setDsDescricao(rs.getString("ds_descricao"))
-                .setVlPreco(rs.getDouble("vl_preco"))
-                .setSnAtivo(rs.getBoolean("sn_ativo"))
-                .setTpCategoria(TipoCategoriaProdutoEnum.valueOf(rs.getString("tp_categoria")))
-                .build());
+        String sql = SELECT_TB_PRODUTOS + " WHERE sn_ativo = :snAtivo";
+        return namedParameterJdbcTemplate.query(sql, params, new ProdutoRowMapper());
     }
 
     @Override
     public List<ProdutoVO> listar(TipoCategoriaProdutoEnum tpCategoria) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("snAtivo", true);
-        params.addValue("tpCategoria", tpCategoria);
+        params.addValue("tpCategoria", tpCategoria.name());
 
-        String sql = "SELECT cd_produto, " +
-                "nm_produto, " +
-                "ds_descricao, " +
-                "vl_preco, " +
-                "sn_ativo, " +
-                "tp_categoria " +
-                "FROM tb_produtos " +
-                "WHERE sn_ativo = :snAtivo " +
-                "AND tp_categoria = :tpCategoria";
-        return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> new ProdutoVO.Builder()
-                .setCdProduto(rs.getObject("cd_produto", UUID.class))
-                .setNmProduto(rs.getString("nm_produto"))
-                .setDsDescricao(rs.getString("ds_descricao"))
-                .setVlPreco(rs.getDouble("vl_preco"))
-                .setSnAtivo(rs.getBoolean("sn_ativo"))
-                .setTpCategoria(TipoCategoriaProdutoEnum.valueOf(rs.getString("tp_categoria")))
-                .build());
+        String sql = SELECT_TB_PRODUTOS + " WHERE sn_ativo = :snAtivo AND tp_categoria = :tpCategoria";
+        return namedParameterJdbcTemplate.query(sql, params, new ProdutoRowMapper());
     }
 
     @Override
@@ -131,21 +105,7 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("cdProduto", cdProduto);
 
-        String sql = "SELECT cd_produto, " +
-                "nm_produto, " +
-                "ds_descricao, " +
-                "vl_preco, " +
-                "sn_ativo, " +
-                "tp_categoria " +
-                "FROM tb_produtos " +
-                "WHERE cd_produto = :cdProduto";
-        return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> new ProdutoVO.Builder()
-                .setCdProduto(rs.getObject("cd_produto", UUID.class))
-                .setNmProduto(rs.getString("nm_produto"))
-                .setDsDescricao(rs.getString("ds_descricao"))
-                .setVlPreco(rs.getDouble("vl_preco"))
-                .setSnAtivo(rs.getBoolean("sn_ativo"))
-                .setTpCategoria(TipoCategoriaProdutoEnum.valueOf(rs.getString("tp_categoria")))
-                .build());
+        String sql = SELECT_TB_PRODUTOS + " WHERE cd_produto = :cdProduto";
+        return namedParameterJdbcTemplate.queryForObject(sql, params, new ProdutoRowMapper());
     }
 }

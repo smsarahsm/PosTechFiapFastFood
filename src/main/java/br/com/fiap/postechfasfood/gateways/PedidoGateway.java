@@ -1,6 +1,7 @@
 package br.com.fiap.postechfasfood.gateways;
 
 import br.com.fiap.postechfasfood.entities.PedidoVO;
+import br.com.fiap.postechfasfood.entities.ProdutosPedidoVO;
 import br.com.fiap.postechfasfood.interfaces.DbConnection;
 import br.com.fiap.postechfasfood.interfaces.PedidoGatewayInterface;
 import br.com.fiap.postechfasfood.interfaces.PedidoRepositoryInterface;
@@ -14,8 +15,12 @@ public class PedidoGateway implements PedidoGatewayInterface {
     }
 
     @Override
-    public PedidoVO inserirPedidoNaBase(PedidoVO pedidoVO) {
-        pedidoRepository.criarPedido(pedidoVO);
-        return pedidoVO;
+    public PedidoVO cadastrar(PedidoVO pedidoVO) {
+        return pedidoRepository.cadastrarPedido(pedidoVO);
+   }
+
+    @Override
+    public ProdutosPedidoVO cadastrarProdutoPedido(ProdutosPedidoVO pedidoVO) {
+        return pedidoRepository.cadastrarProdutosPedido(pedidoVO);
     }
 }
