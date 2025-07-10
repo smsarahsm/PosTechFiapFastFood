@@ -1,45 +1,40 @@
 package br.com.fiap.postechfasfood.gateways;
 
+import java.util.List;
+
+import br.com.fiap.postechfasfood.interfaces.PessoaRepositoryInterface;
+import org.springframework.stereotype.Service;
+
 import br.com.fiap.postechfasfood.entities.PessoaVO;
-import br.com.fiap.postechfasfood.gateways.entities.PessoaEntity;
-import br.com.fiap.postechfasfood.interfaces.DbConnection;
 import br.com.fiap.postechfasfood.interfaces.PessoaGatewayInterface;
 
+@Service
 public class PessoaGateway implements PessoaGatewayInterface {
 
-    private final DbConnection dbConnection;
+    private final PessoaRepositoryInterface pessoaRepository;
 
-    public PessoaGateway(DbConnection dbConnection) {
-        this.dbConnection = dbConnection;
+    public PessoaGateway(PessoaRepositoryInterface pessoaRepository) {
+        this.pessoaRepository = pessoaRepository;
     }
-
-    //TODO:sei que ta errado, mas ainda não sei fazer certo... melhorar...
 
     @Override
-    public PessoaVO InserirPessoaNaBase(PessoaVO pessoaVO) {
-        //TODO: implementar insert SQL na base
-        PessoaEntity pessoaEntity = toEntity(pessoaVO);
-        dbConnection.CriarPessoa(pessoaEntity);
-        return toVo(pessoaEntity);
+    public PessoaVO inserirPessoaNaBase(PessoaVO pessoaVO) {
+        pessoaRepository.criarPessoa(pessoaVO);
+        return pessoaVO;
     }
 
-    //TODO: discutir a necessidade de um arquivo diferente para mappers... ou a inclusão dos metodos no adapters/presenters
-    private PessoaEntity toEntity(PessoaVO pessoaVO) {
-        PessoaEntity e = new PessoaEntity();
-        e.setNmPessoa(pessoaVO.getNmPessoa());
-        e.setCdDocPessoa(pessoaVO.getCdDocPessoa());
-        e.setTpPessoa(pessoaVO.getTpPessoa());
-        e.setDsEmail(pessoaVO.getDsEmail());
-        return e;
+    @Override
+    public PessoaVO buscarPessoaPorCpf(String cpf) {
+        return pessoaRepository.buscarPessoaPorCpf(cpf);
     }
 
-    //TODO: discutir a necessidade de um arquivo diferente para mappers... ou a inclusão dos metodos no adapters/presenters
-    private PessoaVO toVo(PessoaEntity pessoaEntity) {
-        PessoaVO p = new PessoaVO();
-        p.setNmPessoa(pessoaEntity.getNmPessoa());
-        p.setCdDocPessoa(pessoaEntity.getCdDocPessoa());
-        p.setTpPessoa(pessoaEntity.getTpPessoa());
-        p.setDsEmail(pessoaEntity.getDsEmail());
-        return p;
+    @Override
+    public List<PessoaVO> listarTodasPessoas() {
+        return pessoaRepository.listarTodasPessoas();
+    }
+
+    @Override
+    public void removerPessoa(String cdDocPessoa) {
+        pessoaRepository.removerPessoa(cdDocPessoa);
     }
 }
