@@ -7,4 +7,6 @@ public interface PedidoGatewayInterface {
     PedidoVO cadastrar(PedidoVO pedidoVO);
 
     ProdutosPedidoVO cadastrarProdutoPedido(ProdutosPedidoVO pedidoVO);
+
+    int buscarUltimoNumeroPedido();
 }

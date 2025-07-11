@@ -23,4 +23,9 @@ public class PedidoGateway implements PedidoGatewayInterface {
     public ProdutosPedidoVO cadastrarProdutoPedido(ProdutosPedidoVO pedidoVO) {
         return pedidoRepository.cadastrarProdutosPedido(pedidoVO);
     }
+
+    @Override
+    public int buscarUltimoNumeroPedido() {
+        return pedidoRepository.buscarUltimoNumeroPedido();
+    }
 }

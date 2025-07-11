@@ -5,8 +5,12 @@ import br.com.fiap.postechfasfood.entities.ItensPedidoVO;
 import br.com.fiap.postechfasfood.entities.PedidoVO;
 import br.com.fiap.postechfasfood.entities.ProdutosPedidoVO;
 import br.com.fiap.postechfasfood.gateways.PedidoGateway;
+import br.com.fiap.postechfasfood.types.TipoStatusPedidoEnum;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
+
+import static br.com.fiap.postechfasfood.types.TipoStatusPedidoEnum.RECEBIDO;
 
 public class PedidoUseCase {
 
@@ -20,11 +24,11 @@ public class PedidoUseCase {
         var pedido = new PedidoVO(
                 UUID.randomUUID(),
                 pedidoWebHandlerRequest.cdDocCliente(),
-                pedidoWebHandlerRequest.cdDocFuncionario(),
-                pedidoWebHandlerRequest.txStatus(),
-                pedidoWebHandlerRequest.nrPedido(),
-                pedidoWebHandlerRequest.dhCriacaoPedido(),
-                pedidoWebHandlerRequest.dhUltAtualizacao(),
+                "0", //deixei zero por assumir que o totem é o funcionario zero, mas podemos alterar isto
+                RECEBIDO,
+                this.geraNumeroPedido(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
                 pedidoWebHandlerRequest.itens()
         );
         var pedidoVo = pedidoGateway.cadastrar(pedido);
@@ -49,6 +53,12 @@ public class PedidoUseCase {
         );
 
         return pedidoGateway.cadastrarProdutoPedido(produtoPedido);
+    }
+
+    private int geraNumeroPedido() {
+        var ultimoNumeroPedido = pedidoGateway.buscarUltimoNumeroPedido();
+
+        return ultimoNumeroPedido >= 999 ? 1 : ultimoNumeroPedido + 1;
     }
 
 }
