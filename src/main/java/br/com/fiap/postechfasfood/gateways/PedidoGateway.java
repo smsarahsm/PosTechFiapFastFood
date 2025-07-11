@@ -5,7 +5,9 @@ import br.com.fiap.postechfasfood.entities.ProdutosPedidoVO;
 import br.com.fiap.postechfasfood.interfaces.DbConnection;
 import br.com.fiap.postechfasfood.interfaces.PedidoGatewayInterface;
 import br.com.fiap.postechfasfood.interfaces.PedidoRepositoryInterface;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PedidoGateway implements PedidoGatewayInterface {
 
     private final PedidoRepositoryInterface pedidoRepository;

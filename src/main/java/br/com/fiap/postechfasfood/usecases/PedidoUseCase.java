@@ -5,13 +5,14 @@ import br.com.fiap.postechfasfood.entities.ItensPedidoVO;
 import br.com.fiap.postechfasfood.entities.PedidoVO;
 import br.com.fiap.postechfasfood.entities.ProdutosPedidoVO;
 import br.com.fiap.postechfasfood.gateways.PedidoGateway;
-import br.com.fiap.postechfasfood.types.TipoStatusPedidoEnum;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static br.com.fiap.postechfasfood.types.TipoStatusPedidoEnum.RECEBIDO;
 
+@Service
 public class PedidoUseCase {
 
     private final PedidoGateway pedidoGateway;
@@ -24,7 +25,7 @@ public class PedidoUseCase {
         var pedido = new PedidoVO(
                 UUID.randomUUID(),
                 pedidoWebHandlerRequest.cdDocCliente(),
-                "0", //deixei zero por assumir que o totem é o funcionario zero, mas podemos alterar isto
+                "44009435852", //podemos criar um doc funcionario p o "totem"
                 RECEBIDO,
                 this.geraNumeroPedido(),
                 LocalDateTime.now(),
@@ -35,8 +36,8 @@ public class PedidoUseCase {
 
         pedidoWebHandlerRequest.itens().forEach(item -> {
             var itensPedidoVO = new ItensPedidoVO(
-               pedidoWebHandlerRequest.itens().getFirst().getProduto(),
-               pedidoWebHandlerRequest.itens().getFirst().getVlQuantidade()
+               item.getProduto(),
+               item.getVlQuantidade()
             );
 
             this.criaProdutoPedido(pedidoVo, itensPedidoVO);
