@@ -9,6 +9,7 @@ import java.util.UUID;
 
 public interface PedidoRepositoryInterface {
     PedidoVO cadastrarPedido(PedidoVO pedidoModel);
+
     PedidoVO buscarPorCdPedido(UUID cdPedido);
 
     List<PedidoVO> listarTodosPedidos();
@@ -20,5 +21,6 @@ public interface PedidoRepositoryInterface {
     List<PedidoVO> buscarPedidosPorStatus(TipoStatusPedidoEnum txStatus);
 
     ProdutosPedidoVO cadastrarProdutosPedido(ProdutosPedidoVO produtosPedidoModel);
+
     int buscarUltimoNumeroPedido();
 }
