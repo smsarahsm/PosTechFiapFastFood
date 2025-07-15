@@ -4,6 +4,7 @@ public enum TipoStatusPedidoEnum {
     RECEBIDO,
     PREPARACAO,
     PRONTO,
-    FINALIZADO
+    FINALIZADO,
+    AGUARDANDO_PAGAMENTO
 
 }
