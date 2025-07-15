@@ -29,7 +29,7 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
         params.addValue("nmProduto", produto.getNmProduto());
         params.addValue("dsDescricao", produto.getDsDescricao());
         params.addValue("vlPreco", produto.getVlPreco());
-        params.addValue("snAtivo", produto.getSnAtivo());
+        params.addValue("snAtivo", true);
         params.addValue("tpCategoria", produto.getTpCategoria().name());
 
         String sql = "INSERT INTO tb_produtos (cd_produto, nm_produto, ds_descricao, vl_preco, sn_ativo, tp_categoria) " +

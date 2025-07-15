@@ -11,32 +11,26 @@ import br.com.fiap.postechfasfood.types.TipoCategoriaProdutoEnum;
 import br.com.fiap.postechfasfood.usecases.ProdutoUseCase;
 
 public record ProdutoWebHandlerRequest(
-    UUID cdProduto,
     String nmProduto,
     String dsDescricao,
     double vlPreco,
-    boolean snAtivo,
     TipoCategoriaProdutoEnum tpCategoria
     ) {
 
     public ProdutoWebHandlerRequest(ProdutoVO produto) {
-        this(produto.getCdProduto(),
-             produto.getNmProduto(),
+        this(produto.getNmProduto(),
              produto.getDsDescricao(),
              produto.getVlPreco(),
-             produto.getSnAtivo(),
              produto.getTpCategoria());
     }
 
     public ProdutoVO toProdutoVO() {
-        return new ProdutoVO(
-            this.cdProduto,
-            this.nmProduto,
-            this.dsDescricao,
-            this.vlPreco,
-            this.snAtivo,
-            this.tpCategoria
-        );
+        return new ProdutoVO.Builder()
+                .setNmProduto(nmProduto)
+                .setDsDescricao(dsDescricao)
+                .setVlPreco(vlPreco)
+                .setTpCategoria(tpCategoria)
+                .build();
     }
 
     public void atualizarProduto(ProdutoRepositoryInterface produtoRepository, UUID cdProduto, ProdutoWebHandlerRequest produtoWebHandlerRequest) {
