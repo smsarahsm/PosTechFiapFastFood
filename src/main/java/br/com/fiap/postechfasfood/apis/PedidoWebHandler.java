@@ -32,7 +32,7 @@ public class PedidoWebHandler {
     public ResponseEntity<PedidoWebHandlerResponse> cadastrarPedido(@RequestBody PedidoWebHandlerRequest pedidoWebHandlerRequest) {
         PedidoController pedidoController = new PedidoController();
         var response = pedidoController.criarPedido(pedidoRepository, pedidoWebHandlerRequest);
-        return ResponseEntity.created(URI.create("/api/v1/pedidos/checkout" + response.cdDocCliente()))
+        return ResponseEntity.created(URI.create("/api/v1/pedidos/checkout" + response.nrPedido()))
                 .body(response);
     }
 }

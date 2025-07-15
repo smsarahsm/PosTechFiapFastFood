@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static br.com.fiap.postechfasfood.types.TipoStatusPedidoEnum.RECEBIDO;
+import static br.com.fiap.postechfasfood.types.TipoStatusPedidoEnum.AGUARDANDO_PAGAMENTO;
 
 @Service
 public class PedidoUseCase {
@@ -25,8 +25,8 @@ public class PedidoUseCase {
         var pedido = new PedidoVO(
                 UUID.randomUUID(),
                 pedidoWebHandlerRequest.cdDocCliente(),
-                "44009435852", //podemos criar um doc funcionario p o "totem"
-                RECEBIDO,
+                null,
+                AGUARDANDO_PAGAMENTO,
                 this.geraNumeroPedido(),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
