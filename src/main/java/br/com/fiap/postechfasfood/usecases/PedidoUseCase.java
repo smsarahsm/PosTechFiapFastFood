@@ -8,6 +8,7 @@ import br.com.fiap.postechfasfood.gateways.PedidoGateway;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import static br.com.fiap.postechfasfood.types.TipoStatusPedidoEnum.AGUARDANDO_PAGAMENTO;
@@ -22,19 +23,23 @@ public class PedidoUseCase {
     }
 
     public PedidoVO criarPedido(PedidoWebHandlerRequest pedidoWebHandlerRequest) {
+
+        var numeroPedido = this.geraNumeroPedido();
+        var itensPedido = pedidoWebHandlerRequest.itens();
+
         var pedido = new PedidoVO(
                 UUID.randomUUID(),
                 pedidoWebHandlerRequest.cdDocCliente(),
                 null,
                 AGUARDANDO_PAGAMENTO,
-                this.geraNumeroPedido(),
+                numeroPedido,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
-                pedidoWebHandlerRequest.itens()
+                itensPedido
         );
         var pedidoVo = pedidoGateway.cadastrar(pedido);
 
-        pedidoWebHandlerRequest.itens().forEach(item -> {
+        itensPedido.forEach(item -> {
             var itensPedidoVO = new ItensPedidoVO(
                item.getProduto(),
                item.getVlQuantidade()
@@ -42,6 +47,9 @@ public class PedidoUseCase {
 
             this.criaProdutoPedido(pedidoVo, itensPedidoVO);
         });
+
+        var valorTotal = this.somaTotal(itensPedido);
+        pedidoGateway.gerarPagamento(numeroPedido, valorTotal);
 
         return pedidoVo;
     }
@@ -62,4 +70,7 @@ public class PedidoUseCase {
         return ultimoNumeroPedido >= 999 ? 1 : ultimoNumeroPedido + 1;
     }
 
+    private double somaTotal(List<ItensPedidoVO> itens) {
+        return itens.stream().mapToDouble(v -> v.getProduto().getVlPreco() * v.getVlQuantidade()).sum();
+    }
 }

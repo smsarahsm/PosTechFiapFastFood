@@ -2,7 +2,6 @@ package br.com.fiap.postechfasfood.gateways;
 
 import br.com.fiap.postechfasfood.entities.PedidoVO;
 import br.com.fiap.postechfasfood.entities.ProdutosPedidoVO;
-import br.com.fiap.postechfasfood.interfaces.DbConnection;
 import br.com.fiap.postechfasfood.interfaces.PedidoGatewayInterface;
 import br.com.fiap.postechfasfood.interfaces.PedidoRepositoryInterface;
 import org.springframework.stereotype.Service;
@@ -29,5 +28,10 @@ public class PedidoGateway implements PedidoGatewayInterface {
     @Override
     public int buscarUltimoNumeroPedido() {
         return pedidoRepository.buscarUltimoNumeroPedido();
+    }
+
+    @Override
+    public void gerarPagamento(int nrPedido, double valorTotal) {
+        pedidoRepository.gerarPagamento(nrPedido, valorTotal);
     }
 }
