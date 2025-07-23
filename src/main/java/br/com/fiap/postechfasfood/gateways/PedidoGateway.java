@@ -30,4 +30,5 @@ public class PedidoGateway implements PedidoGatewayInterface {
     public int buscarUltimoNumeroPedido() {
         return pedidoRepository.buscarUltimoNumeroPedido();
     }
+
 }
