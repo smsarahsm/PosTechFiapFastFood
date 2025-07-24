@@ -1,24 +1,22 @@
 package br.com.fiap.postechfasfood.entities;
 
+import java.util.UUID;
+
 public class ItensPedidoVO {
-    private ProdutoVO produto;
+    private UUID cdProduto;
     private int vlQuantidade;
 
     public ItensPedidoVO() {
     }
 
-    public ItensPedidoVO(ProdutoVO produto, int vlQuantidade) {
-        this.produto = produto;
+    public ItensPedidoVO(UUID cdProduto, int vlQuantidade) {
+        this.cdProduto = cdProduto;
         this.vlQuantidade = vlQuantidade;
     }
 
-    public ProdutoVO getProduto() {
-        return produto;
-    }
+    public UUID getCdProduto() { return cdProduto; }
 
-    public void setProduto(ProdutoVO produto) {
-        this.produto = produto;
-    }
+    public void setCdProduto(UUID cdProduto) { this.cdProduto = cdProduto; }
 
     public int getVlQuantidade() {
         return vlQuantidade;
@@ -30,11 +28,11 @@ public class ItensPedidoVO {
 
 
     public static class Builder {
-        private ProdutoVO produto;
+        private UUID cdProduto;
         private int vlQuantidade;
 
-        public Builder setCdProduto(ProdutoVO produto) {
-            this.produto = produto;
+        public Builder setCdProduto(UUID cdProduto) {
+            this.cdProduto = cdProduto;
             return this;
         }
 
@@ -44,14 +42,14 @@ public class ItensPedidoVO {
         }
 
         public ItensPedidoVO build() {
-            return new ItensPedidoVO(produto, vlQuantidade);
+            return new ItensPedidoVO(cdProduto, vlQuantidade);
         }
     }
 
     @Override
     public String toString() {
         return "ItensPedidoModel{" +
-                "produto=" + produto +
+                "cdProduto=" + cdProduto +
                 ", vlQuantidade=" + vlQuantidade +
                 '}';
     }
