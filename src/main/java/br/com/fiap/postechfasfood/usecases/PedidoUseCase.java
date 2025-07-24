@@ -51,9 +51,6 @@ public class PedidoUseCase {
             this.criaProdutoPedido(pedidoVo, itensPedidoVO);
         });
 
-        var valorTotal = this.somaTotal(itensPedido);
-        pedidoGateway.gerarPagamento(numeroPedido, valorTotal);
-
         return pedidoVo;
     }
 
@@ -72,9 +69,5 @@ public class PedidoUseCase {
         var ultimoNumeroPedido = pedidoGateway.buscarUltimoNumeroPedido();
 
         return ultimoNumeroPedido >= 999 ? 1 : ultimoNumeroPedido + 1;
-    }
-
-    private double somaTotal(List<ItensPedidoVO> itens) {
-        return itens.stream().mapToDouble(v -> v.getProduto().getVlPreco() * v.getVlQuantidade()).sum();
     }
 }

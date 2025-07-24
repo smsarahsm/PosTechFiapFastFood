@@ -123,9 +123,4 @@ public class PedidoRepository implements PedidoRepositoryInterface {
         Integer ultimoPedido = jdbcTemplate.queryForObject(sql, Integer.class);
         return ultimoPedido != null ? ultimoPedido : 0;
     }
-
-    @Override
-    public void gerarPagamento(int nrPedido, double valorTotal) {
-        // aqui chama mock ou mercadoPago(que vai precisar passar mais valores)
-    }
 }

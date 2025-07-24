@@ -9,6 +9,4 @@ public interface PedidoGatewayInterface {
     ProdutosPedidoVO cadastrarProdutoPedido(ProdutosPedidoVO pedidoVO);
 
     int buscarUltimoNumeroPedido();
-
-    void gerarPagamento(int nrPedido, double valorTotal);
 }

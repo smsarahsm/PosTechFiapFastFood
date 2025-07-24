@@ -30,9 +30,4 @@ public class PedidoGateway implements PedidoGatewayInterface {
     public int buscarUltimoNumeroPedido() {
         return pedidoRepository.buscarUltimoNumeroPedido();
     }
-
-    @Override
-    public void gerarPagamento(int nrPedido, double valorTotal) {
-        pedidoRepository.gerarPagamento(nrPedido, valorTotal);
-    }
 }
