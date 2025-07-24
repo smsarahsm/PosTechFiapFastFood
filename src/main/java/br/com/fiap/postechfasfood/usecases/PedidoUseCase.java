@@ -3,8 +3,10 @@ package br.com.fiap.postechfasfood.usecases;
 import br.com.fiap.postechfasfood.apis.requests.PedidoWebHandlerRequest;
 import br.com.fiap.postechfasfood.entities.ItensPedidoVO;
 import br.com.fiap.postechfasfood.entities.PedidoVO;
+import br.com.fiap.postechfasfood.entities.ProdutoVO;
 import br.com.fiap.postechfasfood.entities.ProdutosPedidoVO;
 import br.com.fiap.postechfasfood.gateways.PedidoGateway;
+import br.com.fiap.postechfasfood.gateways.ProdutoGateway;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,16 +18,17 @@ import static br.com.fiap.postechfasfood.types.TipoStatusPedidoEnum.AGUARDANDO_P
 public class PedidoUseCase {
 
     private final PedidoGateway pedidoGateway;
+    private final ProdutoGateway produtoGateway;
 
-    public PedidoUseCase(PedidoGateway pedidoGateway) {
+    public PedidoUseCase(PedidoGateway pedidoGateway, ProdutoGateway produtoGateway) {
         this.pedidoGateway = pedidoGateway;
+        this.produtoGateway = produtoGateway;
     }
 
     public PedidoVO criarPedido(PedidoWebHandlerRequest pedidoWebHandlerRequest) {
         var pedido = new PedidoVO(
                 UUID.randomUUID(),
                 pedidoWebHandlerRequest.cdDocCliente(),
-                null,
                 AGUARDANDO_PAGAMENTO,
                 this.geraNumeroPedido(),
                 LocalDateTime.now(),
@@ -36,7 +39,7 @@ public class PedidoUseCase {
 
         pedidoWebHandlerRequest.itens().forEach(item -> {
             var itensPedidoVO = new ItensPedidoVO(
-               item.getProduto(),
+               item.getCdProduto(),
                item.getVlQuantidade()
             );
 
@@ -47,9 +50,10 @@ public class PedidoUseCase {
     }
 
     public ProdutosPedidoVO criaProdutoPedido(PedidoVO pedidoVO, ItensPedidoVO itensPedidoVO) {
+        ProdutoVO produto = produtoGateway.buscarPorCdProduto(itensPedidoVO.getCdProduto());
         var produtoPedido = new ProdutosPedidoVO(
                 pedidoVO,
-                itensPedidoVO.getProduto(),
+                produto,
                 itensPedidoVO.getVlQuantidade()
         );
 
