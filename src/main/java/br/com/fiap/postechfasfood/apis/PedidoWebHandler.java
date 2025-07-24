@@ -61,7 +61,7 @@ public class PedidoWebHandler {
                 "txStatus", pedido.getTxStatus().name(),
                 "nrPedido", pedido.getNrPedido(),
                 "itens", pedido.getItens().stream().map(item -> Map.of(
-                        "cdProduto", item.getProduto().getCdProduto(),
+                        "cdProduto", item.getCdProduto(),
                         "vlQuantidade", item.getVlQuantidade()
                 )).toList()
         );
@@ -102,7 +102,7 @@ public class PedidoWebHandler {
                 "nrPedido", pedido.getNrPedido(),
                 "dhCriacao", pedido.getDhCriacaoPedido().toString().substring(0, 16),
                 "itens", pedido.getItens().stream().map(item -> Map.of(
-                        "cdProduto", item.getProduto().getCdProduto(),
+                        "cdProduto", item.getCdProduto(),
                         "vlQuantidade", item.getVlQuantidade()
                 )).toList()
         )).toList();

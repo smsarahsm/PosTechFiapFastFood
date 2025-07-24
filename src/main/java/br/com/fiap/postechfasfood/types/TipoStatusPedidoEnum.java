@@ -7,4 +7,5 @@ public enum TipoStatusPedidoEnum {
     PRONTO,
     FINALIZADO,
     PAGO
+}
 
