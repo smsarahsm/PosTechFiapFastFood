@@ -40,7 +40,9 @@ public class PedidoRepository implements PedidoRepositoryInterface {
         params.addValue("dhUltimaAtualizacao", pedidoModel.getDhUltAtualizacao());
 
         String sql = "INSERT INTO tb_pedidos (cd_pedido, cd_doc_cliente, cd_doc_funcionario, tx_status, nr_pedido, dh_criacao_pedido, dh_ult_atualizacao) " +
+
                 "VALUES (:cdPedido, :cdDocCliente, :cdDocFuncionario, :txStatus, :nrPedido, :dhCriacaoPedido, :dhUltAtualizacao)";
+
         this.namedJdbcTemplate.update(sql, params);
         return pedidoModel;
     }

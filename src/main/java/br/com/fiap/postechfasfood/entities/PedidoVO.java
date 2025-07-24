@@ -22,10 +22,33 @@ public class PedidoVO {
     public PedidoVO() {
     }
 
-    public PedidoVO(UUID cdPedido, String cdDocCliente, String cdDocFuncionario, TipoStatusPedidoEnum txStatus, int nrPedido, LocalDateTime dhCriacaoPedido, LocalDateTime dhUltAtualizacao, List<ItensPedidoVO> itens) {
+    public PedidoVO(UUID cdPedido,
+                    String cdDocCliente,
+                    String cdDocFuncionario,
+                    TipoStatusPedidoEnum txStatus,
+                    int nrPedido,
+                    LocalDateTime dhCriacaoPedido,
+                    LocalDateTime dhUltAtualizacao,
+                    List<ItensPedidoVO> itens) {
         this.cdPedido = cdPedido;
         this.cdDocCliente = cdDocCliente;
         this.cdDocFuncionario = cdDocFuncionario;
+        this.txStatus = txStatus;
+        this.nrPedido = nrPedido;
+        this.dhCriacaoPedido = dhCriacaoPedido;
+        this.dhUltAtualizacao = dhUltAtualizacao;
+        this.itens = itens;
+    }
+
+    public PedidoVO(UUID cdPedido,
+                    String cdDocCliente,
+                    TipoStatusPedidoEnum txStatus,
+                    int nrPedido,
+                    LocalDateTime dhCriacaoPedido,
+                    LocalDateTime dhUltAtualizacao,
+                    List<ItensPedidoVO> itens) {
+        this.cdPedido = cdPedido;
+        this.cdDocCliente = cdDocCliente;
         this.txStatus = txStatus;
         this.nrPedido = nrPedido;
         this.dhCriacaoPedido = dhCriacaoPedido;
