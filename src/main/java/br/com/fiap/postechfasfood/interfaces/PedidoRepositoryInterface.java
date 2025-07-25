@@ -23,4 +23,6 @@ public interface PedidoRepositoryInterface {
     ProdutosPedidoVO cadastrarProdutosPedido(ProdutosPedidoVO produtosPedidoModel);
 
     int buscarUltimoNumeroPedido();
+
+    public PedidoVO buscarPorNumeroPedido(int nrPedido);
 }

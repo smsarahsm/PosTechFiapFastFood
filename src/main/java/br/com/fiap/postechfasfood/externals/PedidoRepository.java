@@ -20,7 +20,7 @@ public class PedidoRepository implements PedidoRepositoryInterface {
     private final NamedParameterJdbcTemplate namedJdbcTemplate;
     private final JdbcTemplate jdbcTemplate;
 
-    private static final String SELECT_TB_PEDIDOS = "SELECT cd_pedido, cd_doc_cliente, cd_doc_funcionario, tx_status, nr_pedido, dh_criacao_pedido, dh_ultima_atualizacao FROM tb_pedidos";
+    private static final String SELECT_TB_PEDIDOS = "SELECT cd_pedido, cd_doc_cliente, cd_doc_funcionario, tx_status, nr_pedido, dh_criacao_pedido, dh_ult_atualizacao FROM tb_pedidos";
 
     public PedidoRepository(NamedParameterJdbcTemplate namedJdbcTemplate,
                             JdbcTemplate jdbcTemplate) {
@@ -37,10 +37,12 @@ public class PedidoRepository implements PedidoRepositoryInterface {
         params.addValue("txStatus", pedidoModel.getTxStatus().name());
         params.addValue("nrPedido", pedidoModel.getNrPedido());
         params.addValue("dhCriacaoPedido", pedidoModel.getDhCriacaoPedido());
-        params.addValue("dhUltimaAtualizacao", pedidoModel.getDhUltAtualizacao());
+        params.addValue("dhUltAtualizacao", pedidoModel.getDhUltAtualizacao());
 
         String sql = "INSERT INTO tb_pedidos (cd_pedido, cd_doc_cliente, cd_doc_funcionario, tx_status, nr_pedido, dh_criacao_pedido, dh_ult_atualizacao) " +
-                "VALUES (:cdPedido, :cdDocCliente, :cdDocFuncionario, :txStatus, :nrPedido, :dhCriacaoPedido, :dhUltimaAtualizacao)";
+
+                "VALUES (:cdPedido, :cdDocCliente, :cdDocFuncionario, :txStatus, :nrPedido, :dhCriacaoPedido, :dhUltAtualizacao)";
+
         this.namedJdbcTemplate.update(sql, params);
         return pedidoModel;
     }
@@ -63,14 +65,14 @@ public class PedidoRepository implements PedidoRepositoryInterface {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("listaStatus", List.of(
                 TipoStatusPedidoEnum.PRONTO.name(),
-                TipoStatusPedidoEnum.PREPARACAO.name(),
+                TipoStatusPedidoEnum.EM_PREPARACAO.name(),
                 TipoStatusPedidoEnum.RECEBIDO.name()
         ));
         String sql = SELECT_TB_PEDIDOS + " WHERE tx_status IN (:listaStatus) " +
                 "ORDER BY " +
                 "  CASE tx_status " +
                 "    WHEN 'PRONTO' THEN 1 " +
-                "    WHEN 'PREPARACAO' THEN 2 " +
+                "    WHEN 'EM_PREPARACAO' THEN 2 " +
                 "    WHEN 'RECEBIDO' THEN 3 " +
                 "    ELSE 4 " +
                 "  END, " +
@@ -122,5 +124,13 @@ public class PedidoRepository implements PedidoRepositoryInterface {
         String sql = "SELECT MAX(nr_pedido) FROM tb_pedidos";
         Integer ultimoPedido = jdbcTemplate.queryForObject(sql, Integer.class);
         return ultimoPedido != null ? ultimoPedido : 0;
+    }
+
+    public PedidoVO buscarPorNumeroPedido(int nrPedido) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("nrPedido", nrPedido);
+        String sql = SELECT_TB_PEDIDOS + " WHERE nr_pedido = :nrPedido";
+        List<PedidoVO> pedidos = namedJdbcTemplate.query(sql, params, new PedidoRowMapper());
+        return pedidos.isEmpty() ? null : pedidos.get(0);
     }
 }
