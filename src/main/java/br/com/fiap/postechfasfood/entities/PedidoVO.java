@@ -4,6 +4,7 @@ package br.com.fiap.postechfasfood.entities;
 import br.com.fiap.postechfasfood.types.TipoStatusPedidoEnum;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -112,7 +113,7 @@ public class PedidoVO {
     }
 
     public List<ItensPedidoVO> getItens() {
-        return itens;
+        return itens != null ? itens : Collections.emptyList();
     }
 
     public void setItens(List<ItensPedidoVO> itens) {
