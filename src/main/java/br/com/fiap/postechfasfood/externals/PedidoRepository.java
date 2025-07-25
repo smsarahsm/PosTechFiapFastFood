@@ -1,5 +1,6 @@
 package br.com.fiap.postechfasfood.externals;
 
+import br.com.fiap.postechfasfood.entities.ItensPedidoVO;
 import br.com.fiap.postechfasfood.entities.PedidoVO;
 import br.com.fiap.postechfasfood.entities.ProdutosPedidoVO;
 import br.com.fiap.postechfasfood.externals.mappers.PedidoRowMapper;
@@ -60,6 +61,30 @@ public class PedidoRepository implements PedidoRepositoryInterface {
         }
     }
 
+
+    @Override
+    public PedidoVO buscarPorStatusPedido(UUID cdPedido) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("cdPedido", cdPedido);
+
+        String sql = SELECT_TB_PEDIDOS + " WHERE cd_pedido = :cdPedido";
+        try {
+            PedidoVO pedido = namedJdbcTemplate.queryForObject(sql, params, new PedidoRowMapper());
+            String sqlItens = "SELECT cd_produto, vl_qtd FROM tb_pedidos_produtos WHERE cd_pedido = :cdPedido";
+            List<ItensPedidoVO> itens = namedJdbcTemplate.query(sqlItens, params, (rs, rowNum) ->
+                    new ItensPedidoVO(
+                            UUID.fromString(rs.getString("cd_produto")),
+                            rs.getInt("vl_qtd")
+                    )
+            );
+            pedido.setItens(itens);
+            return pedido;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+
     @Override
     public List<PedidoVO> listarTodosPedidos() {
         MapSqlParameterSource params = new MapSqlParameterSource();
@@ -77,7 +102,11 @@ public class PedidoRepository implements PedidoRepositoryInterface {
                 "    ELSE 4 " +
                 "  END, " +
                 "dh_criacao_pedido ASC";
-        return namedJdbcTemplate.query(sql, params, new PedidoRowMapper());
+        List<PedidoVO> pedidos = namedJdbcTemplate.query(sql, params, new PedidoRowMapper());
+        for (PedidoVO pedido : pedidos) {
+            pedido.setItens(this.buscarPorStatusPedido(pedido.getCdPedido()).getItens());
+        }
+        return pedidos;
     }
 
     @Override
@@ -95,7 +124,7 @@ public class PedidoRepository implements PedidoRepositoryInterface {
         params.addValue("txStatus", txStatus.name());
         String sql = "UPDATE tb_pedidos SET tx_status = :txStatus WHERE cd_pedido = :cdPedido";
         this.namedJdbcTemplate.update(sql, params);
-        return this.buscarPorCdPedido(cdPedido);
+        return this.buscarPorStatusPedido(cdPedido);
     }
 
     @Override

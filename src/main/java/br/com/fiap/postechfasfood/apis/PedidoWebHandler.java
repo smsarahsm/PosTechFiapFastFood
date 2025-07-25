@@ -55,13 +55,12 @@ public class PedidoWebHandler {
             @PathVariable UUID cdPedido,
             @PathVariable String txStatus) {
 
-        PedidoVO pedido = pedidoRepository.buscarPorCdPedido(cdPedido);
+        PedidoVO pedido = pedidoRepository.buscarPorStatusPedido(cdPedido);
         if (pedido == null) {
             return ResponseEntity.notFound().build();
         }
 
-        // Só permite alteração se o status atual for "PAGO"
-        if (!pedido.getTxStatus().name().equals("PAGO")) {
+        if (!pedido.getTxStatus().name().equals("RECEBIDO")) {
             return ResponseEntity.status(409).body(Map.of("erro", "Status só pode ser alterado após pagamento concluído."));
         }
 

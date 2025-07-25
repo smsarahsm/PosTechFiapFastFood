@@ -34,13 +34,13 @@ public class PagamentoUseCase {
         if ("approved".equalsIgnoreCase(statusPagamento)) {
             PedidoVO pedido = pedidoRepository.buscarPorNumeroPedido(nrPedido);
             if (pedido != null) {
-                pedidoRepository.atualizarStatusPedido(pedido.getCdPedido(), TipoStatusPedidoEnum.PAGO);
+                pedidoRepository.atualizarStatusPedido(pedido.getCdPedido(), TipoStatusPedidoEnum.RECEBIDO);
 
                 PagamentoVO pagamento = new PagamentoVO();
                 pagamento.setCdPagamento(UUID.randomUUID());
                 pagamento.setCdPedido(pedido.getCdPedido());
                 pagamento.setVlPagamento(vlPagamento);
-                pagamento.setTpStatus("APROVADO");
+                pagamento.setTpStatus("PAGO");
                 pagamentoRepository.salvarPagamento(pagamento);
             } else {
                 throw new RuntimeException("Pedido não encontrado");
