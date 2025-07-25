@@ -37,7 +37,7 @@ public class PedidoRepository implements PedidoRepositoryInterface {
         params.addValue("txStatus", pedidoModel.getTxStatus().name());
         params.addValue("nrPedido", pedidoModel.getNrPedido());
         params.addValue("dhCriacaoPedido", pedidoModel.getDhCriacaoPedido());
-        params.addValue("dhUltimaAtualizacao", pedidoModel.getDhUltAtualizacao());
+        params.addValue("dhUltAtualizacao", pedidoModel.getDhUltAtualizacao());
 
         String sql = "INSERT INTO tb_pedidos (cd_pedido, cd_doc_cliente, cd_doc_funcionario, tx_status, nr_pedido, dh_criacao_pedido, dh_ult_atualizacao) " +
 
@@ -65,14 +65,14 @@ public class PedidoRepository implements PedidoRepositoryInterface {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("listaStatus", List.of(
                 TipoStatusPedidoEnum.PRONTO.name(),
-                TipoStatusPedidoEnum.PREPARACAO.name(),
+                TipoStatusPedidoEnum.EM_PREPARACAO.name(),
                 TipoStatusPedidoEnum.RECEBIDO.name()
         ));
         String sql = SELECT_TB_PEDIDOS + " WHERE tx_status IN (:listaStatus) " +
                 "ORDER BY " +
                 "  CASE tx_status " +
                 "    WHEN 'PRONTO' THEN 1 " +
-                "    WHEN 'PREPARACAO' THEN 2 " +
+                "    WHEN 'EM_PREPARACAO' THEN 2 " +
                 "    WHEN 'RECEBIDO' THEN 3 " +
                 "    ELSE 4 " +
                 "  END, " +
