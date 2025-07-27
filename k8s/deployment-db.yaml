@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+        - name: fastfood-db
+          image: mariadb:latest
+          env:
+            - name: MARIADB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: fastood-db-secret
+                  key: MARIADB_DATABASE
+            - name: MARIADB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: fastood-db-secret
+                  key: MARIADB_ROOT_PASSWORD
+            - name: MARIADB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: fastood-db-secret
+                  key: MARIADB_USER
+            - name: MARIADB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: fastood-db-secret
+                  key: MARIADB_PASSWORD
+          ports:
+            - containerPort: 3306

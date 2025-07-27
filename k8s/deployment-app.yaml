@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fiap-fastfood-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fiap-fastfood
+  template:
+    metadata:
+      labels:
+        app: fiap-fastfood
+    spec:
+      containers:
+        - name: fiap-fastfood
+          image: alexguimaraes21/fiap-fastfood:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: fastood-db-secret
+                  key: DB_HOST
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: fastood-db-secret
+                  key: DB_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: fastood-db-secret
+                  key: DB_PASS
