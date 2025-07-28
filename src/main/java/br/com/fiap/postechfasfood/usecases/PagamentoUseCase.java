@@ -25,11 +25,10 @@ public class PagamentoUseCase {
         this.objectMapper = new ObjectMapper();
     }
 
-    public void processarNotificacao(String payload) throws IOException {
+    public void processarNotificacao(int nrPedido, String payload) throws IOException {
         JsonNode root = objectMapper.readTree(payload);
-        int nrPedido = root.path("data").path("nrPedido").asInt();
-        String statusPagamento = root.path("data").path("status").asText();
-        double vlPagamento = root.path("data").path("vlPagamento").asDouble(0.0);
+        String statusPagamento = root.path("pagamento").path("status").asText();
+        double vlPagamento = root.path("pagamento").path("vlPagamento").asDouble(0.0);
 
         if ("approved".equalsIgnoreCase(statusPagamento)) {
             PedidoVO pedido = pedidoRepository.buscarPorNumeroPedido(nrPedido);
