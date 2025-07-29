@@ -1,6 +1,9 @@
 package br.com.fiap.postechfasfood.apis;
 
 import br.com.fiap.postechfasfood.usecases.PagamentoUseCase;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +18,21 @@ public class MercadoPagoWebhookWebHandler {
     }
 
     @PostMapping("/pagamentos/{nrPedido}")
+
+    @Operation(
+            summary = "Recebe notificação de pagamento do Mercado Pago",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Payload da notificação de pagamento",
+                    required = true,
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(
+                                    name = "Exemplo de notificação",
+                                    value = "{\n  \"pagamento\": {\n    \"status\": \"approved\",\n    \"vlPagamento\": 49.90\n  }\n}"
+                            )
+                    )
+            )
+    )
     public ResponseEntity<String> receberNotificacaoPagamento(@RequestBody String payload,
                                                               @PathVariable int nrPedido) {
         try {

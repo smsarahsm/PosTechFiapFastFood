@@ -74,6 +74,7 @@ public class PedidoWebHandler {
         pedido = pedidoRepository.atualizarStatusPedido(cdPedido, novoStatus);
 
         Map<String, Object> response = Map.of(
+                "cdPedido", pedido.getCdPedido(),
                 "txStatus", pedido.getTxStatus().name(),
                 "nrPedido", pedido.getNrPedido(),
                 "itens", pedido.getItens().stream().map(item -> Map.of(
@@ -114,6 +115,7 @@ public class PedidoWebHandler {
         pedidosOrdenados.addAll(recebidos);
         
         List<Map<String, Object>> response = pedidosOrdenados.stream().map(pedido -> Map.of(
+                "cdPedido", pedido.getCdPedido(),
                 "txStatus", pedido.getTxStatus().name(),
                 "nrPedido", pedido.getNrPedido(),
                 "dhCriacao", pedido.getDhCriacaoPedido().toString().substring(0, 16),
