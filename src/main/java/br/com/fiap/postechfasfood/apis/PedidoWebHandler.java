@@ -4,7 +4,7 @@ import br.com.fiap.postechfasfood.apis.requests.PedidoWebHandlerRequest;
 import br.com.fiap.postechfasfood.apis.responses.PagamentoWebHandlerResponse;
 import br.com.fiap.postechfasfood.apis.responses.PedidoWebHandlerResponse;
 import br.com.fiap.postechfasfood.controllers.PedidoController;
-import br.com.fiap.postechfasfood.interfaces.PagamentoRepositoryInterface;
+import br.com.fiap.postechfasfood.interfaces.PagamentoClientInterface;
 import br.com.fiap.postechfasfood.interfaces.PedidoRepositoryInterface;
 import br.com.fiap.postechfasfood.interfaces.ProdutoRepositoryInterface;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.UUID;
 
 @Service
 @RestController
@@ -23,11 +24,11 @@ public class PedidoWebHandler {
 
     private final PedidoRepositoryInterface pedidoRepository;
     private final ProdutoRepositoryInterface produtoRepository;
-    private final PagamentoRepositoryInterface pagamentoRepository;
+    private final PagamentoClientInterface pagamentoRepository;
 
     public PedidoWebHandler(PedidoRepositoryInterface pedidoRepository,
                             ProdutoRepositoryInterface produtoRepository,
-                            PagamentoRepositoryInterface pagamentoRepository) {
+                            PagamentoClientInterface pagamentoRepository) {
         this.pedidoRepository = pedidoRepository;
         this.produtoRepository = produtoRepository;
         this.pagamentoRepository = pagamentoRepository;
@@ -42,11 +43,11 @@ public class PedidoWebHandler {
                 .body(response);
     }
 
-    @PutMapping("/v1/pedidos/pagamento")
+    @PutMapping("/v1/pedidos/pagamento/{numeroPedido}")
     @Operation(summary = "Realiza pagamento do pedido", description = "Realiza pagamento do pedido")
     public ResponseEntity<PagamentoWebHandlerResponse> realizapagamento(@PathVariable int numeroPedido) {
         PedidoController pedidoController = new PedidoController();
-        var response = pedidoController.realizaPagamento(pagamentoRepository, numeroPedido);
+        var response = pedidoController.realizaPagamento(pagamentoRepository, pedidoRepository, numeroPedido);
 
         return ResponseEntity.ok(response);
     }

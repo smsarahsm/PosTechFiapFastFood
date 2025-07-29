@@ -3,6 +3,7 @@ package br.com.fiap.postechfasfood.externals;
 import br.com.fiap.postechfasfood.entities.PedidoVO;
 import br.com.fiap.postechfasfood.entities.ProdutosPedidoVO;
 import br.com.fiap.postechfasfood.externals.mappers.PedidoRowMapper;
+import br.com.fiap.postechfasfood.externals.mappers.ProdutoPedidoRowMapper;
 import br.com.fiap.postechfasfood.interfaces.PedidoRepositoryInterface;
 import br.com.fiap.postechfasfood.types.TipoStatusPedidoEnum;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -20,7 +21,7 @@ public class PedidoRepository implements PedidoRepositoryInterface {
     private final NamedParameterJdbcTemplate namedJdbcTemplate;
     private final JdbcTemplate jdbcTemplate;
 
-    private static final String SELECT_TB_PEDIDOS = "SELECT cd_pedido, cd_doc_cliente, cd_doc_funcionario, tx_status, nr_pedido, dh_criacao_pedido, dh_ultima_atualizacao FROM tb_pedidos";
+    private static final String SELECT_TB_PEDIDOS = "SELECT cd_pedido, cd_doc_cliente, cd_doc_funcionario, tx_status, nr_pedido, dh_criacao_pedido, dh_ult_atualizacao FROM tb_pedidos";
 
     public PedidoRepository(NamedParameterJdbcTemplate namedJdbcTemplate,
                             JdbcTemplate jdbcTemplate) {
@@ -122,5 +123,27 @@ public class PedidoRepository implements PedidoRepositoryInterface {
         String sql = "SELECT MAX(nr_pedido) FROM tb_pedidos";
         Integer ultimoPedido = jdbcTemplate.queryForObject(sql, Integer.class);
         return ultimoPedido != null ? ultimoPedido : 0;
+    }
+
+    @Override
+    public PedidoVO buscarPorNrPedido(int nrPedido) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("nrPedido", nrPedido);
+
+        String sql = SELECT_TB_PEDIDOS + " WHERE nr_pedido = :nrPedido";
+        try {
+            return namedJdbcTemplate.queryForObject(sql, params, new PedidoRowMapper());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<ProdutosPedidoVO> buscarProdutoPedido(PedidoVO pedidoModel) {
+        /*MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("cdPedido", pedidoModel.getCdPedido());
+        String sql = "SELECT * FROM tb_pedidos_produtos WHERE cd_pedido = :cdPedido";
+        return namedJdbcTemplate.query(sql, params, new ProdutoPedidoRowMapper());*/
+        return null;
     }
 }

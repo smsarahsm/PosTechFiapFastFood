@@ -1,7 +1,12 @@
 package br.com.fiap.postechfasfood.usecases;
 
 import br.com.fiap.postechfasfood.entities.PagamentoVO;
+import br.com.fiap.postechfasfood.externals.dto.ItemMercadoPagoDTO;
+import br.com.fiap.postechfasfood.externals.dto.MercadoPagoExternalApiRequestDTO;
 import br.com.fiap.postechfasfood.gateways.PagamentoGateway;
+
+import java.util.List;
+import java.util.UUID;
 
 public class PagamentoUseCase {
     private final PagamentoGateway pagamentoGateway;
@@ -12,17 +17,8 @@ public class PagamentoUseCase {
 
 
     public PagamentoVO realizarPagamento(int nrPedido) {
-        //TODO fazer select no banco para pedidos
-        //pagamentoGateway.getPedido(nrPedido);
-
-        var pagamento = new PagamentoVO(
-                "reference_12345",
-                "Product order",
-                "Purchase description.",
-                "Purchase description.",
-                100
-        );
-
-        return pagamentoGateway.realizaPagamento(pagamento);
+        var pedido = pagamentoGateway.getPedido(nrPedido);
+        var produtosPedidos = pagamentoGateway.buscarProdutoPedido(pedido);
+        return pagamentoGateway.realizaPagamento(produtosPedidos);
     }
 }

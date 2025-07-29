@@ -6,6 +6,6 @@ public record PagamentoWebHandlerResponse(
         String qr_data
 ) {
     public PagamentoWebHandlerResponse(PagamentoVO pagamentoVO) {
-        this(pagamentoVO.getQrCode());
+        this(pagamentoVO.getQrData());
     }
 }

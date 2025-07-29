@@ -8,13 +8,13 @@ import br.com.fiap.postechfasfood.apis.responses.PedidoWebHandlerResponse;
 import br.com.fiap.postechfasfood.gateways.PagamentoGateway;
 import br.com.fiap.postechfasfood.gateways.PedidoGateway;
 import br.com.fiap.postechfasfood.gateways.ProdutoGateway;
-import br.com.fiap.postechfasfood.interfaces.DbConnection;
-import br.com.fiap.postechfasfood.interfaces.PagamentoRepositoryInterface;
+import br.com.fiap.postechfasfood.interfaces.PagamentoClientInterface;
 import br.com.fiap.postechfasfood.interfaces.PedidoRepositoryInterface;
 import br.com.fiap.postechfasfood.interfaces.ProdutoRepositoryInterface;
 import br.com.fiap.postechfasfood.usecases.PagamentoUseCase;
 import br.com.fiap.postechfasfood.usecases.PedidoUseCase;
-import br.com.fiap.postechfastfood_old.infrastructure.persistence.jpa.repositories.ProdutoRepository;
+
+import java.util.UUID;
 
 public class PedidoController {
 
@@ -32,8 +32,8 @@ public class PedidoController {
         return pedidoWebHandlerAdapter.toResponseDto(pedidoCriado);
     }
 
-    public PagamentoWebHandlerResponse realizaPagamento(PagamentoRepositoryInterface pagamentoRepository, int nrPedido) {
-        PagamentoGateway pagamentoGateway = new PagamentoGateway(pagamentoRepository);
+    public PagamentoWebHandlerResponse realizaPagamento(PagamentoClientInterface pagamentoClient, PedidoRepositoryInterface pedidoRepository, int nrPedido) {
+        PagamentoGateway pagamentoGateway = new PagamentoGateway(pagamentoClient, pedidoRepository);
         PagamentoUseCase pagamentoUseCase = new PagamentoUseCase(pagamentoGateway);
 
         var pagamento = pagamentoUseCase.realizarPagamento(nrPedido);

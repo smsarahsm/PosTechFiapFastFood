@@ -19,7 +19,7 @@ public class PedidoRowMapper implements RowMapper<PedidoVO> {
                 .setTxStatus(TipoStatusPedidoEnum.valueOf(rs.getString("tx_status")))
                 .setNrPedido(rs.getInt("nr_pedido"))
                 .setDhCriacaoPedido(rs.getObject("dh_criacao_pedido", LocalDateTime.class))
-                .setDhUltAtualizacao(rs.getObject("dh_ultima_atualizacao", LocalDateTime.class))
+                .setDhUltAtualizacao(rs.getObject("dh_ult_atualizacao", LocalDateTime.class))
                 .build();
     }
 }
