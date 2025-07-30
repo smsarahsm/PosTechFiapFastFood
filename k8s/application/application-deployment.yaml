@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: java-app
-          image: alexguimaraes21/fiap-fastfood:latest #maycondockeraccount/teste-k8s
+          image: maycondockeraccount/fiap-fastfood #alexguimaraes21/fiap-fastfood:latest
           ports:
             - containerPort: 8080
           env:
