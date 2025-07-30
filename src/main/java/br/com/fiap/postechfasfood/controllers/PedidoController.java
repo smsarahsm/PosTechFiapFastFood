@@ -5,11 +5,9 @@ import br.com.fiap.postechfasfood.apis.requests.PedidoWebHandlerRequest;
 import br.com.fiap.postechfasfood.apis.responses.PedidoWebHandlerResponse;
 import br.com.fiap.postechfasfood.gateways.PedidoGateway;
 import br.com.fiap.postechfasfood.gateways.ProdutoGateway;
-import br.com.fiap.postechfasfood.interfaces.DbConnection;
 import br.com.fiap.postechfasfood.interfaces.PedidoRepositoryInterface;
 import br.com.fiap.postechfasfood.interfaces.ProdutoRepositoryInterface;
 import br.com.fiap.postechfasfood.usecases.PedidoUseCase;
-import br.com.fiap.postechfastfood_old.infrastructure.persistence.jpa.repositories.ProdutoRepository;
 
 public class PedidoController {
 

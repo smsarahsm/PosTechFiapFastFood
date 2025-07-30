@@ -55,13 +55,12 @@ public class PedidoWebHandler {
             @PathVariable UUID cdPedido,
             @PathVariable String txStatus) {
 
-        PedidoVO pedido = pedidoRepository.buscarPorCdPedido(cdPedido);
+        PedidoVO pedido = pedidoRepository.buscarPorStatusPedido(cdPedido);
         if (pedido == null) {
             return ResponseEntity.notFound().build();
         }
 
-        // Só permite alteração se o status atual for "PAGO"
-        if (!pedido.getTxStatus().name().equals("PAGO")) {
+        if (!pedido.getTxStatus().name().equals("RECEBIDO")) {
             return ResponseEntity.status(409).body(Map.of("erro", "Status só pode ser alterado após pagamento concluído."));
         }
 
@@ -75,6 +74,7 @@ public class PedidoWebHandler {
         pedido = pedidoRepository.atualizarStatusPedido(cdPedido, novoStatus);
 
         Map<String, Object> response = Map.of(
+                "cdPedido", pedido.getCdPedido(),
                 "txStatus", pedido.getTxStatus().name(),
                 "nrPedido", pedido.getNrPedido(),
                 "itens", pedido.getItens().stream().map(item -> Map.of(
@@ -115,6 +115,7 @@ public class PedidoWebHandler {
         pedidosOrdenados.addAll(recebidos);
         
         List<Map<String, Object>> response = pedidosOrdenados.stream().map(pedido -> Map.of(
+                "cdPedido", pedido.getCdPedido(),
                 "txStatus", pedido.getTxStatus().name(),
                 "nrPedido", pedido.getNrPedido(),
                 "dhCriacao", pedido.getDhCriacaoPedido().toString().substring(0, 16),

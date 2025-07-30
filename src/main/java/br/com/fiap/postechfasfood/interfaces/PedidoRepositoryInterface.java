@@ -12,6 +12,8 @@ public interface PedidoRepositoryInterface {
 
     PedidoVO buscarPorCdPedido(UUID cdPedido);
 
+    PedidoVO buscarPorStatusPedido(UUID cdPedido);
+
     List<PedidoVO> listarTodosPedidos();
 
     void removerPedido(UUID cdPedido);
