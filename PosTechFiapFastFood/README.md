@@ -1,2 +1,0 @@
-# PosTechFiapFastFood
-Tech Challenge

@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: java-app
+  template:
+    metadata:
+      labels:
+        app: java-app
+    spec:
+      containers:
+        - name: java-app
+          image: alexguimaraes21/fiap-fastfood:latest #maycondockeraccount/teste-k8s
+          ports:
+            - containerPort: 8080
+          env:
+            - name: TZ
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: TZ
+
+            - name: DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: DATASOURCE_URL
+
+            - name: DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: DATASOURCE_USERNAME
+
+            - name: DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: DATASOURCE_PASSWORD
+
+            - name: DATASOURCE_POOL-NAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: DATASOURCE_POOL-NAME
+
+            - name: DATASOURCE_MAXIMUM-POOL-SIZE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: DATASOURCE_MAXIMUM-POOL-SIZE

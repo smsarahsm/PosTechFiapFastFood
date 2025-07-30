@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  DATASOURCE_URL: "jdbc:mariadb://fastfood-db-service:3306/fiap-fastfood"
+  MARIADB_DATABASE: "fiap-fastfood"
