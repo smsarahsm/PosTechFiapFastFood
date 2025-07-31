@@ -1,6 +1,8 @@
 package br.com.fiap.postechfasfood.apis;
 
-import br.com.fiap.postechfasfood.usecases.PagamentoUseCase;
+import br.com.fiap.postechfasfood.controllers.MercadoPagoWebHookController;
+import br.com.fiap.postechfasfood.interfaces.PagamentoRepositoryInterface;
+import br.com.fiap.postechfasfood.interfaces.PedidoRepositoryInterface;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -11,14 +13,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/webhook/mercado-pago")
 public class MercadoPagoWebhookWebHandler {
 
-    private final PagamentoUseCase pagamentoUseCase;
+    private final PedidoRepositoryInterface pedidoRepository;
+    private final PagamentoRepositoryInterface pagamentoRepository;
 
-    public MercadoPagoWebhookWebHandler(PagamentoUseCase pagamentoUseCase) {
-        this.pagamentoUseCase = pagamentoUseCase;
+
+    public MercadoPagoWebhookWebHandler(PedidoRepositoryInterface pedidoRepository, PagamentoRepositoryInterface pagamentoRepository) {
+        this.pedidoRepository = pedidoRepository;
+        this.pagamentoRepository = pagamentoRepository;
     }
 
     @PostMapping("/pagamentos/{nrPedido}")
-
     @Operation(
             summary = "Recebe notificação de pagamento do Mercado Pago",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
@@ -36,7 +40,9 @@ public class MercadoPagoWebhookWebHandler {
     public ResponseEntity<String> receberNotificacaoPagamento(@RequestBody String payload,
                                                               @PathVariable int nrPedido) {
         try {
-            pagamentoUseCase.processarNotificacao(nrPedido, payload);
+            MercadoPagoWebHookController mercadoPagoWebHookController = new MercadoPagoWebHookController();
+            mercadoPagoWebHookController.processarNotificacao(pedidoRepository, pagamentoRepository, payload, nrPedido);
+
             String resposta = "{\"mensagem\": \"Transação aprovada\"}";
             return ResponseEntity.ok()
                     .header("Content-Type", "application/json")

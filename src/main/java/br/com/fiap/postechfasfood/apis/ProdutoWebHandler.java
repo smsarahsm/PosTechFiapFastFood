@@ -29,13 +29,10 @@ import jakarta.validation.Valid;
 public class ProdutoWebHandler {
 
     private final ProdutoRepositoryInterface produtoRepository;
-    private final ProdutoUseCase produtoUseCase;
 
-   public ProdutoWebHandler(ProdutoRepositoryInterface produtoRepository) {
-    this.produtoRepository = produtoRepository;
-    ProdutoGateway produtoGateway = new ProdutoGateway(produtoRepository);
-    this.produtoUseCase = new ProdutoUseCase(produtoGateway);
-}
+    public ProdutoWebHandler(ProdutoRepositoryInterface produtoRepository) {
+        this.produtoRepository = produtoRepository;
+    }
 
     @PostMapping("/v1/produto")
     @Operation(summary = "Cadastra produtos", description = "Cadastra os produtos")
@@ -66,14 +63,16 @@ public class ProdutoWebHandler {
     @PatchMapping("/v1/produto/{cdProduto}/desativar")
     @Operation(summary = "Desativa produtos", description = "Desativa produtos existentes")
     public ResponseEntity<Void> desativarProduto(@PathVariable UUID cdProduto) {
-        produtoUseCase.desativar(cdProduto);
+        final ProdutoController produtoController = new ProdutoController();
+        produtoController.desativarProduto(produtoRepository, cdProduto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping("/v1/produto/{cdProduto}/ativar")
     @Operation(summary = "Ativa produtos", description = "Ativa produtos existentes")
     public ResponseEntity<Void> ativarProduto(@PathVariable UUID cdProduto) {
-        produtoUseCase.ativar(cdProduto);
+        final ProdutoController produtoController = new ProdutoController();
+        produtoController.ativarProduto(produtoRepository, cdProduto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
@@ -81,11 +80,9 @@ public class ProdutoWebHandler {
     @Operation(summary = "Lista produtos", description = "Lista todos produtos existentes por categoria")
     public ResponseEntity<List<ProdutoWebHandlerResponse>> listarPorCategoria(
             @RequestParam TipoCategoriaProdutoEnum tpCategoria) {
-
-        List<ProdutoWebHandlerResponse> produtoResponse = produtoUseCase.listarPorCategoria(tpCategoria)
-                .stream()
-                .map(ProdutoWebHandlerResponse::new)
-                .collect(Collectors.toList());
+        final ProdutoController produtoController = new ProdutoController();
+        produtoController.listarProdutosPorCategoria(produtoRepository, tpCategoria);
+        List<ProdutoWebHandlerResponse> produtoResponse = produtoController.listarProdutosPorCategoria(produtoRepository, tpCategoria);
 
         if (produtoResponse.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -97,10 +94,9 @@ public class ProdutoWebHandler {
     @GetMapping("/v1/produtos")
     @Operation(summary = "Lista produtos", description = "Lista todos produtos existentes")
     public ResponseEntity<List<ProdutoWebHandlerResponse>> buscar() {
-        List<ProdutoWebHandlerResponse> produtoResponse = produtoUseCase.listar()
-                .stream()
-                .map(ProdutoWebHandlerResponse::new)
-                .collect(Collectors.toList());
+        final ProdutoController produtoController = new ProdutoController();
+        produtoController.listarProdutos(produtoRepository);
+        List<ProdutoWebHandlerResponse> produtoResponse = produtoController.listarProdutos(produtoRepository);
 
         if (produtoResponse.isEmpty()) {
             return ResponseEntity.notFound().build();

@@ -1,9 +1,11 @@
 package br.com.fiap.postechfasfood.apis;
 
 import br.com.fiap.postechfasfood.apis.requests.PedidoWebHandlerRequest;
+import br.com.fiap.postechfasfood.apis.responses.PedidoAtualizadoWebHandlerResponse;
+import br.com.fiap.postechfasfood.apis.responses.PedidoPorStatusWebHandlerResponse;
 import br.com.fiap.postechfasfood.apis.responses.PedidoWebHandlerResponse;
+import br.com.fiap.postechfasfood.apis.responses.PedidosWebHandlerResponse;
 import br.com.fiap.postechfasfood.controllers.PedidoController;
-import br.com.fiap.postechfasfood.entities.PedidoVO;
 import br.com.fiap.postechfasfood.interfaces.PedidoRepositoryInterface;
 import br.com.fiap.postechfasfood.interfaces.ProdutoRepositoryInterface;
 import br.com.fiap.postechfasfood.types.TipoStatusPedidoEnum;
@@ -14,7 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -41,90 +44,46 @@ public class PedidoWebHandler {
     }
 
     @GetMapping("/v1/pedidos/{nrPedido}/pagamento/status")
-    public ResponseEntity<Map<String, String>> consultarStatusPagamento(@PathVariable int nrPedido) {
-        PedidoVO pedido = pedidoRepository.buscarPorNumeroPedido(nrPedido);
+    public ResponseEntity<PedidoPorStatusWebHandlerResponse> consultarStatusPagamento(@PathVariable int nrPedido) {
+        PedidoController pedidoController = new PedidoController();
+        PedidoPorStatusWebHandlerResponse pedido = pedidoController.buscarPorNumeroPedido(pedidoRepository, produtoRepository, nrPedido);
         if (pedido == null) {
             return ResponseEntity.notFound().build();
         }
-        Map<String, String> response = Map.of("txStatus", pedido.getTxStatus().name());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(pedido);
     }
 
     @PatchMapping("/v1/pedidos/{cdPedido}/status/{txStatus}")
-    public ResponseEntity<?> atualizarStatusPedido(
+    public ResponseEntity<PedidoAtualizadoWebHandlerResponse> atualizarStatusPedido(
             @PathVariable UUID cdPedido,
             @PathVariable String txStatus) {
-
-        PedidoVO pedido = pedidoRepository.buscarPorStatusPedido(cdPedido);
-        if (pedido == null) {
+        PedidoController pedidoController = new PedidoController();
+        var tipoStatusPedido = pedidoController.buscarPorStatusPedido(pedidoRepository, produtoRepository, cdPedido);
+        if (tipoStatusPedido == null) {
             return ResponseEntity.notFound().build();
         }
 
-        if (!pedido.getTxStatus().name().equals("RECEBIDO")) {
-            return ResponseEntity.status(409).body(Map.of("erro", "Status só pode ser alterado após pagamento concluído."));
+        if (!tipoStatusPedido.name().equals("RECEBIDO")) {
+            return ResponseEntity.status(409).build();
         }
 
         TipoStatusPedidoEnum novoStatus;
         try {
             novoStatus = TipoStatusPedidoEnum.valueOf(txStatus);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(Map.of("erro", "Status inválido."));
+            return ResponseEntity.badRequest().build();
         }
 
-        pedido = pedidoRepository.atualizarStatusPedido(cdPedido, novoStatus);
+        var pedidoAtualizado = pedidoController.atualizarStatusPedido(pedidoRepository, produtoRepository, cdPedido, novoStatus);
 
-        Map<String, Object> response = Map.of(
-                "cdPedido", pedido.getCdPedido(),
-                "txStatus", pedido.getTxStatus().name(),
-                "nrPedido", pedido.getNrPedido(),
-                "itens", pedido.getItens().stream().map(item -> Map.of(
-                        "cdProduto", item.getCdProduto(),
-                        "vlQuantidade", item.getVlQuantidade()
-                )).toList()
-        );
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(pedidoAtualizado);
     }
-
 
     @GetMapping("/v1/pedidos")
-    public ResponseEntity<?> listarPedidos() {
-        List<PedidoVO> todosPedidos = pedidoRepository.listarTodosPedidos();
-        List<PedidoVO> pedidosFiltrados = todosPedidos.stream()
-                .filter(p -> !p.getTxStatus().name().equals("FINALIZADO"))
-                .toList();
+    public ResponseEntity<List<PedidosWebHandlerResponse>> listarPedidos() {
+        PedidoController pedidoController = new PedidoController();
+        var pedidos = pedidoController.listarTodosPedidos(pedidoRepository, produtoRepository);
 
-        List<PedidoVO> prontos = pedidosFiltrados.stream()
-                .filter(p -> p.getTxStatus().name().equals("PRONTO"))
-                .sorted(Comparator.comparing(PedidoVO::getDhCriacaoPedido))
-                .toList();
-
-        List<PedidoVO> emPreparacao = pedidosFiltrados.stream()
-                .filter(p -> p.getTxStatus().name().equals("EM_PREPARACAO"))
-                .sorted(Comparator.comparing(PedidoVO::getDhCriacaoPedido))
-                .toList();
-
-        List<PedidoVO> recebidos = pedidosFiltrados.stream()
-                .filter(p -> p.getTxStatus().name().equals("RECEBIDO"))
-                .sorted(Comparator.comparing(PedidoVO::getDhCriacaoPedido))
-                .toList();
-
-        List<PedidoVO> pedidosOrdenados = new ArrayList<>();
-        pedidosOrdenados.addAll(prontos);
-        pedidosOrdenados.addAll(emPreparacao);
-        pedidosOrdenados.addAll(recebidos);
-        
-        List<Map<String, Object>> response = pedidosOrdenados.stream().map(pedido -> Map.of(
-                "cdPedido", pedido.getCdPedido(),
-                "txStatus", pedido.getTxStatus().name(),
-                "nrPedido", pedido.getNrPedido(),
-                "dhCriacao", pedido.getDhCriacaoPedido().toString().substring(0, 16),
-                "itens", pedido.getItens().stream().map(item -> Map.of(
-                        "cdProduto", item.getCdProduto(),
-                        "vlQuantidade", item.getVlQuantidade()
-                )).toList()
-        )).toList();
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(pedidos);
     }
-
 }
