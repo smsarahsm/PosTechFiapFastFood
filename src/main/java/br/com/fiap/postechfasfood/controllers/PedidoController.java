@@ -22,6 +22,7 @@ public class PedidoController {
     public PedidoWebHandlerResponse criarPedido(PedidoRepositoryInterface pedidoRepository,
                                                 ProdutoRepositoryInterface produtoRepository,
                                                 PedidoWebHandlerRequest pedidoWebHandlerRequest) {
+
         PedidoGateway pedidoGateway = new PedidoGateway(pedidoRepository);
         ProdutoGateway produtoGateway = new ProdutoGateway(produtoRepository);
 
