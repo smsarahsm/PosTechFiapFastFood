@@ -7,9 +7,13 @@ import br.com.fiap.postechfasfood.entities.ProdutoVO;
 import br.com.fiap.postechfasfood.entities.ProdutosPedidoVO;
 import br.com.fiap.postechfasfood.gateways.PedidoGateway;
 import br.com.fiap.postechfasfood.gateways.ProdutoGateway;
+import br.com.fiap.postechfasfood.types.TipoStatusPedidoEnum;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.UUID;
 
 import static br.com.fiap.postechfasfood.types.TipoStatusPedidoEnum.AGUARDANDO_PAGAMENTO;
@@ -24,7 +28,6 @@ public class PedidoUseCase {
         this.pedidoGateway = pedidoGateway;
         this.produtoGateway = produtoGateway;
     }
-
     public PedidoVO criarPedido(PedidoWebHandlerRequest pedidoWebHandlerRequest) {
         var pedido = new PedidoVO(
                 UUID.randomUUID(),
@@ -60,10 +63,51 @@ public class PedidoUseCase {
         return pedidoGateway.cadastrarProdutoPedido(produtoPedido);
     }
 
+    public PedidoVO buscarPorNumeroPedido(int nrPedido) {
+        return pedidoGateway.buscarPorNumeroPedido(nrPedido);
+    }
+
+    public PedidoVO buscarPorStatusPedido(UUID cdPedido) {
+        return pedidoGateway.buscarPorStatusPedido(cdPedido);
+    }
+
+    public PedidoVO atualizarStatusPedido(UUID cdPedido, TipoStatusPedidoEnum novoStatus) {
+        return pedidoGateway.atualizarStatusPedido(cdPedido, novoStatus);
+    }
+
+    public List<PedidoVO> listarTodosPedidos() {
+        List<PedidoVO> todosPedidos = pedidoGateway.listarTodosPedidos();
+
+        List<PedidoVO> pedidosFiltrados = todosPedidos.stream()
+                .filter(p -> !p.getTxStatus().name().equals("FINALIZADO"))
+                .toList();
+
+        List<PedidoVO> prontos = pedidosFiltrados.stream()
+                .filter(p -> p.getTxStatus().name().equals("PRONTO"))
+                .sorted(Comparator.comparing(PedidoVO::getDhCriacaoPedido))
+                .toList();
+
+        List<PedidoVO> emPreparacao = pedidosFiltrados.stream()
+                .filter(p -> p.getTxStatus().name().equals("EM_PREPARACAO"))
+                .sorted(Comparator.comparing(PedidoVO::getDhCriacaoPedido))
+                .toList();
+
+        List<PedidoVO> recebidos = pedidosFiltrados.stream()
+                .filter(p -> p.getTxStatus().name().equals("RECEBIDO"))
+                .sorted(Comparator.comparing(PedidoVO::getDhCriacaoPedido))
+                .toList();
+
+        List<PedidoVO> pedidosOrdenados = new ArrayList<>();
+        pedidosOrdenados.addAll(prontos);
+        pedidosOrdenados.addAll(emPreparacao);
+        pedidosOrdenados.addAll(recebidos);
+
+        return pedidosOrdenados;
+    }
+
     private int geraNumeroPedido() {
         var ultimoNumeroPedido = pedidoGateway.buscarUltimoNumeroPedido();
 
         return ultimoNumeroPedido >= 999 ? 1 : ultimoNumeroPedido + 1;
     }
-
 }

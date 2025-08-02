@@ -26,5 +26,5 @@ public interface PedidoRepositoryInterface {
 
     int buscarUltimoNumeroPedido();
 
-    public PedidoVO buscarPorNumeroPedido(int nrPedido);
+    PedidoVO buscarPorNumeroPedido(int nrPedido);
 }
