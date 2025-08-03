@@ -15,6 +15,13 @@ spec:
       containers:
         - name: java-app
           image: maycondockeraccount/fiap-fastfood #alexguimaraes21/fiap-fastfood:latest
+          resources:
+            requests:
+              cpu: "100m" # Solicita 0.1 de um core de CPU
+              memory: "128Mi" # Solicita 128 megabytes de memória
+            limits:
+              cpu: "500m" # Limite de 0.5 de um core de CPU
+              memory: "256Mi" # Limite de 256 megabytes de memória
           ports:
             - containerPort: 8080
           env:
