@@ -209,5 +209,9 @@ Endpoint: Post /webhook/mercado-pago/pagamentos/{nrPedido}
 6. rodar
    ````bash
    kubectl port-forward service/app-service 30080:8080
-# Desenho de Arquitetura
+## Desenho de Arquitetura
 O arquido do desenho de arquitetura econtra-se na pasta ./arquitetura/arquitetura fase 2.drawio
+
+## Vídeo 
+📹 https://youtu.be/2YXLZocAqf4
+
