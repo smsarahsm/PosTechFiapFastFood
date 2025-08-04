@@ -12,6 +12,8 @@ public interface PedidoRepositoryInterface {
 
     PedidoVO buscarPorCdPedido(UUID cdPedido);
 
+    PedidoVO buscarPorStatusPedido(UUID cdPedido);
+
     List<PedidoVO> listarTodosPedidos();
 
     void removerPedido(UUID cdPedido);
@@ -24,5 +26,5 @@ public interface PedidoRepositoryInterface {
 
     int buscarUltimoNumeroPedido();
 
-    public PedidoVO buscarPorNumeroPedido(int nrPedido);
+    PedidoVO buscarPorNumeroPedido(int nrPedido);
 }
