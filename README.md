@@ -161,3 +161,51 @@ Endpoint: Post /webhook/mercado-pago/pagamentos/{nrPedido}
         Endpoint: Post /webhook/mercado-pago/pagamentos/{nrPedido}
     5. Atualiza status
         Endpoint: Patch /api/v1/pedidos/{cdPedido}/status/{txStatus}
+
+# Preparando o ambiente para o K8s
+
+1. Instalar o Docker Desktop
+
+2. Instalar o WSL
+
+3. Instalar o Ubuntu no WSL
+
+4. Iniciar o Kubernetes no Docker Desktop
+
+5. Acessar o terminal do Ubuntu, navegar até a pasta do projeto e verificar a instalação do kubectl:
+   ```bash
+   kubectl version
+   kubectl cluster-info
+6. Instalar o kind usando
+   ```bash
+   curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.29.0/kind-linux-amd64 
+   chmod +x ./kind 
+   sudo mv ./kind /usr/local/bin/kind
+
+# Rodando o projeto com Kubernets
+1. criar um cluster usando 
+   ```bash
+   kind create cluster --name fiap-fastfood --config ./k8s/cluster/kind-cluster.yaml
+2. verificar se a criação ocorreu com sucesso usando 
+   ```bash
+   kubectl cluster-info --context kind-fiap-fastfood
+3. instalar o metrics-server utilizando 
+   ```bash
+   kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+4. aplique cada um dos arquivos k8s
+   ```bash
+   kubectl apply -f ./k8s/configmap.yaml
+   kubectl apply -f ./k8s/database/database-secrets.yaml
+   kubectl apply -f ./k8s/database/database-service.yaml
+   kubectl apply -f ./k8s/database/database-deployment.yaml
+   kubectl apply -f ./k8s/application/application-secrets.yaml
+   kubectl apply -f ./k8s/application/application-service.yaml
+   kubectl apply -f ./k8s/application/application-deployment.yaml
+   kubectl apply -f ./k8s/hpa/hpa.yaml
+5. validar se a aplicação está de pé usando
+   ````bash
+   kubectl get services
+   kubectl get pods
+6. rodar
+   ````bash
+   kubectl port-forward service/app-service 30080:8080
