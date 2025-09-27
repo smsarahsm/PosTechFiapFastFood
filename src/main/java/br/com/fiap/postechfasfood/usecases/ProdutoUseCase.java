@@ -21,23 +21,24 @@ public class ProdutoUseCase {
     public ProdutoUseCase(ProdutoGateway produtoGateway) {
         this.produtoGateway = produtoGateway;
     }
-    
+
     public ProdutoVO cadastrar(ProdutoWebHandlerRequest request) {
         ProdutoVO produto = request.toProdutoVO();
-        produto.setCdProduto(UUID.randomUUID());
+        produto.setCdProduto(UUID.randomUUID().toString());
         produtoGateway.cadastrar(produto);
         return produto;
     }
-    public void atualizar(UUID cdProduto, ProdutoWebHandlerRequest request) {
+
+    public void atualizar(String cdProduto, ProdutoWebHandlerRequest request) {
         ProdutoVO produto = request.toProdutoVO();
         produtoGateway.atualizar(cdProduto, produto);
     }
 
-    public void desativar(UUID cdProduto) {
+    public void desativar(String cdProduto) {
         produtoGateway.desativar(cdProduto);
     }
 
-    public void ativar(UUID cdProduto) {
+    public void ativar(String cdProduto) {
         produtoGateway.ativar(cdProduto);
     }
 
@@ -46,10 +47,10 @@ public class ProdutoUseCase {
     }
 
     public List<ProdutoVO> listarPorCategoria(TipoCategoriaProdutoEnum tpCategoria) {
-    return new ArrayList<>(produtoGateway.listar(tpCategoria));
+        return new ArrayList<>(produtoGateway.listar(tpCategoria));
     }
 
-    public ProdutoVO buscarPorCdProduto(UUID cdProduto) {
+    public ProdutoVO buscarPorCdProduto(String cdProduto) {
         return produtoGateway.buscarPorCdProduto(cdProduto);
     }
 }

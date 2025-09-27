@@ -19,7 +19,7 @@ import lombok.Setter;
 public class ProdutoEntity {
     @Id
     @Column(name = "cd_produto", nullable = false, unique = true)
-    private UUID cdProduto;
+    private String cdProduto;
     @Column(name = "nm_produto", nullable = false)
     private String nmProduto;
     @Column(name = "ds_descricao", nullable = false)

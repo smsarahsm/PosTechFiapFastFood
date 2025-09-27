@@ -10,13 +10,15 @@ import java.util.UUID;
 public interface PedidoRepositoryInterface {
     PedidoVO cadastrarPedido(PedidoVO pedidoModel);
 
-    PedidoVO buscarPorCdPedido(UUID cdPedido);
+    PedidoVO buscarPorCdPedido(String cdPedido);
+
+    PedidoVO buscarPorStatusPedido(String cdPedido);
 
     List<PedidoVO> listarTodosPedidos();
 
-    void removerPedido(UUID cdPedido);
+    void removerPedido(String cdPedido);
 
-    PedidoVO atualizarStatusPedido(UUID cdPedido, TipoStatusPedidoEnum txStatus);
+    PedidoVO atualizarStatusPedido(String cdPedido, TipoStatusPedidoEnum txStatus);
 
     List<PedidoVO> buscarPedidosPorStatus(TipoStatusPedidoEnum txStatus);
 
@@ -24,5 +26,5 @@ public interface PedidoRepositoryInterface {
 
     int buscarUltimoNumeroPedido();
 
-    public PedidoVO buscarPorNumeroPedido(int nrPedido);
+    PedidoVO buscarPorNumeroPedido(int nrPedido);
 }

@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class ProdutoVO {
 
-    private UUID cdProduto;
+    private String cdProduto;
     private String nmProduto;
     private String dsDescricao;
     private double vlPreco;
@@ -18,7 +18,7 @@ public class ProdutoVO {
     public ProdutoVO() {
     }
 
-    public ProdutoVO(UUID cdProduto, String nmProduto, String dsDescricao, double vlPreco, boolean snAtivo,
+    public ProdutoVO(String cdProduto, String nmProduto, String dsDescricao, double vlPreco, boolean snAtivo,
                      TipoCategoriaProdutoEnum tpCategoria) {
         this.cdProduto = cdProduto;
         this.nmProduto = nmProduto;
@@ -28,11 +28,11 @@ public class ProdutoVO {
         this.tpCategoria = tpCategoria;
     }
 
-    public UUID getCdProduto() {
+    public String getCdProduto() {
         return cdProduto;
     }
 
-    public void setCdProduto(UUID cdProduto) {
+    public void setCdProduto(String cdProduto) {
         this.cdProduto = cdProduto;
     }
 
@@ -77,14 +77,14 @@ public class ProdutoVO {
     }
 
     public static class Builder {
-        private UUID cdProduto;
+        private String cdProduto;
         private String nmProduto;
         private String dsDescricao;
         private double vlPreco;
         private boolean snAtivo;
         private TipoCategoriaProdutoEnum tpCategoria;
 
-        public Builder setCdProduto(UUID cdProduto) {
+        public Builder setCdProduto(String cdProduto) {
             this.cdProduto = cdProduto;
             return this;
         }

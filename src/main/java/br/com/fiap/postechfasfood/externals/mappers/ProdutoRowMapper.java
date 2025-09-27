@@ -12,7 +12,7 @@ public class ProdutoRowMapper implements RowMapper<ProdutoVO> {
     @Override
     public ProdutoVO mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new ProdutoVO.Builder()
-                .setCdProduto(rs.getObject("cd_produto", UUID.class))
+                .setCdProduto(rs.getString("cd_produto"))
                 .setNmProduto(rs.getString("nm_produto"))
                 .setDsDescricao(rs.getString("ds_descricao"))
                 .setVlPreco(rs.getDouble("vl_preco"))

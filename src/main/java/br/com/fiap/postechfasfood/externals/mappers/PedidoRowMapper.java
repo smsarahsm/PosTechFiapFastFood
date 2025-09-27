@@ -13,7 +13,7 @@ public class PedidoRowMapper implements RowMapper<PedidoVO> {
     @Override
     public PedidoVO mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new PedidoVO.Builder()
-                .setCdPedido(rs.getObject("cd_pedido", UUID.class))
+                .setCdPedido(rs.getString("cd_pedido"))
                 .setCdDocCliente(rs.getString("cd_doc_cliente"))
                 .setCdDocFuncionario(rs.getString("cd_doc_funcionario"))
                 .setTxStatus(TipoStatusPedidoEnum.valueOf(rs.getString("tx_status")))

@@ -3,20 +3,20 @@ package br.com.fiap.postechfasfood.entities;
 import java.util.UUID;
 
 public class ItensPedidoVO {
-    private UUID cdProduto;
+    private String cdProduto;
     private int vlQuantidade;
 
     public ItensPedidoVO() {
     }
 
-    public ItensPedidoVO(UUID cdProduto, int vlQuantidade) {
+    public ItensPedidoVO(String cdProduto, int vlQuantidade) {
         this.cdProduto = cdProduto;
         this.vlQuantidade = vlQuantidade;
     }
 
-    public UUID getCdProduto() { return cdProduto; }
+    public String getCdProduto() { return cdProduto; }
 
-    public void setCdProduto(UUID cdProduto) { this.cdProduto = cdProduto; }
+    public void setCdProduto(String cdProduto) { this.cdProduto = cdProduto; }
 
     public int getVlQuantidade() {
         return vlQuantidade;
@@ -28,10 +28,10 @@ public class ItensPedidoVO {
 
 
     public static class Builder {
-        private UUID cdProduto;
+        private String cdProduto;
         private int vlQuantidade;
 
-        public Builder setCdProduto(UUID cdProduto) {
+        public Builder setCdProduto(String cdProduto) {
             this.cdProduto = cdProduto;
             return this;
         }
