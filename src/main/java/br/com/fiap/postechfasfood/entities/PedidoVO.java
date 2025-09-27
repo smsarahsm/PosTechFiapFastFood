@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class PedidoVO {
 
-    private UUID cdPedido;
+    private String cdPedido;
     private String cdDocCliente;
     private String cdDocFuncionario;
     private TipoStatusPedidoEnum txStatus;
@@ -22,7 +22,7 @@ public class PedidoVO {
     public PedidoVO() {
     }
 
-    public PedidoVO(UUID cdPedido,
+    public PedidoVO(String cdPedido,
                     String cdDocCliente,
                     String cdDocFuncionario,
                     TipoStatusPedidoEnum txStatus,
@@ -40,7 +40,7 @@ public class PedidoVO {
         this.itens = itens;
     }
 
-    public PedidoVO(UUID cdPedido,
+    public PedidoVO(String cdPedido,
                     String cdDocCliente,
                     TipoStatusPedidoEnum txStatus,
                     int nrPedido,
@@ -56,11 +56,11 @@ public class PedidoVO {
         this.itens = itens;
     }
 
-    public UUID getCdPedido() {
+    public String getCdPedido() {
         return cdPedido;
     }
 
-    public void setCdPedido(UUID cdPedido) {
+    public void setCdPedido(String cdPedido) {
         this.cdPedido = cdPedido;
     }
 
@@ -121,7 +121,7 @@ public class PedidoVO {
     }
 
     public static class Builder {
-        private UUID cdPedido;
+        private String cdPedido;
         private String cdDocCliente;
         private String cdDocFuncionario;
         private TipoStatusPedidoEnum txStatus;
@@ -130,7 +130,7 @@ public class PedidoVO {
         private LocalDateTime dhUltAtualizacao;
         private List<ItensPedidoVO> itens;
 
-        public Builder setCdPedido(UUID cdPedido) {
+        public Builder setCdPedido(String cdPedido) {
             this.cdPedido = cdPedido;
             return this;
         }

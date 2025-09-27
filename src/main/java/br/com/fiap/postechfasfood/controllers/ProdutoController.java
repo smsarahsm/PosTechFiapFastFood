@@ -23,7 +23,7 @@ public class ProdutoController {
         return response;
     }
     public ProdutoWebHandlerResponse buscarProdutoPorCdProduto
-    (ProdutoRepositoryInterface produtoRepository, UUID cdProduto) {
+    (ProdutoRepositoryInterface produtoRepository, String cdProduto) {
         final ProdutoGateway produtoGateway = new ProdutoGateway(produtoRepository);
         ProdutoUseCase produtoUseCase = new ProdutoUseCase(produtoGateway);
         var produto = produtoUseCase.buscarPorCdProduto(cdProduto);
@@ -33,7 +33,7 @@ public class ProdutoController {
     }
     public ProdutoWebHandlerResponse atualizarProduto(
     ProdutoRepositoryInterface produtoRepository,
-    UUID cdProduto,
+    String cdProduto,
     ProdutoWebHandlerRequest produtoWebHandlerRequest) {
 
     final ProdutoGateway produtoGateway = new ProdutoGateway(produtoRepository);
@@ -48,13 +48,13 @@ public class ProdutoController {
     return adapter.toResponseDto(produtoAtualizado);
 }
 
-    public void desativarProduto(ProdutoRepositoryInterface produtoRepository, UUID cdProduto) {
+    public void desativarProduto(ProdutoRepositoryInterface produtoRepository, String cdProduto) {
         final ProdutoGateway produtoGateway = new ProdutoGateway(produtoRepository);
         ProdutoUseCase produtoUseCase = new ProdutoUseCase(produtoGateway);
         produtoUseCase.desativar(cdProduto);
     }
 
-    public void ativarProduto(ProdutoRepositoryInterface produtoRepository, UUID cdProduto) {
+    public void ativarProduto(ProdutoRepositoryInterface produtoRepository, String cdProduto) {
         final ProdutoGateway produtoGateway = new ProdutoGateway(produtoRepository);
         ProdutoUseCase produtoUseCase = new ProdutoUseCase(produtoGateway);
         produtoUseCase.ativar(cdProduto);

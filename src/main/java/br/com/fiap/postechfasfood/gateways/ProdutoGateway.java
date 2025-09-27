@@ -23,20 +23,20 @@ public class ProdutoGateway implements ProdutoGatewayInterface {
 
     
     public void cadastrar(ProdutoVO produto) {
-        produto.setCdProduto(UUID.randomUUID());
+        produto.setCdProduto(UUID.randomUUID().toString());
         produtoRepository.cadastrar(produto);
     }
 
-    public void atualizar(UUID cdProduto, ProdutoVO produto) {
+    public void atualizar(String cdProduto, ProdutoVO produto) {
         produto.setCdProduto(cdProduto);
         produtoRepository.atualizar(cdProduto, produto);
     }
 
-    public void desativar(UUID cdProduto) {
+    public void desativar(String cdProduto) {
         produtoRepository.desativar(cdProduto);
     }
 
-    public void ativar(UUID cdProduto) {
+    public void ativar(String cdProduto) {
         produtoRepository.ativar(cdProduto);
     }
 
@@ -48,7 +48,7 @@ public class ProdutoGateway implements ProdutoGatewayInterface {
         return produtoRepository.listar(tpCategoria);
     }
 
-    public ProdutoVO buscarPorCdProduto(UUID cdProduto) {
+    public ProdutoVO buscarPorCdProduto(String cdProduto) {
         return produtoRepository.buscarPorCdProduto(cdProduto);
     }
 

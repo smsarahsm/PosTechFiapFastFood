@@ -30,7 +30,7 @@ public class PedidoUseCase {
     }
     public PedidoVO criarPedido(PedidoWebHandlerRequest pedidoWebHandlerRequest) {
         var pedido = new PedidoVO(
-                UUID.randomUUID(),
+                UUID.randomUUID().toString(),
                 pedidoWebHandlerRequest.cdDocCliente(),
                 AGUARDANDO_PAGAMENTO,
                 this.geraNumeroPedido(),
@@ -67,11 +67,11 @@ public class PedidoUseCase {
         return pedidoGateway.buscarPorNumeroPedido(nrPedido);
     }
 
-    public PedidoVO buscarPorStatusPedido(UUID cdPedido) {
+    public PedidoVO buscarPorStatusPedido(String cdPedido) {
         return pedidoGateway.buscarPorStatusPedido(cdPedido);
     }
 
-    public PedidoVO atualizarStatusPedido(UUID cdPedido, TipoStatusPedidoEnum novoStatus) {
+    public PedidoVO atualizarStatusPedido(String cdPedido, TipoStatusPedidoEnum novoStatus) {
         return pedidoGateway.atualizarStatusPedido(cdPedido, novoStatus);
     }
 

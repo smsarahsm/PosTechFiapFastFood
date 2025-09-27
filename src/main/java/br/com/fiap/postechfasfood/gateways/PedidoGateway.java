@@ -40,12 +40,12 @@ public class PedidoGateway implements PedidoGatewayInterface {
     }
 
     @Override
-    public PedidoVO buscarPorStatusPedido(UUID cdPedido) {
+    public PedidoVO buscarPorStatusPedido(String cdPedido) {
         return pedidoRepository.buscarPorStatusPedido(cdPedido);
     }
 
     @Override
-    public PedidoVO atualizarStatusPedido(UUID cdPedido, TipoStatusPedidoEnum novoStatus) {
+    public PedidoVO atualizarStatusPedido(String cdPedido, TipoStatusPedidoEnum novoStatus) {
         return pedidoRepository.atualizarStatusPedido(cdPedido, novoStatus);
     }
 

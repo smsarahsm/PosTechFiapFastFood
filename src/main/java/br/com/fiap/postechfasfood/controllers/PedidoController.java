@@ -48,7 +48,7 @@ public class PedidoController {
 
     public TipoStatusPedidoEnum buscarPorStatusPedido(PedidoRepositoryInterface pedidoRepository,
                                                       ProdutoRepositoryInterface produtoRepository,
-                                                      UUID cdPedido) {
+                                                      String cdPedido) {
         PedidoGateway pedidoGateway = new PedidoGateway(pedidoRepository);
         ProdutoGateway produtoGateway = new ProdutoGateway(produtoRepository);
 
@@ -60,7 +60,7 @@ public class PedidoController {
 
     public PedidoAtualizadoWebHandlerResponse atualizarStatusPedido(PedidoRepositoryInterface pedidoRepository,
                                                                     ProdutoRepositoryInterface produtoRepository,
-                                                                    UUID cdPedido, TipoStatusPedidoEnum novoStatus) {
+                                                                    String cdPedido, TipoStatusPedidoEnum novoStatus) {
         PedidoGateway pedidoGateway = new PedidoGateway(pedidoRepository);
         ProdutoGateway produtoGateway = new ProdutoGateway(produtoRepository);
 

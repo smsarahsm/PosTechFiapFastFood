@@ -3,7 +3,7 @@
 # Variaveis do script
 DOCKER_IMAGE_TAG=latest
 PROJECT_NAME=fiap-fastfood
-DOCKER_REGISTRY=maycondoceraccount
+DOCKER_REGISTRY=maycondockeraccount/fiap-fastfood
 
 # Definindo a variavel JAVA_HOME para o sistema operacional
 export JAVA_HOME=/opt/java/jdk-21.0.6 # Ajustar de acordo com a necessidade

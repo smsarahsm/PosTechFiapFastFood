@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class PagamentoVO {
-    private UUID cdPagamento;
-    private UUID cdPedido;
+    private String cdPagamento;
+    private String cdPedido;
     private double vlPagamento;
     private LocalDateTime dhPagamento;
     private LocalDateTime dhAtualizacao;
@@ -14,19 +14,19 @@ public class PagamentoVO {
     public PagamentoVO() {
     }
 
-    public UUID getCdPagamento() {
+    public String getCdPagamento() {
         return cdPagamento;
     }
 
-    public void setCdPagamento(UUID cdPagamento) {
+    public void setCdPagamento(String cdPagamento) {
         this.cdPagamento = cdPagamento;
     }
 
-    public UUID getCdPedido() {
+    public String getCdPedido() {
         return cdPedido;
     }
 
-    public void setCdPedido(UUID cdPedido) {
+    public void setCdPedido(String cdPedido) {
         this.cdPedido = cdPedido;
     }
 

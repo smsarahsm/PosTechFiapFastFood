@@ -47,7 +47,7 @@ public class ProdutoWebHandler {
     @PutMapping("/v1/produto/{cdProduto}")
     @Operation(summary = "Atualiza produtos", description = "Atualiza produtos existentes")
     public ResponseEntity<ProdutoWebHandlerResponse> atualizarProduto(
-            @PathVariable UUID cdProduto,
+            @PathVariable String cdProduto,
             @Valid @RequestBody ProdutoWebHandlerRequest request) {
 
         final ProdutoController produtoController = new ProdutoController();
@@ -62,7 +62,7 @@ public class ProdutoWebHandler {
 
     @PatchMapping("/v1/produto/{cdProduto}/desativar")
     @Operation(summary = "Desativa produtos", description = "Desativa produtos existentes")
-    public ResponseEntity<Void> desativarProduto(@PathVariable UUID cdProduto) {
+    public ResponseEntity<Void> desativarProduto(@PathVariable String cdProduto) {
         final ProdutoController produtoController = new ProdutoController();
         produtoController.desativarProduto(produtoRepository, cdProduto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -70,7 +70,7 @@ public class ProdutoWebHandler {
 
     @PatchMapping("/v1/produto/{cdProduto}/ativar")
     @Operation(summary = "Ativa produtos", description = "Ativa produtos existentes")
-    public ResponseEntity<Void> ativarProduto(@PathVariable UUID cdProduto) {
+    public ResponseEntity<Void> ativarProduto(@PathVariable String cdProduto) {
         final ProdutoController produtoController = new ProdutoController();
         produtoController.ativarProduto(produtoRepository, cdProduto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

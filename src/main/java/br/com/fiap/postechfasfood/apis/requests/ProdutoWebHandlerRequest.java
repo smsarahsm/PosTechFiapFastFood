@@ -11,7 +11,7 @@ import br.com.fiap.postechfasfood.types.TipoCategoriaProdutoEnum;
 import br.com.fiap.postechfasfood.usecases.ProdutoUseCase;
 
 public record ProdutoWebHandlerRequest(
-    UUID cdProduto,
+    String cdProduto,
     String nmProduto,
     String dsDescricao,
     double vlPreco,
@@ -39,7 +39,7 @@ public record ProdutoWebHandlerRequest(
         );
     }
 
-    public void atualizarProduto(ProdutoRepositoryInterface produtoRepository, UUID cdProduto, ProdutoWebHandlerRequest produtoWebHandlerRequest) {
+    public void atualizarProduto(ProdutoRepositoryInterface produtoRepository, String cdProduto, ProdutoWebHandlerRequest produtoWebHandlerRequest) {
     final ProdutoGateway produtoGateway = new ProdutoGateway(produtoRepository);
     ProdutoUseCase produtoUseCase = new ProdutoUseCase(produtoGateway);
     produtoUseCase.atualizar(cdProduto, produtoWebHandlerRequest);

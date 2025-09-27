@@ -55,7 +55,7 @@ public class PedidoWebHandler {
 
     @PatchMapping("/v1/pedidos/{cdPedido}/status/{txStatus}")
     public ResponseEntity<PedidoAtualizadoWebHandlerResponse> atualizarStatusPedido(
-            @PathVariable UUID cdPedido,
+            @PathVariable String cdPedido,
             @PathVariable String txStatus) {
         PedidoController pedidoController = new PedidoController();
         var tipoStatusPedido = pedidoController.buscarPorStatusPedido(pedidoRepository, produtoRepository, cdPedido);

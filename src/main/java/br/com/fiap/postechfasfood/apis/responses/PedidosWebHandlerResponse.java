@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public record PedidosWebHandlerResponse(
-        UUID cdPedido,
+        String cdPedido,
         TipoStatusPedidoEnum txStatus,
         int nrPedido,
         LocalDateTime dhCriacaoPedido,

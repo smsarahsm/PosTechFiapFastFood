@@ -38,7 +38,7 @@ public class PagamentoUseCase {
                 pedidoGateway.atualizarStatusPedido(pedido.getCdPedido(), TipoStatusPedidoEnum.RECEBIDO);
 
                 PagamentoVO pagamento = new PagamentoVO();
-                pagamento.setCdPagamento(UUID.randomUUID());
+                pagamento.setCdPagamento(UUID.randomUUID().toString());
                 pagamento.setCdPedido(pedido.getCdPedido());
                 pagamento.setVlPagamento(vlPagamento);
                 pagamento.setTpStatus("PAGO");

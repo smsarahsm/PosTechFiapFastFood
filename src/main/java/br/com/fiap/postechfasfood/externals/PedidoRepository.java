@@ -49,7 +49,7 @@ public class PedidoRepository implements PedidoRepositoryInterface {
     }
 
     @Override
-    public PedidoVO buscarPorCdPedido(UUID cdPedido) {
+    public PedidoVO buscarPorCdPedido(String cdPedido) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("cdPedido", cdPedido);
 
@@ -63,7 +63,7 @@ public class PedidoRepository implements PedidoRepositoryInterface {
 
 
     @Override
-    public PedidoVO buscarPorStatusPedido(UUID cdPedido) {
+    public PedidoVO buscarPorStatusPedido(String cdPedido) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("cdPedido", cdPedido);
 
@@ -73,7 +73,7 @@ public class PedidoRepository implements PedidoRepositoryInterface {
             String sqlItens = "SELECT cd_produto, vl_qtd FROM tb_pedidos_produtos WHERE cd_pedido = :cdPedido";
             List<ItensPedidoVO> itens = namedJdbcTemplate.query(sqlItens, params, (rs, rowNum) ->
                     new ItensPedidoVO(
-                            UUID.fromString(rs.getString("cd_produto")),
+                            rs.getString("cd_produto"),
                             rs.getInt("vl_qtd")
                     )
             );
@@ -110,7 +110,7 @@ public class PedidoRepository implements PedidoRepositoryInterface {
     }
 
     @Override
-    public void removerPedido(UUID cdPedido) {
+    public void removerPedido(String cdPedido) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("cdPedido", cdPedido);
         String sql = "DELETE FROM tb_pedidos WHERE cd_pedido = :cdPedido";
@@ -118,7 +118,7 @@ public class PedidoRepository implements PedidoRepositoryInterface {
     }
 
     @Override
-    public PedidoVO atualizarStatusPedido(UUID cdPedido, TipoStatusPedidoEnum txStatus) {
+    public PedidoVO atualizarStatusPedido(String cdPedido, TipoStatusPedidoEnum txStatus) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("cdPedido", cdPedido);
         params.addValue("txStatus", txStatus.name());

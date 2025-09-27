@@ -9,10 +9,10 @@ import java.util.UUID;
 public interface ProdutoGatewayInterface {
 
     void cadastrar(ProdutoVO produto);
-    void atualizar(UUID cdProduto, ProdutoVO produto);
-    void desativar(UUID cdProduto);
-    void ativar(UUID cdProduto);
+    void atualizar(String cdProduto, ProdutoVO produto);
+    void desativar(String cdProduto);
+    void ativar(String cdProduto);
     List<ProdutoVO> listar();
     List<ProdutoVO> listar(TipoCategoriaProdutoEnum tpCategoria);
-    ProdutoVO buscarPorCdProduto(UUID cdProduto);
+    ProdutoVO buscarPorCdProduto(String cdProduto);
 }

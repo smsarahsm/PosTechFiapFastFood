@@ -38,7 +38,7 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
     }
 
     @Override
-    public void atualizar(UUID cdProduto, ProdutoVO produto) {
+    public void atualizar(String cdProduto, ProdutoVO produto) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("cdProduto", cdProduto);
         params.addValue("nmProduto", produto.getNmProduto());
@@ -58,7 +58,7 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
     }
 
     @Override
-    public void desativar(UUID cdProduto) {
+    public void desativar(String cdProduto) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("cdProduto", cdProduto);
         params.addValue("snAtivo", false);
@@ -70,7 +70,7 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
     }
 
     @Override
-    public void ativar(UUID cdProduto) {
+    public void ativar(String cdProduto) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("cdProduto", cdProduto);
         params.addValue("snAtivo", true);
@@ -101,7 +101,7 @@ public class ProdutoRepository implements ProdutoRepositoryInterface {
     }
 
     @Override
-    public ProdutoVO buscarPorCdProduto(UUID cdProduto) {
+    public ProdutoVO buscarPorCdProduto(String cdProduto) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("cdProduto", cdProduto);
 

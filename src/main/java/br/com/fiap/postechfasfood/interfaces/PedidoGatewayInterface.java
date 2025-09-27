@@ -16,9 +16,9 @@ public interface PedidoGatewayInterface {
 
     PedidoVO buscarPorNumeroPedido(int nrPedido);
 
-    PedidoVO buscarPorStatusPedido(UUID cdPedido);
+    PedidoVO buscarPorStatusPedido(String cdPedido);
 
-    PedidoVO atualizarStatusPedido(UUID cdPedido, TipoStatusPedidoEnum novoStatus);
+    PedidoVO atualizarStatusPedido(String cdPedido, TipoStatusPedidoEnum novoStatus);
 
     List<PedidoVO> listarTodosPedidos();
 }
