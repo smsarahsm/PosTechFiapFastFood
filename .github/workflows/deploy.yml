@@ -1,0 +1,62 @@
+name: CI/CD com Dockerfile
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  EKS_CLUSTER_NAME: eks-postech-fiap-fastfood
+  IMAGE_REPO: thiagolinoz/postech-fastfood:latest
+  AWS_REGION: us-east-1
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+
+      - name: Fazer o build da aplicação (JAR)
+        run: mvn package -DskipTests
+
+      - name: Fazer login no Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Fazer o build da imagem Docker
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/postech-fastfood:latest
+
+      - name: Configurar credenciais da AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Atualizar kubeconfig para o cluster EKS
+        run: aws eks update-kubeconfig --name ${{ env.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
+
+      - name: Deploy no Kubernetes
+        run: |
+          kubectl apply -f ./k8s/configmap.yaml
+          kubectl apply -f ./k8s/application/application-secrets.yaml
+          kubectl apply -f ./k8s/application/application-service.yaml
+          kubectl apply -f ./k8s/application/application-deployment.yaml
+          kubectl get services app-service

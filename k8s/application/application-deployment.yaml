@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: java-app
-          image: maycondockeraccount/fiap-fastfood:latest #maycondockeraccount/k8s:latest #maycondockeraccount/fiap-fastfood #alexguimaraes21/fiap-fastfood:latest
+          image: thiagolinoz/postech-fastfood:latest #maycondockeraccount/k8s:latest #maycondockeraccount/fiap-fastfood #alexguimaraes21/fiap-fastfood:latest
           # endpoint da imagem de teste k8s = http://localhost:8080/api/v1/mockApi
           resources:
             requests:
