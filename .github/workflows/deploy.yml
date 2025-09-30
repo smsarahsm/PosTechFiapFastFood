@@ -3,7 +3,7 @@ name: CI/CD com Dockerfile
 on:
   push:
     branches:
-      - main
+      - separando_applicação
 
 env:
   EKS_CLUSTER_NAME: eks-postech-fiap-fastfood
