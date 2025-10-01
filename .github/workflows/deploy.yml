@@ -3,7 +3,7 @@ name: CI/CD com Dockerfile
 on:
   push:
     branches:
-      - separando_applicação
+      - main
 
 env:
   EKS_CLUSTER_NAME: eks-postech-fiap-fastfood
@@ -48,13 +48,14 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
-#      - name: Atualizar kubeconfig para o cluster EKS
-#        run: aws eks update-kubeconfig --name ${{ env.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
-#
-#      - name: Deploy no Kubernetes
-#        run: |
-#          kubectl apply -f ./k8s/configmap.yaml
-#          kubectl apply -f ./k8s/application/application-secrets.yaml
-#          kubectl apply -f ./k8s/application/application-service.yaml
-#          kubectl apply -f ./k8s/application/application-deployment.yaml
-#          kubectl get services app-service
+      - name: Atualizar kubeconfig para o cluster EKS
+        run: aws eks update-kubeconfig --name ${{ env.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
+
+      - name: Deploy no Kubernetes
+        run: |
+          sed -i "s|REPO_ECR|${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest|g" application-deployment.yaml
+          kubectl apply -f ./k8s/configmap.yaml
+          kubectl apply -f ./k8s/application/application-secrets.yaml
+          kubectl apply -f ./k8s/application/application-service.yaml
+          kubectl apply -f ./k8s/application/application-deployment.yaml
+          kubectl get services app-service
