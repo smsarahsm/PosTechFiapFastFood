@@ -7,7 +7,7 @@ on:
 
 env:
   EKS_CLUSTER_NAME: eks-postech-fiap-fastfood
-  ECR_REPOSITORY: postech-fastfood
+  ECR_REPOSITORY: postech-fiap-fastfood
   AWS_REGION: us-east-1
 
 jobs:
