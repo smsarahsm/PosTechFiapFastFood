@@ -53,7 +53,7 @@ jobs:
 
       - name: Deploy no Kubernetes
         run: |
-          sed -i "s|REPO_ECR|${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest|g" application-deployment.yaml
+          sed -i "s|REPO_ECR|${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest|g" ./k8s/application/application-deployment.yaml
           kubectl apply -f ./k8s/configmap.yaml
           kubectl apply -f ./k8s/application/application-secrets.yaml
           kubectl apply -f ./k8s/application/application-service.yaml
