@@ -1,0 +1,61 @@
+name: CI/CD com Dockerfile
+
+on:
+  push:
+    branches:
+      - separando_applicação
+
+env:
+  EKS_CLUSTER_NAME: eks-postech-fiap-fastfood
+  ECR_REPOSITORY: postech-fiap-fastfood
+  AWS_REGION: us-east-1
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+
+      - name: Fazer o build da aplicação (JAR)
+        run: mvn package -DskipTests
+
+      - name: Configurar credenciais da AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Fazer login no ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag e push da imagem para o ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+      - name: Atualizar kubeconfig para o cluster EKS
+        run: aws eks update-kubeconfig --name ${{ env.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
+
+      - name: Deploy no Kubernetes
+        run: |
+          sed -i "s|REPO_ECR|${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest|g" ./k8s/application/application-deployment.yaml
+          kubectl apply -f ./k8s/configmap.yaml
+          kubectl apply -f ./k8s/application/application-secrets.yaml
+          kubectl apply -f ./k8s/application/application-service.yaml
+          kubectl apply -f ./k8s/application/application-deployment.yaml
+          kubectl get services app-service
